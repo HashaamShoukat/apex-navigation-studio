@@ -60,7 +60,10 @@ export function renderList(tpl, entries, { classes = [], staticId = "navigation-
         return h;
     }).join("\n");
     const html = (p["list.beforeEntries"] || "") + walk(entries, 1) + (p["list.afterEntries"] || "");
-    return html.replace(/#COMPONENT_CSS_CLASSES#/g, [].concat(classes).join(" ")).replace(/#PARENT_STATIC_ID#/g, staticId).replace(/#LIST_ID#/g, staticId);
+    // the template's <link> to its CSS in the app's static files, inlined
+    return html.replace(/<link rel="stylesheet" href="#APP_FILES#([^"]+)">/g, (m, f) =>
+        `<style>\n${fs.readFileSync(new URL("../apexlang/shared-components/static-files/" + f, import.meta.url), "utf8")}</style>`)
+        .replace(/#COMPONENT_CSS_CLASSES#/g, [].concat(classes).join(" ")).replace(/#PARENT_STATIC_ID#/g, staticId).replace(/#LIST_ID#/g, staticId);
 }
 
 // the demo menu with links and "current"

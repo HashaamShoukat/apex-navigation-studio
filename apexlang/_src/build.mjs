@@ -1,11 +1,15 @@
 // Builds the Navigation Studio list templates and their option groups from _src:
 //   node _src/build.mjs
-// - side-nav.css / side-nav-pre.js / side-nav.js  -> list-templates/modern-side-navigation.apx
-// - nav-bar.css / nav-bar.js                      -> list-templates/modern-navigation-bar.apx
-// - top-nav.css / top-nav.js                      -> list-templates/modern-top-navigation.apx
-// - the option tables below                       -> template options + template-option-groups.apx
-// Field limits (APEXlang 26.1 metamodel): css.inline 32767 bytes; javaScript.executeWhenPageLoads, list.beforeEntries,
-// list.afterEntries and every entry template 4000; option and group names 30. The build fails when a field is too big.
+// - side-nav-pre.js / side-nav.js  -> list-templates/modern-side-navigation.apx
+// - nav-bar-pre.js / nav-bar.js    -> list-templates/modern-navigation-bar.apx
+// - top-nav-pre.js / top-nav.js    -> list-templates/modern-top-navigation.apx
+// - side-nav.css / nav-bar.css / top-nav.css -> static-files/navigation-studio/*.css, loaded by a <link> at the start
+//   of each template's Before List Entries (#APP_FILES#navigation-studio/<name>.css). APEX 26.1 does not emit a list
+//   template's CSS File URLs for the navigation menu or bar (its JavaScript File URLs it does).
+// - the option tables below        -> template options + template-option-groups.apx
+// Field limits: javaScript.executeWhenPageLoads, list.beforeEntries, list.afterEntries and every entry template 4000 bytes;
+// option and group names 30. The build fails when a field is too big. The metamodel allows 32767 for css.inline, but the
+// database column (WWV_FLOW_LIST_TEMPLATES.INLINE_CSS) holds 4000, so apex import fails with ORA-12899 - hence the files.
 import fs from "node:fs";
 import { SIDE, BAR, TOP } from "./options.mjs";
 import { minify } from "terser";
@@ -28,6 +32,14 @@ function field(name, value, max) {
     LIMITS.push(`${name} ${b}/${max}`);
     if (b > max) { throw new Error(`${name} is ${b} bytes - the limit is ${max}`); }
     return value;
+}
+// a template's CSS as an application static file; returns the <link> that starts the template's Before List Entries
+const FILES = ROOT + "shared-components/static-files/navigation-studio/";
+function cssFile(name, css) {
+    fs.mkdirSync(FILES, { recursive: true });
+    fs.writeFileSync(FILES + name + ".css", css + "\n");
+    LIMITS.push(`${name}.css ${bytes(css)} (static file)`);
+    return `<link rel="stylesheet" href="#APP_FILES#navigation-studio/${name}.css">`;
 }
 const block = (key, lang, value, n) => `${" ".repeat(n)}${key}:\n${" ".repeat(n + 4)}\`\`\`${lang}\n${ind(value, n + 4)}\n${" ".repeat(n + 4)}\`\`\``;
 
@@ -84,7 +96,8 @@ const UT_PREPAINT = `(() => {
 })();`;
 
 async function sideTemplate() {
-    const before = `<div class="t-Body-nav" id="t_Body_nav" role="navigation" aria-label="&"APP_TEXT$APEX.TEMPLATE.APPLICATION".">
+    const before = `${cssFile("side-nav", minCss(read("side-nav.css")))}
+<div class="t-Body-nav" id="t_Body_nav" role="navigation" aria-label="&"APP_TEXT$APEX.TEMPLATE.APPLICATION".">
   <div class="a-TreeView t-TreeNav #COMPONENT_CSS_CLASSES#" id="t_TreeNav" data-id="#PARENT_STATIC_ID#_tree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL".">
     <ul>`;
     const after = `    </ul>
@@ -95,11 +108,9 @@ ${await minJs(read("side-nav-pre.js"), "/* Modern Side Navigation: source in Nav
 ${UT_PREPAINT}
 </script>`;
     const onload = "apex.jQuery('body').addClass('t-PageBody--leftNav');\n" + await minJs(read("side-nav.js"), "// Modern Side Navigation: source in Navigation Studio _src/side-nav.js\n");
-    const css = minCss(read("side-nav.css"));
     field("side list.beforeEntries", before, 4000);
     field("side list.afterEntries", after, 4000);
     field("side executeWhenPageLoads", onload, 4000);
-    field("side css.inline", css, 32767);
     return `listTemplate modern-side-navigation (
     name: Modern Side Navigation
     templateClass: verticalSidebarList
@@ -132,9 +143,6 @@ ${block("noncurrentWithSublist", "html", NODE(false, false), 8)}
         fileUrls: #APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.treeView#MIN#.js?v=#APEX_VERSION#
 ${block("executeWhenPageLoads", "javascript-browser", onload, 8)}
     }
-    css {
-${block("inline", "css", css, 8)}
-    }
     attributeDescriptions {
         a01: ID Attribute
         a02: Disabled (True/False)
@@ -155,6 +163,6 @@ ${options(SIDE)}
 fs.mkdirSync(THEME + "list-templates", { recursive: true });
 fs.writeFileSync(THEME + "list-templates/modern-side-navigation.apx", await sideTemplate());
 const extra = [];
-extra.push(...await (await import("./build-bar-top.mjs")).build({ read, minCss, minJs, field, block, options, THEME, BAR, TOP }));
+extra.push(...await (await import("./build-bar-top.mjs")).build({ read, minCss, minJs, cssFile, field, block, options, THEME, BAR, TOP }));
 fs.writeFileSync(THEME + "template-option-groups.apx", groups([SIDE, ...extra]));
 console.log(LIMITS.join("\n"));

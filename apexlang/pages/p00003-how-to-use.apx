@@ -75,6 +75,14 @@ page 3 (
                   <tr><td>Modern Top Navigation</td><td>The top navigation menu (a copy of Top Navigation Menu).</td></tr>
                   <tr><td>Modern Navigation Bar</td><td>The navigation bar - user menu, notifications, help. It takes the colours of the menu templates.</td></tr>
                 </table>
+                <p>Each template loads its CSS from a static file, which the copy does not bring along. Upload the matching files to <strong>Shared Components &gt; Static Application Files</strong> in your application, in a directory named <code>navigation-studio</code>. Download them from Navigation Studio's own Static Application Files, or from <code>apexlang/shared-components/static-files/navigation-studio</code> on GitHub.</p>
+                <table>
+                  <tr><th>Template</th><th>File</th></tr>
+                  <tr><td>Modern Side Navigation</td><td><code>navigation-studio/side-nav.css</code></td></tr>
+                  <tr><td>Modern Top Navigation</td><td><code>navigation-studio/top-nav.css</code></td></tr>
+                  <tr><td>Modern Navigation Bar</td><td><code>navigation-studio/nav-bar.css</code></td></tr>
+                </table>
+                <p>To share one copy between several applications, upload them as Static Workspace Files instead and change <code>&#35;APP_FILES&#35;</code> to <code>&#35;WORKSPACE_FILES&#35;</code> in the <code>&lt;link&gt;</code> at the start of each template's <em>Before List Entries</em>.</p>
 
                 <h3>3. Switch your application to them</h3>
                 <ol>
@@ -104,7 +112,7 @@ page 3 (
 
                 <h3>6. Good to know</h3>
                 <ul>
-                  <li>Each template is self-contained: its CSS (Cascading Style Sheet &gt; Inline) and JavaScript travel with it. Keep the small script in <em>After List Entries</em>: it applies the look before the menu is drawn.</li>
+                  <li>The JavaScript travels with each template; the CSS is the one static file per template from step 2 (a list template's inline CSS holds only 4,000 bytes). A <code>&lt;link&gt;</code> at the start of <em>Before List Entries</em> loads it before the menu is drawn, so the menu never shows its default colours first. Keep the small script in <em>After List Entries</em>: it applies the look before the menu is drawn.</li>
                   <li>The source is generated from <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code> rather than editing the minified JavaScript in the template.</li>
                   <li>Users who prefer reduced motion get no animations; Windows high-contrast mode is respected.</li>
                 </ul>

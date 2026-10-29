@@ -7,7 +7,7 @@ listTemplate modern-top-navigation (
         ]
     }
     list {
-        beforeEntries: <div class="t-Header-nav-list #COMPONENT_CSS_CLASSES#" id="t_MenuNav"><ul>
+        beforeEntries: <link rel="stylesheet" href="#APP_FILES#navigation-studio/top-nav.css"><div class="t-Header-nav-list #COMPONENT_CSS_CLASSES#" id="t_MenuNav"><ul>
         afterEntries:
             ```html
             </ul></div>
@@ -38,88 +38,6 @@ listTemplate modern-top-navigation (
             ```javascript-browser
             // Modern Top Navigation: source in Navigation Studio _src/top-nav.js
             !function(e){const a=e("#t_MenuNav",apex.gPageContext$);a.hasClass("js-addActions")&&apex.actions.addFromMarkup(a),a.menu({behaveLikeTabs:a.hasClass("js-tabLike"),menubarShowSubMenuIcon:a.hasClass("js-showSubMenuIcons")||null,menubar:!0,menubarOverflow:!0,callout:a.hasClass("js-menu-callout")});const n=()=>a.find(".a-MenuBar-item").not(".a-MenuBar-item--overflow").each((function(a){const n=(window.nsTopBadges||[])[a],s=e(this).children(".a-MenuBar-label");n&&!s.children(".ns-TopBadge").length&&s.append(e('<span class="ns-TopBadge"></span>').text(n))}));n(),a.menu("resize"),n(),e(window).on("apexwindowresized",(()=>setTimeout(n,0)))}(apex.jQuery);
-            ```
-    }
-    css {
-        inline:
-            ```css
-            .ns-TopNav { --ns-a: var(--ut-palette-primary, #4f46e5); --ns-a2: var(--ns-a); --ns-on: var(--ut-palette-primary-contrast, #fff); --ns-ink: color-mix(in srgb, var(--ns-a) 72%, #000); --ns-tint: color-mix(in srgb, var(--ns-a) 45%, #fff); }
-            .ns-TopNav.ns-Accent--ocean { --ns-a: #0369a1; --ns-a2: #0e7490; --ns-on: #fff; --ns-ink: #075985; --ns-tint: #7dd3fc; }
-            .ns-TopNav.ns-Accent--indigo { --ns-a: #4f46e5; --ns-a2: #6d28d9; --ns-on: #fff; --ns-ink: #4338ca; --ns-tint: #a5b4fc; }
-            .ns-TopNav.ns-Accent--violet { --ns-a: #7c3aed; --ns-a2: #a21caf; --ns-on: #fff; --ns-ink: #6d28d9; --ns-tint: #c4b5fd; }
-            .ns-TopNav.ns-Accent--emerald { --ns-a: #047857; --ns-a2: #0f766e; --ns-on: #fff; --ns-ink: #047857; --ns-tint: #6ee7b7; }
-            .ns-TopNav.ns-Accent--rose { --ns-a: #e11d48; --ns-a2: #be185d; --ns-on: #fff; --ns-ink: #be123c; --ns-tint: #fda4af; }
-            .ns-TopNav.ns-Accent--amber { --ns-a: #f59e0b; --ns-a2: #f97316; --ns-on: #1c1303; --ns-ink: #92400e; --ns-tint: #fcd34d; }
-            .ns-TopNav.ns-Accent--slate { --ns-a: #475569; --ns-a2: #1e293b; --ns-on: #fff; --ns-ink: #334155; --ns-tint: #cbd5e1; }
-            .ns-TopNav.ns-Accent--wine { --ns-a: #9f1239; --ns-a2: #6b21a8; --ns-on: #fff; --ns-ink: #881337; --ns-tint: #f9a8d4; }
-            .ns-TopNav.ns-Accent--tangerine { --ns-a: #c2410c; --ns-a2: #b91c1c; --ns-on: #fff; --ns-ink: #9a3412; --ns-tint: #fdba74; }
-            .ns-TopNav.ns-Accent--cyan { --ns-a: #0e7490; --ns-a2: #1d4ed8; --ns-on: #fff; --ns-ink: #155e75; --ns-tint: #67e8f9; }
-            .ns-TopNav {
-            --ns-hdr-bg: light-dark(#fff, #15171c); --ns-hdr-fg: light-dark(#1f2328, #eceef2); --ns-muted: light-dark(#5b6170, #a3a9b6); --ns-hdr-line: light-dark(#e6e8ec, #2a2e36);
-            --ns-hover: light-dark(rgb(15 23 42 / .055), rgb(255 255 255 / .07)); --ns-cur-fg: light-dark(var(--ns-ink), #fff); --ns-cur-bg: transparent; --ns-ind: var(--ns-a);
-            --ns-focus: light-dark(var(--ns-a), var(--ns-tint)); --ns-hb-bg: var(--ns-a); --ns-hb-fg: var(--ns-on); --ns-r: .5rem;
-            }
-            .ns-TopNav .t-Header, .ns-TopNav .a-Menu { color-scheme: light; }
-            .ns-TopNav.ns-Scheme--dark .t-Header, .ns-TopNav.ns-Scheme--dark .t-Header-nav .a-Menu { color-scheme: dark; }
-            .ns-TopNav.ns-Scheme--auto .t-Header, .ns-TopNav.ns-Scheme--auto .t-Header-nav .a-Menu { color-scheme: light dark; }
-            .ns-TopNav:not(.ns-Header--theme) .t-Header { --ut-header-background-color: var(--ns-hdr-bg); --ut-header-text-color: var(--ns-hdr-fg); background: var(--ns-hdr-bg); color: var(--ns-hdr-fg); box-shadow: inset 0 -1px 0 var(--ns-hdr-line); }
-            .ns-TopNav:not(.ns-Header--theme) .t-Header .t-Header-logo-link { color: var(--ns-hdr-fg); font-weight: 700; letter-spacing: -.01em; }
-            .ns-TopNav:not(.ns-Header--theme) .t-Header-logo-link::before { content: ""; display: inline-block; width: 1.5rem; height: 1.5rem; margin-inline-end: .5rem; vertical-align: -.3125rem; border-radius: .4375rem;
-            background: linear-gradient(135deg, var(--ns-a), var(--ns-a2)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .2); }
-            .ns-TopNav.ns-Logo--none .t-Header-logo-link::before { display: none; }
-            .ns-TopNav .t-Header-nav { --a-menubar-background-color: transparent; background: transparent; padding-inline: .75rem; }
-            .ns-TopNav .t-Header-nav .a-MenuBar { box-shadow: none; background: transparent; }
-            .ns-TopNav .t-Header-nav .a-MenuBar > ul { align-items: center; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item { position: relative; border: 0; background: transparent !important; color: var(--ns-muted) !important; border-radius: var(--ns-r); }
-            .ns-TopNav .t-Header-nav .a-MenuBar-label { padding: .875rem .75rem; color: inherit !important; font-size: .875rem; font-weight: 500; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item:hover, .ns-TopNav .t-Header-nav .a-MenuBar-item.is-focused { color: var(--ns-hdr-fg) !important; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item:hover > .a-MenuBar-label, .ns-TopNav .t-Header-nav .a-MenuBar-item.is-focused > .a-MenuBar-label { background: var(--ns-hover); border-radius: var(--ns-r); }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item:focus-within { outline: 2px solid var(--ns-focus); outline-offset: -2px; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item.a-Menu--current { color: var(--ns-cur-fg) !important; background: var(--ns-cur-bg) !important; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item.a-Menu--current > .a-MenuBar-label { font-weight: 600; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item.a-Menu--current::after { content: ""; position: absolute; inset-inline: .75rem; bottom: 0; height: 2px; border-radius: 2px 2px 0 0; background: var(--ns-ind); }
-            .ns-TopNav .t-Header-nav .a-Menu-subMenuCol { color: inherit; padding-inline: .125rem .5rem; display: inline-flex; align-items: center; align-self: stretch; }
-            .ns-TopNav .t-Header-nav .a-MenuBar-item { display: flex; }
-            .ns-TopNav .t-Header-nav .a-Icon.icon-menu-split-drop-down::before { content: "\e0c2"; font-size: .75rem; opacity: .7; }
-            .ns-TopBadge { display: inline-block; margin-inline-start: .375rem; min-width: 1.125rem; padding: 0 .3125rem; border-radius: 999px; background: var(--ns-hb-bg); color: var(--ns-hb-fg);
-            font-size: .6875rem; font-weight: 600; line-height: 1.125rem; text-align: center; vertical-align: 1px; font-variant-numeric: tabular-nums; }
-            .ns-TopNav .a-Menu.a-Menu--top, .ns-TopNav .a-MenuBar-item--overflow .a-Menu { border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px rgb(15 23 42 / .08); }
-            .ns-TopNav .a-Menu .a-Menu-item { border-radius: .5rem; }
-            .ns-TopNav .a-Menu .a-Menu-item.a-Menu--current > .a-Menu-inner { color: var(--ns-ink); font-weight: 600; }
-            .ns-Top--pills { --ns-cur-bg: light-dark(color-mix(in srgb, var(--ns-a) 11%, #fff), color-mix(in srgb, var(--ns-a) 28%, #15171c)); --ns-r: 999px; }
-            .ns-Top--pills .t-Header-nav .a-MenuBar > ul { padding-block: .375rem; }
-            .ns-Top--pills .t-Header-nav .a-MenuBar-label { padding: .5rem .875rem; }
-            .ns-Top--pills .t-Header-nav .a-MenuBar-item.a-Menu--current::after { display: none; }
-            .ns-Top--segmented { --ns-cur-bg: light-dark(#fff, rgb(255 255 255 / .12)); --ns-cur-fg: var(--ns-hdr-fg); --ns-r: .5rem; }
-            .ns-Top--segmented .t-Header-nav { padding-block: .375rem .5rem; }
-            .ns-Top--segmented .t-Header-nav .a-MenuBar { padding: .1875rem; border-radius: .6875rem; background: light-dark(#f0f1f4, rgb(255 255 255 / .06)); box-shadow: inset 0 0 0 1px var(--ns-hdr-line); }
-            .ns-Top--segmented .t-Header-nav .a-MenuBar-label { padding: .4375rem .875rem; }
-            .ns-Top--segmented .t-Header-nav .a-MenuBar-item.a-Menu--current { box-shadow: 0 1px 2px rgb(15 23 42 / .1), 0 0 0 1px light-dark(rgb(15 23 42 / .06), rgb(255 255 255 / .08)); }
-            .ns-Top--segmented .t-Header-nav .a-MenuBar-item.a-Menu--current::after { display: none; }
-            .ns-Top--midnight { --ns-hdr-bg: #0f1218; --ns-hdr-fg: #eef0f4; --ns-muted: #a1a8b5; --ns-hdr-line: #20242c; --ns-hover: rgb(255 255 255 / .06); --ns-cur-fg: #fff; --ns-ind: var(--ns-tint); --ns-focus: var(--ns-tint); }
-            .ns-Top--midnight .t-Header, .ns-Top--midnight .t-Header-nav .a-Menu { color-scheme: dark; }
-            .ns-Top--midnight .t-Header-nav .a-MenuBar-item.a-Menu--current::after { box-shadow: 0 0 12px 1px var(--ns-a); }
-            .ns-Top--gradient { --ns-hdr-bg: var(--ns-a); --ns-hdr-fg: var(--ns-on); --ns-muted: var(--ns-on); --ns-hdr-field: rgb(0 0 0 / .16); --ns-hdr-line: transparent; --ns-hover: color-mix(in srgb, var(--ns-on) 12%, transparent);
-            --ns-cur-bg: var(--ns-on); --ns-cur-fg: var(--ns-a); --ns-r: 999px; --ns-focus: var(--ns-on); --ns-hb-bg: var(--ns-on); --ns-hb-fg: var(--ns-a); }
-            .ns-Top--gradient:not(.ns-Header--theme) .t-Header { background: linear-gradient(100deg, var(--ns-a), var(--ns-a2)); }
-            .ns-Top--gradient:not(.ns-Header--theme) .t-Header-branding { background: transparent; }
-            .ns-Top--gradient .t-Header-nav .a-MenuBar > ul { padding-block: .375rem .5rem; }
-            .ns-Top--gradient .t-Header-nav .a-MenuBar-label { padding: .5rem .875rem; }
-            .ns-Top--gradient .t-Header-nav .a-MenuBar-item.a-Menu--current::after { display: none; }
-            .ns-Top--gradient .t-Header-nav .a-MenuBar-item.a-Menu--current .ns-TopBadge { background: var(--ns-a); color: var(--ns-on); }
-            .ns-TopNav.ns-Top--gradient .t-Header .t-Header-logo-link::before { background: var(--ns-on); opacity: .9; }
-            .ns-Top--glass { --ns-hdr-bg: light-dark(rgb(255 255 255 / .62), rgb(20 22 28 / .9)); --ns-muted: light-dark(#4f5564, #b8bec9); --ns-hdr-line: light-dark(rgb(255 255 255 / .8), rgb(255 255 255 / .08));
-            --ns-cur-bg: light-dark(rgb(255 255 255 / .9), rgb(255 255 255 / .14)); --ns-r: .625rem; }
-            .ns-Top--glass .t-Header { backdrop-filter: saturate(1.6) blur(18px); }
-            .ns-Top--glass .t-Body { background: radial-gradient(60rem 30rem at 10% 0%, color-mix(in srgb, var(--ns-a) 20%, transparent), transparent 60%),
-            radial-gradient(50rem 30rem at 90% 10%, color-mix(in srgb, var(--ns-a2) 16%, transparent), transparent 60%), light-dark(#eef0f6, #0b0c10); background-attachment: fixed; }
-            .ns-Top--glass .t-Body-main { background: transparent; }
-            .ns-Top--glass .t-Header-nav .a-MenuBar > ul { padding-block: .375rem .5rem; }
-            .ns-Top--glass .t-Header-nav .a-MenuBar-label { padding: .5rem .875rem; }
-            .ns-Top--glass .t-Header-nav .a-MenuBar-item.a-Menu--current { box-shadow: 0 2px 8px -2px rgb(30 27 75 / .18); }
-            .ns-Top--glass .t-Header-nav .a-MenuBar-item.a-Menu--current::after { display: none; }
-            @media (prefers-reduced-motion: reduce) { .ns-TopNav .t-Header, .ns-TopNav .t-Header-nav * { transition: none !important; animation: none !important; } }
-            @media (forced-colors: active) { .ns-TopNav .t-Header-nav .a-MenuBar-item.a-Menu--current { outline: 2px solid Highlight; outline-offset: -2px; } }
             ```
     }
     attributeDescriptions {

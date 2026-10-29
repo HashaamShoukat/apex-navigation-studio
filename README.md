@@ -69,7 +69,16 @@ The APEXlang source is in [`apexlang/`](apexlang/) (`apex import -input apexlang
 ## Use it in your application
 
 1. **Copy the templates.** In *your* application: **Shared Components > Templates > Create > List > As a Copy of an Existing Template**, copy from **Navigation Studio** and pick Modern Side Navigation (or Modern Top Navigation) and Modern Navigation Bar. Tick *Subscribe* for later updates.
-2. **Switch to them.** **Shared Components > User Interface Attributes**:
+2. **Upload the CSS files.** Each template loads its CSS from a static file, which the copy does not bring along. In **Shared Components > Static Application Files**, upload the matching files from [`apexlang/shared-components/static-files/navigation-studio`](apexlang/shared-components/static-files/navigation-studio) into a directory named `navigation-studio`:
+
+   | Template | File |
+   |---|---|
+   | Modern Side Navigation | `navigation-studio/side-nav.css` |
+   | Modern Top Navigation | `navigation-studio/top-nav.css` |
+   | Modern Navigation Bar | `navigation-studio/nav-bar.css` |
+
+   To share one copy between applications, upload them as Static Workspace Files and change `#APP_FILES#` to `#WORKSPACE_FILES#` in the `<link>` at the start of each template's *Before List Entries*.
+3. **Switch to them.** **Shared Components > User Interface Attributes**:
    - *Navigation Menu* - List Template **Modern Side Navigation** (or **Modern Top Navigation** with Position *Top*) and the Template Options from the Designer;
    - *Navigation Bar* - List Template **Modern Navigation Bar** and its Template Options.
 
@@ -95,7 +104,7 @@ navigationBar {
 }
 ```
 
-3. **Optional - make the most of the lists:**
+4. **Optional - make the most of the lists:**
 
 | In the list | What it does |
 |---|---|
@@ -110,7 +119,7 @@ Texts can be translated with the text messages `MODERN_NAV.SEARCH`, `MODERN_NAV.
 
 ## Notes
 
-- Each template is self-contained - its CSS (*Cascading Style Sheet > Inline*) and JavaScript travel with it; no static files, no CDN.
+- Each template's JavaScript travels with it; its CSS is one static file (see step 2). A list template's inline CSS field holds only 4,000 bytes in the database, too small for these designs, and APEX does not emit a list template's *CSS File URLs* for the navigation menu or bar. So a `<link>` at the start of *Before List Entries* loads the file, before the menu is drawn - the menu never shows its default colours first. No CDN.
 - Keep the small script in *After List Entries*: it applies the look before the menu is drawn, so nothing jumps.
 - A list template's JavaScript fields hold 4,000 bytes, so the template JavaScript is minified - edit the readable sources in `apexlang/_src` and run the build.
 - Color Scheme applies to the menu and the header; your theme style keeps the content. Midnight and Terminal are always dark.

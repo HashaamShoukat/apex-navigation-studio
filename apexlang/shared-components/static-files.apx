@@ -93,3 +93,15 @@ file "gallery/top-segmented-emerald.jpg" (
 file "gallery/top-underline-indigo.jpg" (
     mimeType: image/jpeg
 )
+
+file "navigation-studio/nav-bar.css" (
+    mimeType: text/css
+)
+
+file "navigation-studio/side-nav.css" (
+    mimeType: text/css
+)
+
+file "navigation-studio/top-nav.css" (
+    mimeType: text/css
+)
