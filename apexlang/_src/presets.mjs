@@ -1,7 +1,7 @@
 // Ready-made looks for the Gallery. side / top = Modern Side / Top Navigation options, bar = Modern Navigation Bar options,
 // state = how the side menu is shown in the thumbnail. Thumbnails: static files gallery/<id>.jpg (qa/thumbs.cjs).
 export const SIDE_DEFAULTS = "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar";
-export const BAR_DEFAULTS = "ns-Bar--avatar ns-Bar--search";
+export const BAR_DEFAULTS = "ns-Bar--avatar";
 export const TOP_DEFAULTS = "js-tabLike";
 
 export const PRESETS = [

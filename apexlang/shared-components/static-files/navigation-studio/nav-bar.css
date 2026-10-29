@@ -48,6 +48,7 @@ color: var(--ns-hb-fg, var(--nb-on)); font-size: .6875rem; font-weight: 700; let
 @media (min-width: 640px) { .ns-Bar .ns-User .t-Button--navBar { padding-inline-end: .625rem; } }
 .ns-Bar .ns-SearchItem { display: none; }
 .ns-HasSearch .ns-Bar.ns-Bar--search .ns-SearchItem { display: block; }
+.ns-HasSearch.js-navExpanded:not(.js-navCollapsed) .ns-Bar.ns-Bar--search .ns-SearchItem { display: none; }
 .ns-Bar .ns-SearchBtn kbd { display: none; }
 @media (min-width: 768px) {
 .ns-Bar .ns-SearchBtn { min-width: 13rem; justify-content: flex-start; box-shadow: inset 0 0 0 1px var(--nb-line); --a-button-background-color: var(--ns-hdr-field, var(--nb-hover)); color: var(--nb-fg); }

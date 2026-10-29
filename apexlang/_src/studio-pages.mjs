@@ -460,7 +460,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Navigation Studio - Desig
     sel("P2_BAR_ACCENT", "Navigation Bar Accent", 91, ACC, "Match the Menu", ""), "",
     sel("P2_BAR_BADGE", "Navigation Bar Badges", 92, "Red;ns-Bar--badgeRed,Dot;ns-Bar--badgeDot", "Accent", ""), "",
     sw("P2_AVATAR", "User Avatar", 93, "Y", true), "",
-    sw("P2_BAR_SEARCH", "Search Button", 94, "Y", false), "",
+    sw("P2_BAR_SEARCH", "Search Button", 94, "N", false), "",
     sw("P2_PULSE", "Pulsing Badges", 95, "N", true), "",
     radio("P2_DEVICE", "Preview On", 10, "Desktop;DESKTOP,Tablet;TABLET,Phone;PHONE", "DESKTOP"), "",
     radio("P2_STATE", "Menu", 15, "Expanded;EXPANDED,Collapsed;COLLAPSED", "EXPANDED"), "",
@@ -541,7 +541,8 @@ const howHtml = `<div class="nvs-Doc">
 
 <h3>5. What the options do</h3>
 <ul>
-  <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it; the navigation bar's <em>Search Button</em> opens it too.</li>
+  <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it.</li>
+  <li><strong>Search Button</strong> (navigation bar, off by default) - a button that opens that search field. It shows only while the side menu is collapsed or hidden; when the menu is expanded the field is already in view.</li>
   <li><strong>Sub-menus: Flyout</strong> - sub-levels open in a panel beside the menu instead of expanding in place: on hover, with a tap on the arrow, or with the Right arrow key (Up / Down move inside it, Left or Escape closes it). It works on the collapsed icon rail too. Phones always expand in place.</li>
   <li><strong>Tooltips When Collapsed</strong> - the entry's name next to the icon on the collapsed rail (mouse and keyboard).</li>
   <li><strong>Phone Bottom Bar</strong> - on phones the first four entries and a Menu button sit in a bar at the bottom, in reach of the thumb.</li>

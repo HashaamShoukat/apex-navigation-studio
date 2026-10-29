@@ -15,7 +15,7 @@ page 2 (
             // Designer: every choice is a template option (a CSS class) of Modern Side / Top Navigation or Modern Navigation Bar.
             // The preview iframe shows the real demo page; the classes travel in its URL hash (#ns=<menu>&nb=<bar>&nsx=<state>).
             (function ($) {
-                var DEF = { side: "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar".split(" "), top: "js-tabLike".split(" "), bar: "ns-Bar--avatar ns-Bar--search".split(" ") };
+                var DEF = { side: "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar".split(" "), top: "js-tabLike".split(" "), bar: "ns-Bar--avatar".split(" ") };
                 // t: side / top / nav (both menus) / bar
                 var SELECTS = [
                     { item: "P2_DESIGN", group: "Design", t: "side" }, { item: "P2_TOP_DESIGN", group: "Design", t: "top" },
@@ -824,7 +824,7 @@ page 2 (
         }
         default {
             type: static
-            staticValue: Y
+            staticValue: N
         }
         sessionState {
             storage: request
