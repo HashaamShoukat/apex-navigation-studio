@@ -28,6 +28,8 @@ export const SIDE = {
           options: ACCENTS.map(([id, name]) => ["ns-Accent--" + id, name]) },
         { id: "ns-scheme", name: "Color Scheme", seq: 20, nul: "Light", help: "Midnight and Terminal are always dark.",
           options: [["ns-Scheme--dark", "Dark"], ["ns-Scheme--auto", "Follow Device Setting"]] },
+        { id: "ns-sub", name: "Sub-menus", seq: 25, nul: "Expand in Place", help: "How the sub-levels of an entry open. Flyout shows them in a panel beside the menu - on hover, on a tap on the arrow, or with the Right arrow key - also on the collapsed icon rail. Phones always expand in place.",
+          options: [["ns-Sub--flyout", "Flyout"]] },
         { id: "ns-collapse", name: "Collapse Mode", seq: 30, help: "What the menu shows when it is collapsed on large screens. Phones always hide it.",
           options: [["js-navCollapsed--default", "Icons"], ["js-navCollapsed--hidden", "Hidden"]] },
         { id: "ns-header", name: "Header", seq: 40, nul: "Match the Menu", help: "Match the Menu colours the header bar like the menu. Keep Theme Header leaves it to your theme style.",

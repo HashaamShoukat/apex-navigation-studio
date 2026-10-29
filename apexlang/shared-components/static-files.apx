@@ -18,6 +18,10 @@ file "gallery/floating-dark-violet.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/floating-flyout.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/floating-ocean.jpg" (
     mimeType: image/jpeg
 )
@@ -43,6 +47,10 @@ file "gallery/inset-dark-emerald.jpg" (
 )
 
 file "gallery/inset-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/midnight-flyout.jpg" (
     mimeType: image/jpeg
 )
 

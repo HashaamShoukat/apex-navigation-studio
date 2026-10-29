@@ -7,6 +7,7 @@ const { chromium } = require("playwright"); const fs = require("fs"), path = req
     ["side-sub", D + "ns-Design--floating ns-Accent--ocean", "ns-Bar--pills", "expanded"], ["side-sub", D + "ns-Design--midnight ns-Accent--violet", "ns-Bar--icons", "expanded"],
     ["side", D + "ns-Design--midnight ns-Accent--violet", "ns-Bar--icons", "collapsed", "hover"], ["side", D + "ns-Design--rail ns-Accent--emerald", "ns-Bar--icons", "collapsed"],
     ["side-sub", D + "ns-Design--gradient ns-Accent--indigo", "", "expanded"], ["side", D + "ns-Design--glass ns-Accent--violet", "ns-Bar--pills", "expanded", "search"],
+    ["side", D + "ns-Design--floating ns-Accent--indigo ns-Sub--flyout", "ns-Bar--pills", "expanded", "flyout"], ["side", D + "ns-Design--midnight ns-Accent--cyan ns-Sub--flyout", "ns-Bar--icons", "collapsed", "flyout-rail"],
     ["side-sub", D + "ns-Design--soft ns-Accent--indigo", "", "expanded"], ["side-sub", D + "ns-Design--bold ns-Accent--amber", "ns-Bar--outline ns-Bar--badgeRed", "expanded"],
     ["side-sub", D + "ns-Design--outline ns-Accent--emerald", "", "expanded"], ["side-sub", D + "ns-Design--editorial", "ns-Bar--icons", "expanded"],
     ["side-sub", D + "ns-Design--terminal", "ns-Bar--badgeDot", "expanded"], ["side-sub", D + "ns-Design--inset ns-Accent--emerald ns-Scheme--dark", "ns-Bar--segmented", "expanded"],
@@ -17,6 +18,8 @@ const { chromium } = require("playwright"); const fs = require("fs"), path = req
     const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
     await p.goto(`http://localhost:8642/${pg}.html#ns=${encodeURIComponent(ns)}&nb=${encodeURIComponent("ns-Bar--avatar ns-Bar--search " + nb)}${st ? "&nsx=" + st : ""}`); await p.waitForTimeout(900);
     if (act === "hover") { await p.hover("#t_TreeNav_1 .a-TreeView-content"); await p.waitForTimeout(400); }
+    if (act === "flyout") { await p.hover("#t_TreeNav_9 .a-TreeView-content"); await p.waitForTimeout(500); }
+    if (act === "flyout-rail") { await p.hover("#t_TreeNav_3 .a-TreeView-content"); await p.waitForTimeout(500); }
     if (act === "search") { await p.click(".ns-Search input"); await p.keyboard.type("rep"); await p.waitForTimeout(400); }
     await p.screenshot({ path: path.join(dir, String(i).padStart(2, "0") + ".png") }); await p.close();
   }

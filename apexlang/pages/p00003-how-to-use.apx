@@ -95,7 +95,7 @@ page 3 (
                 <table>
                   <tr><th>In the list</th><th>What it does</th></tr>
                   <tr><td>Label <code>Inbox [12]</code></td><td>A badge with 12 (side and top menu; Universal Theme's own syntax). Use a substitution for a live count: <code>Inbox [&amp;P0_UNREAD.]</code>.</td></tr>
-                  <tr><td>Attribute 3</td><td>Side menu: a section heading above the entry, e.g. <em>Reports</em>. A divider line when the menu is collapsed.</td></tr>
+                  <tr><td>Attribute 3</td><td>Side menu: a section heading above the entry. Type the heading (e.g. <em>Reports</em>) in the entry's <strong>User Defined Attributes &gt; 3</strong> (Shared Components &gt; Lists &gt; your list &gt; the entry). It is shown above that entry and starts a new group; when the menu is collapsed it becomes a divider line. The demo menu's WORKSPACE, SALES, INSIGHTS and ADMIN, and the NAVIGATION STUDIO and DEMOS headings of this app's own menu, are made this way.</td></tr>
                   <tr><td>Navigation bar: Attribute 1</td><td>The badge value of a navigation bar entry.</td></tr>
                   <tr><td>Navigation bar: Attribute 2</td><td>List item CSS classes. <code>ns-User</code> shows the initials of the label in a round avatar (option User Avatar); <code>icon-only</code> and <code>no-icon</code> work as in Universal Theme.</td></tr>
                 </table>
@@ -103,6 +103,7 @@ page 3 (
                 <h3>5. What the options do</h3>
                 <ul>
                   <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it; the navigation bar's <em>Search Button</em> opens it too.</li>
+                  <li><strong>Sub-menus: Flyout</strong> - sub-levels open in a panel beside the menu instead of expanding in place: on hover, with a tap on the arrow, or with the Right arrow key (Up / Down move inside it, Left or Escape closes it). It works on the collapsed icon rail too. Phones always expand in place.</li>
                   <li><strong>Tooltips When Collapsed</strong> - the entry's name next to the icon on the collapsed rail (mouse and keyboard).</li>
                   <li><strong>Phone Bottom Bar</strong> - on phones the first four entries and a Menu button sit in a bar at the bottom, in reach of the thumb.</li>
                   <li><strong>Header: Match the Menu</strong> - the header bar takes the menu's colours; <em>Keep Theme Header</em> leaves it to your theme style.</li>

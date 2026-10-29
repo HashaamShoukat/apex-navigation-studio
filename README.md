@@ -42,6 +42,7 @@ They are copies of Universal Theme's own templates with the same markup and ids,
 Every design takes 10 **accent colours** (or your theme colour), **light / dark / follow the device**, and:
 
 - **Section headings** - list entry attribute 3 puts a small heading above an entry (a divider when collapsed);
+- **Sub-menus: expand in place or flyout** - with *Flyout*, sub-levels open in a panel beside the menu (hover, a tap on the arrow, or the Right arrow key), on the collapsed icon rail too; phones expand in place;
 - **Badges** - Universal Theme's `Inbox [12]` label syntax, styled per design (accent, soft, red or dot), in the top menu too;
 - **Menu search** - finds every entry, sub-levels too; <kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>/</kbd> opens it;
 - **Collapsed icon rail** with tooltips, or a menu that hides completely;
@@ -109,7 +110,7 @@ navigationBar {
 | In the list | What it does |
 |---|---|
 | Label `Inbox [12]` | A badge (side and top menu). Use a substitution for a live count: `Inbox [&P0_UNREAD.]` |
-| Menu entry attribute 3 | A section heading above the entry |
+| Menu entry attribute 3 | A section heading above the entry. In Shared Components > Lists > your list > the entry: **User Defined Attributes > 3**, e.g. *Reports*. The demo menu's WORKSPACE, SALES, INSIGHTS and ADMIN are made this way |
 | Navigation bar attribute 1 | The badge value |
 | Navigation bar attribute 2 | List item CSS classes - `ns-User` shows the initials avatar; `icon-only`, `no-icon` as in Universal Theme |
 

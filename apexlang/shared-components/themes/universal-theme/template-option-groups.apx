@@ -34,6 +34,18 @@ templateOptionGroup ns-scheme (
     }
 )
 
+templateOptionGroup ns-sub (
+    templateType: list
+    name: Sub-menus
+    sequence: 25
+    settings {
+        nullText: Expand in Place
+    }
+    help {
+        helpText: How the sub-levels of an entry open. Flyout shows them in a panel beside the menu - on hover, on a tap on the arrow, or with the Right arrow key - also on the collapsed icon rail. Phones always expand in place.
+    }
+)
+
 templateOptionGroup ns-collapse (
     templateType: list
     name: Collapse Mode

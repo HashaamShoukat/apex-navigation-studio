@@ -13,6 +13,10 @@ listTemplate modern-side-navigation (
         beforeEntries:
             ```html
             <link rel="stylesheet" href="#APP_FILES#navigation-studio/side-nav.css">
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>
+            /* Flyout: source in Navigation Studio _src/side-nav-flyout.js */
+            (()=>{const e=document,t=(t,r)=>e.addEventListener(t,r,!0),r=()=>e.body.classList.contains("ns-Sub--flyout")&&matchMedia("(min-width: 640px)").matches,o=e=>"rtl"===getComputedStyle(e).direction,n=e=>e.replace(/\s*\[.*?\]\s*$/,"");let a,l,i;const s=e=>{const t=e.closest&&e.closest("#t_TreeNav .a-TreeView-node--topLevel");return t&&t.matches(".is-expandable, .is-collapsible")?t:null},c=e=>{clearTimeout(i),a&&(a.hidden=!0),e&&l&&l.querySelector(".a-TreeView-label").focus(),l=null},d=(t,r)=>{clearTimeout(i);const s=apex.jQuery,c=apex.util.escapeHTML,d=s("#t_TreeNav"),u=d.treeView("getNodeAdapter"),g=d.treeView("getNodes",s(t).children(".a-TreeView-content"))[0],p=d.treeView("getSelectedNodes")[0];if(!g||!u.childCount(g))return;a||(a=e.createElement("div"),a.className="ns-Flyout",a.setAttribute("role","group"),e.body.append(a));let w="";const f=(e,t)=>{for(let r=0;r<u.childCount(e);r++){const o=u.child(e,r);w+='<a href="'+c(u.getLink(o)||"#")+'" style="--l:'+t+'"'+(o===p?' aria-current="page"':"")+">"+c(n(u.getLabel(o)))+"</a>",f(o,t+1)}};f(g,0);const T=n(u.getLabel(g));a.setAttribute("aria-label",T),a.innerHTML="<p>"+c(T)+"</p>"+w,a.hidden=!1,l=t;const y=t.querySelector(".a-TreeView-row").getBoundingClientRect(),m=e.getElementById("t_Body_nav").getBoundingClientRect();a.style.top=Math.max(8,Math.min(y.top-6,innerHeight-a.offsetHeight-8))+"px",a.style.left=(o(t)?m.left-a.offsetWidth-6:m.right+6)+"px",r&&a.querySelector("a").focus()};t("mouseover",(e=>{if(!r())return;if(a&&a.contains(e.target))return void clearTimeout(i);const t=s(e.target);clearTimeout(i),t?t!==l&&(i=setTimeout((()=>d(t)),l?60:160)):l&&(i=setTimeout((()=>c()),300))}));const u=e=>{if(!r())return;const t=e.target.closest&&e.target.closest("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-toggle");if(t){if(e.preventDefault(),e.stopPropagation(),"click"===e.type){const e=t.parentElement;l===e?c():d(e)}}else"click"===e.type&&l&&!a.contains(e.target)&&c()};t("mousedown",u),t("click",u),t("keydown",(t=>{if(!r())return;const n=s(t.target),l=a&&a.contains(t.target),i=o(t.target)?-1:1,u=t.target.matches&&t.target.matches("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content > .a-TreeView-label");if(n&&u&&t.key===(i>0?"ArrowRight":"ArrowLeft"))t.preventDefault(),t.stopPropagation(),d(n,!0);else if(u&&/^(ArrowDown|ArrowUp|Home|End|ArrowLeft|ArrowRight)$/.test(t.key)){t.preventDefault(),t.stopPropagation();const r=[...e.querySelectorAll("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content > .a-TreeView-label")],o=r.indexOf(t.target),n={ArrowDown:r[o+1],ArrowUp:r[o-1],Home:r[0],End:r[r.length-1]}[t.key];n&&(t.target.tabIndex=-1,n.tabIndex=0,n.focus())}else if(l){const e=[...a.querySelectorAll("a")],r=e.indexOf(t.target);"ArrowDown"!==t.key&&"ArrowUp"!==t.key||(t.preventDefault(),(e[r+("ArrowDown"===t.key?1:-1)]||e["ArrowDown"===t.key?0:e.length-1]).focus()),"Escape"!==t.key&&t.key!==(i>0?"ArrowLeft":"ArrowRight")||(t.preventDefault(),c(!0))}})),t("focusout",(e=>{a&&a.contains(e.target)&&!a.contains(e.relatedTarget)&&c()})),t("scroll",(e=>{!l||a&&a.contains(e.target)||c()})),addEventListener("resize",(()=>c()));const g=()=>{const t=e.querySelector("#t_TreeNav .a-TreeView-label[tabindex='0']");r()&&t&&!t.closest(".a-TreeView-node--topLevel > .a-TreeView-content")&&(t.tabIndex=-1,t.closest(".a-TreeView-node--topLevel").querySelector(".a-TreeView-label").tabIndex=0)};addEventListener("load",(()=>setTimeout(g,0)))})();
+            </script>
             <div class="t-Body-nav" id="t_Body_nav" role="navigation" aria-label="&"APP_TEXT$APEX.TEMPLATE.APPLICATION".">
               <div class="a-TreeView t-TreeNav #COMPONENT_CSS_CLASSES#" id="t_TreeNav" data-id="#PARENT_STATIC_ID#_tree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL".">
                 <ul>
@@ -330,6 +334,15 @@ listTemplate modern-side-navigation (
         sequence: 20
         appearance {
             cssClasses: ns-Scheme--auto
+        }
+    )
+
+    templateOption sub-flyout (
+        name: Flyout
+        group: @list/ns-sub
+        sequence: 10
+        appearance {
+            cssClasses: ns-Sub--flyout
         }
     )
 

@@ -13,6 +13,8 @@ const fs = require("fs"), path = require("path");
     const pg = await ctx.newPage();
     const url = `http://localhost:8642/${p.pos === "top" ? "top" : "side"}.html#ns=${encodeURIComponent(p.nav)}&nb=${encodeURIComponent(p.bar)}&nsx=${p.state}`;
     await pg.goto(url); await pg.waitForTimeout(900);
+    // a Flyout preset shows its panel open
+    if (/flyout/.test(p.tags)) { await pg.hover(p.state === "collapsed" ? "#t_TreeNav_3 .a-TreeView-content" : "#t_TreeNav_9 .a-TreeView-content"); await pg.waitForTimeout(500); }
     const png = await pg.screenshot();
     await ctx.close();
     const jpg = await shrink.evaluate(async b64 => {
