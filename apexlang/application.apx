@@ -1,0 +1,57 @@
+app NAVIGATION-STUDIO (
+    name: Navigation Studio
+    logo {
+        type: text
+        text: Navigation Studio
+    }
+    navigation {
+        homeUrl: {
+            page: 1
+        }
+    }
+    navigationMenu {
+        listTemplate: @modern-side-navigation
+        templateOptions: [
+            #DEFAULT#
+            ns-Accent--indigo
+        ]
+        list: @navigation-menu
+    }
+    navigationBar {
+        list: @navigation-bar
+        listTemplate: @modern-navigation-bar
+        templateOptions: #DEFAULT#
+    }
+    userInterface {
+        currentTheme: @universal-theme
+        globalPage: 0
+        addBuiltWithApexToFooter: false
+        autoDismissSuccessMessages: true
+    }
+    appFormatMasks {
+        date: DD-MON-YYYY
+        timestamp: DS
+        timestampTimeZone: DS
+    }
+    authentication {
+        scheme: @no-authentication
+    }
+    security {
+        deepLinking: true
+        embedInFrames: allowSameOrigin
+    }
+    sessionStateProtection {
+        checksumSalt: B51441058DBF6E03916278B1A86C1C19A4534A8DC16D00F4007F19DBFBA03867
+    }
+    sessionManagement {
+        maxSessionLength: 28800
+        maxSessionIdleTime: 7200
+    }
+
+    substitution APP_NAME (
+        value {
+            staticValue: Navigation Studio
+        }
+    )
+
+)

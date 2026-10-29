@@ -1,0 +1,38 @@
+breadcrumb breadcrumb (
+    name: Breadcrumb
+
+    entry home (
+        name: Gallery
+        pageNumber: 1
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+    entry designer (
+        name: Designer
+        pageNumber: 2
+        execution {
+            sequence: 20
+        }
+        appearance {
+            parentEntry: @home
+        }
+    )
+
+    entry how-to-use (
+        name: How to Use
+        pageNumber: 3
+        execution {
+            sequence: 30
+        }
+        appearance {
+            parentEntry: @home
+        }
+    )
+)

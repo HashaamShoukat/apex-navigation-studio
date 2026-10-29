@@ -1,0 +1,925 @@
+page 2 (
+    name: Designer
+    alias: DESIGNER
+    title: Navigation Studio - Designer
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    javaScript {
+        executeWhenPageLoads:
+            ```javascript-browser
+            // Designer: every choice is a template option (a CSS class) of Modern Side / Top Navigation or Modern Navigation Bar.
+            // The preview iframe shows the real demo page; the classes travel in its URL hash (#ns=<menu>&nb=<bar>&nsx=<state>).
+            (function ($) {
+                var DEF = { side: "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar".split(" "), top: "js-tabLike".split(" "), bar: "ns-Bar--avatar ns-Bar--search".split(" ") };
+                // t: side / top / nav (both menus) / bar
+                var SELECTS = [
+                    { item: "P2_DESIGN", group: "Design", t: "side" }, { item: "P2_TOP_DESIGN", group: "Design", t: "top" },
+                    { item: "P2_ACCENT", group: "Accent Color", t: "nav" }, { item: "P2_SCHEME", group: "Color Scheme", t: "nav" },
+                    { item: "P2_COLLAPSE", group: "Collapse Mode", t: "side" }, { item: "P2_HEADER", group: "Header", t: "nav" },
+                    { item: "P2_DENSITY", group: "Density", t: "side" }, { item: "P2_BADGE", group: "Badges", t: "side" }, { item: "P2_WIDTH", group: "Width", t: "side" },
+                    { item: "P2_BAR_STYLE", group: "Style", t: "bar" }, { item: "P2_BAR_ACCENT", group: "Accent Color", t: "bar" }, { item: "P2_BAR_BADGE", group: "Badges", t: "bar" }
+                ];
+                var SWITCHES = [
+                    { item: "P2_SEARCH", css: "ns-Fx--search", label: "Menu Search", t: "side" }, { item: "P2_TIPS", css: "ns-Fx--tips", label: "Tooltips When Collapsed", t: "side" },
+                    { item: "P2_TABBAR", css: "ns-Fx--tabbar", label: "Phone Bottom Bar", t: "side" }, { item: "P2_COLLAPSED", css: "js-defaultCollapsed", label: "Collapsed by Default", t: "side" },
+                    { item: "P2_TABLIKE", css: "js-tabLike", label: "Behave Like Tabs", t: "top" }, { item: "P2_LOGO", css: "ns-Logo--none", label: "Hide Logo Mark", t: "nav" },
+                    { item: "P2_AVATAR", css: "ns-Bar--avatar", label: "User Avatar", t: "bar" }, { item: "P2_BAR_SEARCH", css: "ns-Bar--search", label: "Search Button", t: "bar" },
+                    { item: "P2_PULSE", css: "ns-Bar--pulse", label: "Pulsing Badges", t: "bar" }
+                ];
+                var frame = document.getElementById("nvd-frame"), app = frame.getAttribute("data-app"), session = frame.getAttribute("data-session"), lastReload = null;
+                function esc(s) { return apex.util.escapeHTML(String(s)); }
+                function pos() { return $v("P2_POSITION") === "TOP" ? "top" : "side"; }
+                function on(t) { return t === "nav" || t === "bar" || t === pos(); }
+                function pageUrl() { return "f?p=" + app + ":" + (pos() === "top" ? "DEMO-TOP-NAV" : "DEMO-DASHBOARD") + ":" + session; }
+
+                // a look passed from the Gallery: #look=<menu classes>&bar=<bar classes>&pos=side|top&st=expanded|collapsed
+                (function fromHash() {
+                    var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+                    if (!g("look")) { return; }
+                    var nav = g("look").split(/\s+/), bar = (g("bar") || "").split(/\s+/);
+                    apex.item("P2_POSITION").setValue(g("pos") === "top" ? "TOP" : "SIDE", null, true);
+                    apex.item("P2_STATE").setValue(g("st") === "collapsed" ? "COLLAPSED" : "EXPANDED", null, true);
+                    var lp = g("pos") === "top" ? "top" : "side", mine = function (s) { return s.t === "nav" || s.t === "bar" || s.t === lp; };
+                    SELECTS.forEach(function (s) {
+                        if (!mine(s)) { return; }
+                        var cls = s.t === "bar" ? bar : nav, hit = $("#" + s.item + " option").filter(function () { return this.value && cls.indexOf(this.value) >= 0; }).first();
+                        if (hit.length || $("#" + s.item + " option[value='']").length) { apex.item(s.item).setValue(hit.length ? hit.val() : "", null, true); }
+                    });
+                    SWITCHES.filter(mine).forEach(function (s) { apex.item(s.item).setValue((s.t === "bar" ? bar : nav).indexOf(s.css) >= 0 ? "Y" : "N", null, true); });
+                })();
+
+                function chosen() {
+                    var p = pos(), nav = [], bar = [], rows = [];
+                    SELECTS.forEach(function (s) {
+                        if (!on(s.t)) { return; }
+                        var v = $v(s.item), text = $("#" + s.item + " option:selected").text();
+                        if (v) { (s.t === "bar" ? bar : nav).push(v); }
+                        rows.push({ t: s.t, group: s.group, option: text, isDefault: !v || DEF[p].indexOf(v) >= 0 });
+                    });
+                    SWITCHES.forEach(function (s) {
+                        if (!on(s.t)) { return; }
+                        var y = $v(s.item) === "Y";
+                        if (y) { (s.t === "bar" ? bar : nav).push(s.css); }
+                        rows.push({ t: s.t, group: s.label, option: y ? "On" : "Off", isDefault: y === (DEF[s.t === "bar" ? "bar" : p].indexOf(s.css) >= 0) });
+                    });
+                    return { pos: p, nav: nav, bar: bar, rows: rows };
+                }
+                // #DEFAULT# plus the extra options when every default is kept, otherwise the full list
+                function optionList(all, defs) {
+                    var keep = defs.every(function (d) { return all.indexOf(d) >= 0; });
+                    return keep ? ["#DEFAULT#"].concat(all.filter(function (c) { return defs.indexOf(c) < 0; })) : all;
+                }
+                function relevance(c) {
+                    var d = $v("P2_DESIGN"), td = $v("P2_TOP_DESIGN"),
+                        alwaysDark = c.pos === "side" ? /midnight|terminal/.test(d) : /midnight/.test(td);
+                    var rules = [
+                        ["P2_SCHEME", alwaysDark, "always dark in this design"],
+                        ["P2_TIPS", c.pos === "side" && (/rail/.test(d) || $v("P2_COLLAPSE") === "js-navCollapsed--hidden"), /rail/.test(d) ? "Rail shows labels" : "the menu hides completely"],
+                        ["P2_BAR_SEARCH", c.pos === "top" || $v("P2_SEARCH") !== "Y", "needs Menu Search in the side menu"]
+                    ];
+                    rules.forEach(function (r) {
+                        var cont = $("#" + r[0] + "_CONTAINER");
+                        apex.item(r[0])[r[1] ? "disable" : "enable"]();
+                        cont.toggleClass("nvd-Off", r[1]).attr("data-why", r[1] ? r[2] : null);
+                    });
+                    SELECTS.concat(SWITCHES).forEach(function (s) { $("#" + s.item + "_CONTAINER").toggle(on(s.t)); });
+                    $("#P2_STATE_CONTAINER").toggle(c.pos === "side");
+                    $("#P2_TOP_DESIGN_CONTAINER").toggle(c.pos === "top");
+                }
+                function render() {
+                    var c = chosen(), want = pageUrl(), state = c.pos === "side" && $v("P2_STATE") === "COLLAPSED" ? "collapsed" : "expanded",
+                        hash = "#ns=" + encodeURIComponent(c.nav.join(" ")) + "&nb=" + encodeURIComponent(c.bar.join(" ")) + "&nsx=" + state,
+                        reloadKey = want + "|" + $v("P2_COLLAPSE");
+                    relevance(c);
+                    // a new page or Collapse Mode needs a fresh load; everything else follows the hash without a reload
+                    if (reloadKey !== lastReload) {
+                        var was = (frame.getAttribute("src") || "").split("#")[0];
+                        frame.setAttribute("src", want + hash);
+                        if (was === want) { try { frame.contentWindow.location.reload(); } catch (e) { /* cross-origin: ignore */ } }
+                    } else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", want + hash); } }
+                    lastReload = reloadKey;
+                    var navName = c.pos === "top" ? "Modern Top Navigation" : "Modern Side Navigation";
+                    $("#nvd-summary").html(["nav", "bar"].map(function (t) {
+                        return '<p class="nvd-H">' + esc(t === "bar" ? "Modern Navigation Bar" : navName) + '</p><dl class="nvd-List">' + c.rows.filter(function (r) { return (r.t === "bar") === (t === "bar"); }).map(function (r) {
+                            return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
+                        }).join("") + "</dl>";
+                    }).join(""));
+                    var navList = optionList(c.nav, DEF[c.pos]), barList = optionList(c.bar, DEF.bar), arr = function (l) { return l.length === 1 ? " " + l[0] + "\n" : " [\n" + l.map(function (x) { return "        " + x + "\n"; }).join("") + "    ]\n"; };
+                    $("#nvd-code").text("navigationMenu {\n" + (c.pos === "top" ? "    listPosition: top\n" : "") + "    listTemplate: @" + (c.pos === "top" ? "modern-top-navigation" : "modern-side-navigation") + "\n    templateOptions:" + arr(navList) +
+                        "    list: @navigation-menu\n}\nnavigationBar {\n    list: @navigation-bar\n    listTemplate: @modern-navigation-bar\n    templateOptions:" + arr(barList) + "}");
+                    $("#nvd-where").html("<strong>Shared Components &gt; User Interface Attributes</strong>: Navigation Menu - Position <strong>" + (c.pos === "top" ? "Top" : "Side") + "</strong>, List Template <strong>" + navName +
+                        "</strong>; Navigation Bar - List Template <strong>Modern Navigation Bar</strong>. Tick the template options listed below, or paste the APEXlang into <code>application.apx</code>.");
+                }
+
+                $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(["#P2_POSITION", "#P2_STATE"]).join(",")).on("change", render);
+                // Desktop: the page is laid out at 1280px (so the menu stays expanded) and scaled down to fit the preview
+                function fit() {
+                    var stage = document.getElementById("nvd-stage"), desk = $v("P2_DEVICE") === "DESKTOP", s = Math.min(1, stage.clientWidth / 1280);
+                    stage.setAttribute("data-device", $v("P2_DEVICE"));
+                    frame.style.width = desk ? "1280px" : "";
+                    frame.style.height = desk ? (stage.clientHeight / s) + "px" : "";
+                    frame.style.transform = desk && s < 1 ? "scale(" + s + ")" : "";
+                }
+                $("#P2_DEVICE").on("change", fit);
+                $(window).on("resize apexwindowresized", fit);
+                fit();
+                $(document).on("click", ".js-nvd-copy", function () {
+                    var t = $(this).attr("data-target");
+                    navigator.clipboard.writeText($("#" + t).text()).then(function () { apex.message.showPageSuccess("Copied."); });
+                });
+                $(document).on("click", ".js-nvd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
+                render();
+            })(apex.jQuery);
+            ```
+    }
+    css {
+        inline:
+            ```css
+            .nvd-Stage { display: flex; justify-content: center; align-items: center; height: min(80vh, 780px); min-height: 520px; overflow: hidden; border-radius: 12px;
+                         border: 1px solid var(--ut-component-border-color, #ddd); background: repeating-conic-gradient(rgba(0,0,0,.035) 0 25%, transparent 0 50%) 0 0 / 24px 24px; }
+            .nvd-Stage { position: relative; }
+            .nvd-Stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; transition: width .3s ease, border-radius .3s ease; }
+            .nvd-Stage[data-device="DESKTOP"] { display: block; }
+            .nvd-Stage[data-device="DESKTOP"] iframe { transform-origin: 0 0; transition: none; }
+            .nvd-Stage[data-device="TABLET"], .nvd-Stage[data-device="PHONE"] { padding: 16px 0; }
+            .nvd-Stage[data-device="TABLET"] iframe { width: 820px; max-width: calc(100% - 32px); border-radius: 20px; box-shadow: 0 0 0 12px #1f2329, 0 24px 48px -12px rgba(0,0,0,.45); }
+            .nvd-Stage[data-device="PHONE"] iframe { width: 390px; max-width: calc(100% - 32px); border-radius: 28px; box-shadow: 0 0 0 10px #1f2329, 0 24px 48px -12px rgba(0,0,0,.45); }
+            .nvd-List { display: grid; grid-template-columns: auto 1fr; gap: .375rem 1rem; margin: 0 0 1rem; font-size: .875rem; }
+            .nvd-List dt { opacity: .75; }
+            .nvd-List dd { margin: 0; font-weight: 600; }
+            .nvd-List dd.is-default::after { content: " (default)"; font-weight: 400; opacity: .7; }
+            .nvd-Code { margin: 0 0 1rem; padding: .875rem 1rem; overflow-x: auto; border-radius: 8px; background: #1f2329; color: #e6edf3; font-size: .8125rem; line-height: 1.5; white-space: pre-wrap; }
+            .nvd-Where { margin: 0 0 .75rem; padding: .625rem .875rem; border-radius: 8px; background: rgba(67,56,202,.08); font-size: .8125rem; line-height: 1.5; }
+            .nvd-H { margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
+            .nvd-Off { opacity: .55; }
+            .nvd-Off[data-why]::after { content: attr(data-why); display: block; padding: 0 .75rem .25rem; font-size: .75rem; font-style: italic; }
+            @media (max-width: 640px) { .nvd-Stage { height: 72vh; min-height: 460px; } }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: Designer
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region options (
+        name: Template Options
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: body
+            columnSpan: 4
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region preview (
+        name: Live Preview
+        type: staticContent
+        source {
+            htmlCode: <div class="nvd-Stage" id="nvd-stage" data-device="DESKTOP"><iframe id="nvd-frame" title="Navigation preview" data-app="&APP_ID." data-session="&APP_SESSION."></iframe></div>
+        }
+        layout {
+            sequence: 30
+            slot: body
+            startNewRow: false
+            columnSpan: 8
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--noPadding
+            ]
+        }
+    )
+
+    region summary (
+        name: Your Choice
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <p class="nvd-Where" id="nvd-where"></p>
+                <div id="nvd-summary"></div>
+                <p class="nvd-H">APEXlang (application.apx)</p>
+                <pre class="nvd-Code" id="nvd-code"></pre>
+                <button type="button" class="t-Button t-Button--small t-Button--iconLeft js-nvd-copy" data-target="nvd-code"><span class="t-Icon fa fa-copy" aria-hidden="true"></span><span class="t-Button-label">Copy APEXlang</span></button>
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @options
+            slot: subRegions
+        }
+        appearance {
+            template: @/content-block
+            templateOptions: [
+                #DEFAULT#
+                t-ContentBlock--h3
+            ]
+        }
+    )
+
+    pageItem P2_POSITION (
+        type: selectList
+        label {
+            label: Menu Position
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Side Navigation;SIDE,Top Navigation;TOP
+            displayNullValue: false
+        }
+        layout {
+            sequence: 1
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: SIDE
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_DESIGN (
+        type: selectList
+        label {
+            label: Design
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Inset;ns-Design--inset,Floating;ns-Design--floating,Midnight;ns-Design--midnight,Rail;ns-Design--rail,Gradient;ns-Design--gradient,Glass;ns-Design--glass,Soft UI;ns-Design--soft,Bold;ns-Design--bold,Outline;ns-Design--outline,Editorial;ns-Design--editorial,Terminal;ns-Design--terminal
+            nullDisplayValue: Clean
+        }
+        layout {
+            sequence: 5
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TOP_DESIGN (
+        type: selectList
+        label {
+            label: Design
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Pills;ns-Top--pills,Segmented;ns-Top--segmented,Midnight;ns-Top--midnight,Gradient;ns-Top--gradient,Glass;ns-Top--glass
+            nullDisplayValue: Underline
+        }
+        layout {
+            sequence: 6
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_ACCENT (
+        type: selectList
+        label {
+            label: Accent Color
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Ocean;ns-Accent--ocean,Indigo;ns-Accent--indigo,Violet;ns-Accent--violet,Emerald;ns-Accent--emerald,Rose;ns-Accent--rose,Amber;ns-Accent--amber,Slate;ns-Accent--slate,Wine;ns-Accent--wine,Tangerine;ns-Accent--tangerine,Cyan;ns-Accent--cyan
+            nullDisplayValue: Theme Color
+        }
+        layout {
+            sequence: 10
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: ns-Accent--indigo
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_SCHEME (
+        type: selectList
+        label {
+            label: Color Scheme
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Dark;ns-Scheme--dark,Follow Device Setting;ns-Scheme--auto
+            nullDisplayValue: Light
+        }
+        layout {
+            sequence: 20
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_COLLAPSE (
+        type: selectList
+        label {
+            label: Collapse Mode
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Icons;js-navCollapsed--default,Hidden;js-navCollapsed--hidden
+            displayNullValue: false
+        }
+        layout {
+            sequence: 30
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: js-navCollapsed--default
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_HEADER (
+        type: selectList
+        label {
+            label: Header
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Keep Theme Header;ns-Header--theme
+            nullDisplayValue: Match the Menu
+        }
+        layout {
+            sequence: 40
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_DENSITY (
+        type: selectList
+        label {
+            label: Density
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Compact;ns-Density--compact,Spacious;ns-Density--spacious
+            nullDisplayValue: Comfortable
+        }
+        layout {
+            sequence: 50
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BADGE (
+        type: selectList
+        label {
+            label: Badges
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Soft;ns-Badge--soft,Red;ns-Badge--red,Dot;ns-Badge--dot
+            nullDisplayValue: Accent
+        }
+        layout {
+            sequence: 60
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_WIDTH (
+        type: selectList
+        label {
+            label: Width
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Narrow;ns-Width--narrow,Wide;ns-Width--wide
+            nullDisplayValue: Regular
+        }
+        layout {
+            sequence: 70
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_SEARCH (
+        type: switch
+        label {
+            label: Menu Search
+            alignment: left
+        }
+        layout {
+            sequence: 80
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TIPS (
+        type: switch
+        label {
+            label: Tooltips When Collapsed
+            alignment: left
+        }
+        layout {
+            sequence: 81
+            region: @options
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TABBAR (
+        type: switch
+        label {
+            label: Phone Bottom Bar
+            alignment: left
+        }
+        layout {
+            sequence: 82
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_COLLAPSED (
+        type: switch
+        label {
+            label: Collapsed by Default
+            alignment: left
+        }
+        layout {
+            sequence: 83
+            region: @options
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TABLIKE (
+        type: switch
+        label {
+            label: Behave Like Tabs
+            alignment: left
+        }
+        layout {
+            sequence: 84
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_LOGO (
+        type: switch
+        label {
+            label: Hide Logo Mark
+            alignment: left
+        }
+        layout {
+            sequence: 85
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BAR_STYLE (
+        type: selectList
+        label {
+            label: Navigation Bar Style
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Icons Only;ns-Bar--icons,Pills;ns-Bar--pills,Segmented;ns-Bar--segmented,Outlined;ns-Bar--outline
+            nullDisplayValue: Icon and Label
+        }
+        layout {
+            sequence: 90
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BAR_ACCENT (
+        type: selectList
+        label {
+            label: Navigation Bar Accent
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Ocean;ns-Accent--ocean,Indigo;ns-Accent--indigo,Violet;ns-Accent--violet,Emerald;ns-Accent--emerald,Rose;ns-Accent--rose,Amber;ns-Accent--amber,Slate;ns-Accent--slate,Wine;ns-Accent--wine,Tangerine;ns-Accent--tangerine,Cyan;ns-Accent--cyan
+            nullDisplayValue: Match the Menu
+        }
+        layout {
+            sequence: 91
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BAR_BADGE (
+        type: selectList
+        label {
+            label: Navigation Bar Badges
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Red;ns-Bar--badgeRed,Dot;ns-Bar--badgeDot
+            nullDisplayValue: Accent
+        }
+        layout {
+            sequence: 92
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_AVATAR (
+        type: switch
+        label {
+            label: User Avatar
+            alignment: left
+        }
+        layout {
+            sequence: 93
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BAR_SEARCH (
+        type: switch
+        label {
+            label: Search Button
+            alignment: left
+        }
+        layout {
+            sequence: 94
+            region: @options
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: Y
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_PULSE (
+        type: switch
+        label {
+            label: Pulsing Badges
+            alignment: left
+        }
+        layout {
+            sequence: 95
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_DEVICE (
+        type: radioGroup
+        label {
+            label: Preview On
+            alignment: left
+        }
+        settings {
+            noOfCols: 3
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Desktop;DESKTOP,Tablet;TABLET,Phone;PHONE
+            displayNullValue: false
+        }
+        layout {
+            sequence: 10
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            template: @/hidden
+            templateOptions: [
+                #DEFAULT#
+                t-Form-fieldContainer--radioButtonGroup
+            ]
+        }
+        default {
+            type: static
+            staticValue: DESKTOP
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_STATE (
+        type: radioGroup
+        label {
+            label: Menu
+            alignment: left
+        }
+        settings {
+            noOfCols: 2
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Expanded;EXPANDED,Collapsed;COLLAPSED
+            displayNullValue: false
+        }
+        layout {
+            sequence: 15
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            template: @/hidden
+            templateOptions: [
+                #DEFAULT#
+                t-Form-fieldContainer--radioButtonGroup
+            ]
+        }
+        default {
+            type: static
+            staticValue: EXPANDED
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button open-full (
+        buttonName: OPEN_FULL
+        label: Open Full Page
+        layout {
+            sequence: 20
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-nvd-open
+            icon: fa-external-link
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )
+
+)

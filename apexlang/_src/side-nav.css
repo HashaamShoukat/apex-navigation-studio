@@ -1,0 +1,278 @@
+/* Modern Side Navigation (Navigation Studio) - https://github.com/HashaamShoukat/apex-navigation-studio
+   The template options sit on #t_TreeNav; the script in "After List Entries" copies them to <body> as ns-* classes
+   before the menu is drawn, so every rule below is scoped to body.ns-Nav. Colours are tokens (--ns-*), set by
+   Accent Color, Color Scheme and Design; light-dark() picks the light or dark value from color-scheme. */
+
+/* accent colours: fill, gradient partner, text on the fill, accent text on light / dark surfaces */
+.ns-Nav { --ns-a: var(--ut-palette-primary, #4f46e5); --ns-a2: var(--ns-a); --ns-on: var(--ut-palette-primary-contrast, #fff); --ns-ink: color-mix(in srgb, var(--ns-a) 72%, #000); --ns-tint: color-mix(in srgb, var(--ns-a) 45%, #fff); }
+.ns-Accent--ocean { --ns-a: #0369a1; --ns-a2: #0e7490; --ns-on: #fff; --ns-ink: #075985; --ns-tint: #7dd3fc; }
+.ns-Accent--indigo { --ns-a: #4f46e5; --ns-a2: #6d28d9; --ns-on: #fff; --ns-ink: #4338ca; --ns-tint: #a5b4fc; }
+.ns-Accent--violet { --ns-a: #7c3aed; --ns-a2: #a21caf; --ns-on: #fff; --ns-ink: #6d28d9; --ns-tint: #c4b5fd; }
+.ns-Accent--emerald { --ns-a: #047857; --ns-a2: #0f766e; --ns-on: #fff; --ns-ink: #047857; --ns-tint: #6ee7b7; }
+.ns-Accent--rose { --ns-a: #e11d48; --ns-a2: #be185d; --ns-on: #fff; --ns-ink: #be123c; --ns-tint: #fda4af; }
+.ns-Accent--amber { --ns-a: #f59e0b; --ns-a2: #f97316; --ns-on: #1c1303; --ns-ink: #92400e; --ns-tint: #fcd34d; }
+.ns-Accent--slate { --ns-a: #475569; --ns-a2: #1e293b; --ns-on: #fff; --ns-ink: #334155; --ns-tint: #cbd5e1; }
+.ns-Accent--wine { --ns-a: #9f1239; --ns-a2: #6b21a8; --ns-on: #fff; --ns-ink: #881337; --ns-tint: #f9a8d4; }
+.ns-Accent--tangerine { --ns-a: #c2410c; --ns-a2: #b91c1c; --ns-on: #fff; --ns-ink: #9a3412; --ns-tint: #fdba74; }
+.ns-Accent--cyan { --ns-a: #0e7490; --ns-a2: #1d4ed8; --ns-on: #fff; --ns-ink: #155e75; --ns-tint: #67e8f9; }
+
+/* surface tokens - Clean (the default design) */
+.ns-Nav {
+  --ns-bg: light-dark(#fbfbfc, #15171c); --ns-fg: light-dark(#1f2328, #eceef2); --ns-muted: light-dark(#5b6170, #a3a9b6);
+  --ns-hover: light-dark(rgb(15 23 42 / .055), rgb(255 255 255 / .07)); --ns-line: light-dark(#e6e8ec, #2a2e36);
+  --ns-act-bg: light-dark(color-mix(in srgb, var(--ns-a) 11%, #fff), color-mix(in srgb, var(--ns-a) 26%, #15171c));
+  --ns-act-fg: light-dark(var(--ns-ink), #fff); --ns-act-icon: light-dark(var(--ns-a), var(--ns-tint));
+  --ns-parent: light-dark(var(--ns-ink), var(--ns-tint)); --ns-sec: light-dark(#596070, #9aa0ae);
+  --ns-badge-bg: var(--ns-a); --ns-badge-fg: var(--ns-on); --ns-focus: light-dark(var(--ns-a), var(--ns-tint));
+  --ns-hdr-bg: var(--ns-bg); --ns-hdr-fg: var(--ns-fg); --ns-hdr-line: var(--ns-line); --ns-hb-bg: var(--ns-a); --ns-hb-fg: var(--ns-on);
+  --ns-r: .5rem; --ns-gap: .5rem; --ns-py: .5rem; --ns-fs: .875rem; --ns-icon: 1rem; --ns-rail: 3.75rem; --ns-bar: none;
+  --ut-nav-width: 15.5rem; --ut-nav-collapsed-icon-width: var(--ns-rail);
+}
+.ns-Nav .t-Body-nav, .ns-Nav .t-Header, .ns-Nav .ns-TabBar, .ns-Tip { color-scheme: light; }
+.ns-Scheme--dark .t-Body-nav, .ns-Scheme--dark .t-Header, .ns-Scheme--dark .ns-TabBar, .ns-Scheme--dark .ns-Tip { color-scheme: dark; }
+.ns-Scheme--auto .t-Body-nav, .ns-Scheme--auto .t-Header, .ns-Scheme--auto .ns-TabBar, .ns-Scheme--auto .ns-Tip { color-scheme: light dark; }
+
+/* density and width */
+.ns-Density--compact { --ns-py: .3125rem; --ns-fs: .8125rem; --ns-gap: .375rem; }
+.ns-Density--spacious { --ns-py: .6875rem; --ns-fs: .9375rem; --ns-gap: .625rem; }
+.ns-Width--narrow { --ut-nav-width: 13.5rem; }
+.ns-Width--wide { --ut-nav-width: 18rem; }
+
+/* ---------- engine: tokens -> Universal Theme's TreeView ---------- */
+.ns-Nav .t-Body-nav { background: var(--ns-bg); color: var(--ns-fg); box-shadow: inset calc(var(--ns-edge, 1) * -1px) 0 0 var(--ns-line); }
+.ns-Nav.u-RTL .t-Body-nav, .u-RTL .ns-Nav .t-Body-nav { box-shadow: inset calc(var(--ns-edge, 1) * 1px) 0 0 var(--ns-line); }
+.ns-Nav .t-Body-nav::after { display: none; }
+.ns-Nav .t-TreeNav { --a-treeview-node-padding-y: var(--ns-py); --a-treeview-node-padding-x: .625rem; --a-treeview-node-font-size: var(--ns-fs);
+  --ut-treeview-icon-size: var(--ns-icon); --ut-treeview-toplevel-node-font-size: var(--ns-fs); --a-treeview-node-text-color: var(--ns-muted);
+  padding-block: .5rem; font-size: var(--ns-fs); }
+.ns-Nav .t-TreeNav .a-TreeView-node { border: 0; margin: 0; }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel + .a-TreeView-node--topLevel { margin-block-start: 2px; }
+.ns-Nav .t-TreeNav .a-TreeView-row { width: auto; margin-inline: var(--ns-gap); border-radius: var(--ns-r); background: transparent !important; box-shadow: none !important; transition: background-color .15s ease, box-shadow .15s ease; }
+.ns-Nav .t-TreeNav .a-TreeView-row::before { display: none; }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel ul { background: transparent !important; }
+.ns-Nav .t-TreeNav .a-TreeView-content, .ns-Nav .t-TreeNav .a-TreeView-toggle { color: var(--ns-muted) !important; }
+.ns-Nav .t-TreeNav .a-TreeView-content { margin-inline: var(--ns-gap); }
+.ns-Nav .t-TreeNav .a-TreeView-label { color: inherit; font-weight: 450; letter-spacing: -.005em; }
+.ns-Nav .t-TreeNav .a-TreeView-content .fa { color: inherit; opacity: .9; }
+.ns-Nav .t-TreeNav .a-TreeView-row.is-hover { background: var(--ns-hover) !important; }
+.ns-Nav .t-TreeNav .a-TreeView-row.is-hover ~ .a-TreeView-content, .ns-Nav .t-TreeNav .a-TreeView-row.is-hover ~ .a-TreeView-toggle { color: var(--ns-fg) !important; }
+/* the current page */
+.ns-Nav .t-TreeNav .a-TreeView-row.is-selected { background: var(--ns-act-bg) !important; box-shadow: var(--ns-bar) !important; }
+.ns-Nav .t-TreeNav .a-TreeView-row.is-selected ~ .a-TreeView-content, .ns-Nav .t-TreeNav .a-TreeView-row.is-selected ~ .a-TreeView-toggle { color: var(--ns-act-fg) !important; }
+.ns-Nav .t-TreeNav .a-TreeView-content.is-selected .a-TreeView-label { font-weight: 600; }
+.ns-Nav .t-TreeNav .a-TreeView-content.is-selected .fa { color: var(--ns-act-icon); opacity: 1; }
+/* the top-level parent of the current page */
+.ns-Nav .t-TreeNav .a-TreeView-content.is-current--top:not(.is-selected) { color: var(--ns-parent) !important; }
+.ns-Nav .t-TreeNav .a-TreeView-content.is-current--top .a-TreeView-label { font-weight: 600; }
+/* keyboard focus */
+.ns-Nav .t-TreeNav .a-TreeView-row.is-focused { outline: 2px solid var(--ns-focus) !important; outline-offset: -2px; }
+.ns-Nav .t-TreeNav .a-TreeView-label:focus { outline: none; }
+/* sub-levels */
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel > ul { padding-block: 2px; --a-treeview-node-padding-y: calc(var(--ns-py) - .125rem); }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel > ul .a-TreeView-content { --a-treeview-node-font-size: calc(var(--ns-fs) - .0625rem); }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel > ul > .a-TreeView-node > .a-TreeView-content { padding-inline-start: calc(var(--ut-treeview-toplevel-icon-container-width, 1.5rem) + .25rem); }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel > ul ul > .a-TreeView-node > .a-TreeView-content { padding-inline-start: calc(var(--ut-treeview-toplevel-icon-container-width, 1.5rem) + 1.25rem); }
+.ns-Nav .t-TreeNav .a-TreeView-toggle { opacity: .7; }
+/* badges: Universal Theme turns "Inbox [12]" into a badge */
+.ns-Nav .t-TreeNav .a-TreeView-badge { background: var(--ns-badge-bg); color: var(--ns-badge-fg); border-radius: 999px; font-weight: 600; font-size: .6875rem; line-height: 1.125rem; min-width: 1.125rem; padding: 0 .375rem; text-align: center; font-variant-numeric: tabular-nums; }
+.ns-Badge--soft .t-TreeNav .a-TreeView-badge { --ns-badge-bg: light-dark(color-mix(in srgb, var(--ns-a) 14%, #fff), color-mix(in srgb, var(--ns-a) 30%, #000)); --ns-badge-fg: light-dark(var(--ns-ink), var(--ns-tint)); }
+.ns-Badge--red .t-TreeNav .a-TreeView-badge { --ns-badge-bg: #dc2626; --ns-badge-fg: #fff; }
+.ns-Badge--dot .t-TreeNav .a-TreeView-badge { width: .5rem; height: .5rem; min-width: 0; padding: 0; font-size: 0; line-height: 0; overflow: hidden; align-self: center; }
+/* section headings: list entry attribute 3 */
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel[data-ns-section] { margin-block-start: 1.75rem; position: relative; }
+.ns-Nav .t-TreeNav .a-TreeView-node--topLevel[data-ns-section]:first-child { margin-block-start: 1.375rem; }
+.ns-Nav .t-TreeNav [data-ns-section]::before { content: attr(data-ns-section); position: absolute; inset-block-end: calc(100% + .3125rem); inset-inline: calc(var(--ns-gap) + .625rem) var(--ns-gap);
+  font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ns-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ns-Nav.js-navCollapsed .t-TreeNav [data-ns-section]::before { content: ""; inset-inline: 30%; height: 1px; background: var(--ns-line); inset-block-end: calc(100% + .8125rem); }
+/* collapsed (icon) rail */
+.ns-Nav.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-content { justify-items: center; }
+.ns-Nav.js-navCollapsed .t-TreeNav .a-TreeView-badge { position: absolute; inset-block-start: .25rem; inset-inline-end: .5rem; min-width: .5rem; height: .5rem; padding: 0; font-size: 0; box-shadow: 0 0 0 2px var(--ns-bg); }
+
+/* ---------- menu search (Fx: Menu Search) ---------- */
+.ns-Search { display: none; position: relative; margin: .75rem calc(var(--ns-gap) + .125rem) .25rem; }
+.ns-Fx--search .ns-Search { display: block; }
+.ns-Search input { width: 100%; height: 2.125rem; padding: 0 3rem 0 2rem; border: 1px solid var(--ns-line); border-radius: var(--ns-r); background: light-dark(rgb(255 255 255 / .8), rgb(255 255 255 / .06)); color: var(--ns-fg); font: inherit; font-size: .8125rem; }
+.ns-Search input::placeholder { color: var(--ns-muted); opacity: 1; }
+.ns-Search input:focus { outline: 2px solid var(--ns-focus); outline-offset: -1px; border-color: transparent; }
+.ns-Search .fa { position: absolute; inset-inline-start: .6875rem; top: 50%; transform: translateY(-50%); font-size: .8125rem; color: var(--ns-muted); pointer-events: none; }
+.ns-Search kbd { position: absolute; inset-inline-end: .5rem; top: 50%; transform: translateY(-50%); padding: 0 .3125rem; border: 1px solid var(--ns-line); border-radius: .3125rem; font-family: inherit; font-size: .625rem; font-weight: 600; line-height: 1.125rem; color: var(--ns-muted); background: transparent; pointer-events: none; }
+.ns-Search input:focus ~ kbd, .ns-Search.has-text kbd { display: none; }
+.ns-Results { display: none; list-style: none; margin: .25rem 0; padding: 0; }
+.ns-Searching .ns-Results { display: block; }
+.ns-Searching .t-TreeNav { display: none; }
+.ns-Results a { display: block; margin: 1px var(--ns-gap); padding: .4375rem .75rem; border-radius: var(--ns-r); color: var(--ns-fg); text-decoration: none; font-size: var(--ns-fs); }
+.ns-Results a small { display: block; color: var(--ns-muted); font-size: .6875rem; }
+.ns-Results a:hover, .ns-Results a.is-active { background: var(--ns-act-bg); color: var(--ns-act-fg); }
+.ns-Results a:focus-visible { outline: 2px solid var(--ns-focus); outline-offset: -2px; }
+.ns-Results .ns-None { padding: .5rem 1rem; color: var(--ns-muted); font-size: .8125rem; }
+.ns-Nav.js-navCollapsed .ns-Search input, .ns-Nav.js-navCollapsed .ns-Search kbd { opacity: 0; pointer-events: none; }
+.ns-Nav.js-navCollapsed .ns-Search { margin-inline: auto; width: 2.25rem; cursor: pointer; }
+.ns-Nav.js-navCollapsed .ns-Search .fa { inset-inline-start: 50%; transform: translate(-50%, -50%); font-size: .9375rem; }
+
+/* ---------- tooltips on the collapsed rail (Fx: Tooltips When Collapsed) ---------- */
+.ns-Tip { position: fixed; z-index: 1000; padding: .3125rem .625rem; border-radius: .375rem; background: light-dark(#111827, #f3f4f6); color: light-dark(#fff, #111827);
+  font-size: .8125rem; font-weight: 500; white-space: nowrap; pointer-events: none; box-shadow: 0 6px 16px -6px rgb(0 0 0 / .35); }
+.ns-Tip[hidden] { display: none; }
+
+/* ---------- phone bottom bar (Fx: Phone Bottom Bar) ---------- */
+.ns-TabBar { display: none; }
+@media (max-width: 639px) {
+  .ns-Fx--tabbar .ns-TabBar { position: fixed; z-index: 800; inset-inline: .5rem; bottom: calc(.5rem + env(safe-area-inset-bottom)); display: flex; justify-content: space-around;
+    padding: .3125rem; border-radius: 1rem; background: light-dark(rgb(255 255 255 / .94), rgb(24 26 32 / .94)); color: light-dark(#4b5160, #c3c8d2); border: 1px solid light-dark(#e3e5ea, #2c3038);
+    box-shadow: 0 10px 30px -10px rgb(15 23 42 / .35); backdrop-filter: blur(12px); }
+  .ns-Fx--tabbar .t-Body-main { padding-bottom: 4.5rem; }
+  .ns-TabBar a, .ns-TabBar button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .1875rem; min-width: 0; padding: .375rem .125rem; border: 0; border-radius: .75rem; background: none; color: inherit; font: inherit; font-size: .6875rem; text-decoration: none; cursor: pointer; }
+  .ns-TabBar span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ns-TabBar .fa { font-size: 1.125rem; }
+  .ns-TabBar [aria-current] { color: light-dark(var(--ns-ink), var(--ns-tint)); background: light-dark(color-mix(in srgb, var(--ns-a) 12%, #fff), color-mix(in srgb, var(--ns-a) 30%, #181a20)); font-weight: 600; }
+  .ns-TabBar a:focus-visible, .ns-TabBar button:focus-visible { outline: 2px solid var(--ns-focus); outline-offset: -2px; }
+}
+
+/* ---------- header bar matching the menu (Header: Match the Menu) ---------- */
+.ns-Nav:not(.ns-Header--theme) .t-Header { --ut-header-background-color: var(--ns-hdr-bg); --ut-header-text-color: var(--ns-hdr-fg); --ut-header-border-color: var(--ns-hdr-line);
+  background: var(--ns-hdr-bg); color: var(--ns-hdr-fg); box-shadow: inset 0 -1px 0 var(--ns-hdr-line); }
+.ns-Nav:not(.ns-Header--theme) .t-Header .t-Header-logo-link, .ns-Nav:not(.ns-Header--theme) .t-Header .t-Button--header { color: var(--ns-hdr-fg); }
+.ns-Nav:not(.ns-Header--theme) .t-Header-logo-link { font-weight: 700; letter-spacing: -.01em; }
+.ns-Nav:not(.ns-Header--theme) .t-Header-logo-link::before { content: ""; display: inline-block; width: 1.5rem; height: 1.5rem; margin-inline-end: .5rem; vertical-align: -.3125rem; border-radius: .4375rem;
+  background: linear-gradient(135deg, var(--ns-a), var(--ns-a2)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .2); }
+.ns-Logo--none .t-Header-logo-link::before { display: none; }
+.ns-Nav:not(.ns-Header--theme) .t-Button--headerTree { --a-button-background-color: transparent; --a-button-text-color: var(--ns-hdr-fg); --a-button-hover-text-color: var(--ns-hdr-fg);
+  --a-button-hover-background-color: color-mix(in srgb, var(--ns-hdr-fg) 10%, transparent); --a-button-border-radius: var(--ns-r); color: var(--ns-hdr-fg); }
+
+/* ========== designs ========== */
+
+/* Inset: the menu and the header share one canvas; the content is a raised card */
+.ns-Design--inset { --ns-bg: light-dark(#eceef3, #101115); --ns-edge: 0; --ns-hdr-line: transparent; --ns-act-bg: light-dark(#fff, rgb(255 255 255 / .09));
+  --ns-act-fg: light-dark(#111827, #fff); --ns-act-icon: light-dark(var(--ns-a), var(--ns-tint)); }
+.ns-Design--inset .t-Body-nav { background: var(--ns-bg); }
+.ns-Design--inset .t-TreeNav .a-TreeView-row.is-selected { box-shadow: 0 1px 2px rgb(15 23 42 / .08), 0 0 0 1px light-dark(rgb(15 23 42 / .06), rgb(255 255 255 / .06)) !important; }
+.ns-Design--inset .t-Body { background: var(--ns-bg); color-scheme: inherit; }
+.ns-Design--inset .t-Body-main { margin: .25rem .75rem .75rem 0; border-radius: 1rem; overflow: clip; background: var(--ut-body-background-color, #fff);
+  box-shadow: 0 1px 2px rgb(15 23 42 / .06), 0 4px 16px -6px rgb(15 23 42 / .12), 0 0 0 1px rgb(15 23 42 / .07); }
+.u-RTL .ns-Design--inset .t-Body-main, .ns-Design--inset.u-RTL .t-Body-main { margin: 0 0 .625rem .625rem; }
+@media (max-width: 639px) { .ns-Design--inset .t-Body-main { margin: 0; border-radius: 0; } }
+
+/* Floating: a detached panel with small gaps */
+.ns-Design--floating { --ns-bg: light-dark(#fff, #1b1e24); --ns-edge: 0; --ns-r: .625rem; --ns-hdr-bg: light-dark(rgb(255 255 255 / .85), rgb(20 22 27 / .85)); }
+.ns-Design--floating .t-Body { background: light-dark(#f3f4f7, #0d0e11); color-scheme: inherit; }
+.ns-Design--floating .t-Body-nav { margin: .5rem; margin-inline-end: .25rem; top: calc(var(--js-sticky-top, 0rem) + .5rem); height: calc(100dvh - var(--js-sticky-top, 0rem) - 1rem);
+  border-radius: 1rem; box-shadow: 0 1px 2px rgb(15 23 42 / .06), 0 12px 32px -12px rgb(15 23 42 / .22), 0 0 0 1px light-dark(rgb(15 23 42 / .06), rgb(255 255 255 / .08)); overflow: hidden auto; }
+.ns-Design--floating.js-navCollapsed--hidden.js-navCollapsed .t-Body-nav { margin: 0; box-shadow: none; }
+.ns-Design--floating .t-Header { backdrop-filter: saturate(1.4) blur(10px); }
+
+/* Midnight: a dark menu with an accent edge bar */
+.ns-Design--midnight { --ns-bg: #0f1218; --ns-fg: #eef0f4; --ns-muted: #9aa1ae; --ns-hover: rgb(255 255 255 / .06); --ns-line: #20242c; --ns-sec: #7b8291;
+  --ns-act-bg: linear-gradient(90deg, color-mix(in srgb, var(--ns-a) 30%, transparent), transparent 85%); --ns-act-fg: #fff; --ns-act-icon: var(--ns-tint); --ns-parent: var(--ns-tint);
+  --ns-bar: inset 3px 0 0 var(--ns-tint); --ns-focus: var(--ns-tint); --ns-r: .375rem; --ns-hdr-bg: #0f1218; --ns-hdr-fg: #eef0f4; --ns-hdr-line: #20242c; }
+.ns-Design--midnight .t-Body-nav, .ns-Design--midnight .t-Header, .ns-Design--midnight .ns-Tip, .ns-Design--midnight .ns-TabBar { color-scheme: dark; }
+.u-RTL .ns-Design--midnight, .ns-Design--midnight.u-RTL { --ns-bar: inset -3px 0 0 var(--ns-tint); --ns-act-bg: linear-gradient(-90deg, color-mix(in srgb, var(--ns-a) 30%, transparent), transparent 85%); }
+.ns-Design--midnight .t-TreeNav .a-TreeView-badge { box-shadow: 0 0 12px -2px color-mix(in srgb, var(--ns-a) 70%, transparent); }
+
+/* Rail: the collapsed menu shows a small label under each icon */
+.ns-Design--rail { --ns-bg: light-dark(#f7f7f9, #14161b); --ns-rail: 4.75rem; --ns-r: .625rem; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav { --a-treeview-node-padding-y: .4375rem; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content { display: flex; flex-direction: column; align-items: center; gap: .1875rem; padding-inline: .125rem; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content .fa { width: 2.25rem; height: 1.75rem; line-height: 1.75rem; border-radius: 999px; font-size: 1.0625rem; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content .a-TreeView-label { color: inherit !important; font-size: .625rem; font-weight: 500; line-height: 1.2; max-width: 100%; text-align: center; padding: 0; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-row.is-selected { background: transparent !important; }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-content.is-selected .fa { background: var(--ns-act-bg); }
+.ns-Design--rail.js-navCollapsed.js-navCollapsed--icons .t-TreeNav .a-TreeView-badge { inset-inline-end: .875rem; }
+
+/* Gradient: the menu in the accent colours */
+.ns-Design--gradient { --ns-fg: var(--ns-on); --ns-muted: var(--ns-on); --ns-hover: color-mix(in srgb, var(--ns-on) 12%, transparent); --ns-line: color-mix(in srgb, var(--ns-on) 18%, transparent);
+  --ns-act-bg: color-mix(in srgb, var(--ns-on) 92%, transparent); --ns-act-fg: var(--ns-a); --ns-act-icon: var(--ns-a); --ns-parent: var(--ns-on); --ns-sec: var(--ns-on);
+  --ns-badge-bg: var(--ns-on); --ns-badge-fg: var(--ns-a); --ns-focus: var(--ns-on); --ns-edge: 0; --ns-r: .625rem; --ns-hdr-bg: var(--ns-a); --ns-hdr-fg: var(--ns-on); --ns-hdr-line: transparent;
+  --ns-hb-bg: var(--ns-on); --ns-hb-fg: var(--ns-a); --ns-hdr-field: rgb(0 0 0 / .16); }
+.ns-Design--gradient .t-Body-nav { background: linear-gradient(170deg, var(--ns-a), var(--ns-a2)); }
+.ns-Design--gradient .t-TreeNav .a-TreeView-row.is-selected ~ .a-TreeView-content { color: color-mix(in srgb, var(--ns-a) 80%, #000) !important; }
+.ns-Design--gradient.ns-Accent--amber { --ns-act-fg: #7c2d12; }
+.ns-Design--gradient .ns-Search input { background: rgb(0 0 0 / .14); border-color: transparent; }
+.ns-Design--gradient .t-TreeNav .a-TreeView-content:not(.is-selected) .a-TreeView-label { font-weight: 500; }
+.ns-Nav.ns-Design--gradient .t-Header .t-Header-logo-link::before { background: var(--ns-on); opacity: .9; }
+
+/* Glass: frosted panels over a soft colour wash */
+.ns-Design--glass { --ns-bg: light-dark(rgb(255 255 255 / .55), rgb(18 20 26 / .82)); --ns-muted: light-dark(#4f5564, #b8bec9); --ns-sec: light-dark(#596070, #b8bec9); --ns-line: light-dark(rgb(255 255 255 / .7), rgb(255 255 255 / .08)); --ns-hover: light-dark(rgb(255 255 255 / .6), rgb(255 255 255 / .08));
+  --ns-act-bg: light-dark(rgb(255 255 255 / .9), rgb(255 255 255 / .14)); --ns-act-fg: light-dark(var(--ns-ink), #fff); --ns-r: .75rem; --ns-hdr-bg: var(--ns-bg); }
+.ns-Design--glass .t-Body { background: radial-gradient(60rem 40rem at 0% 0%, color-mix(in srgb, var(--ns-a) 22%, transparent), transparent 60%),
+  radial-gradient(50rem 40rem at 100% 100%, color-mix(in srgb, var(--ns-a2) 18%, transparent), transparent 60%), light-dark(#eef0f6, #0b0c10); background-attachment: fixed; color-scheme: inherit; }
+.ns-Design--glass .t-Body-nav, .ns-Design--glass .t-Header { backdrop-filter: saturate(1.6) blur(18px); }
+.ns-Design--glass .t-Body-nav { margin: .5rem; border-radius: 1.125rem; top: calc(var(--js-sticky-top, 0rem) + .5rem); height: calc(100dvh - var(--js-sticky-top, 0rem) - 1rem); overflow: hidden auto;
+  box-shadow: inset 0 0 0 1px var(--ns-line), 0 8px 32px -12px rgb(30 27 75 / .25); }
+.ns-Design--glass .t-TreeNav .a-TreeView-row.is-selected { box-shadow: 0 2px 8px -2px rgb(30 27 75 / .18) !important; }
+.ns-Design--glass .t-Body-main { background: transparent; }
+.ns-Design--glass.js-navCollapsed--hidden.js-navCollapsed .t-Body-nav { margin: 0; box-shadow: none; }
+
+/* Soft UI: neumorphic - the current item is pressed in */
+.ns-Design--soft { --ns-bg: light-dark(#e9edf3, #23262d); --ns-edge: 0; --ns-hover: transparent; --ns-act-bg: var(--ns-bg); --ns-r: .875rem; --ns-gap: .625rem;
+  --ns-hi: light-dark(#fff, #2d3139); --ns-lo: light-dark(#c5ccd8, #17191e); --ns-hdr-line: transparent; }
+.ns-Design--soft .t-Body-nav { box-shadow: 6px 0 16px -10px var(--ns-lo); }
+.ns-Design--soft .t-TreeNav .a-TreeView-row.is-hover { box-shadow: 3px 3px 7px var(--ns-lo), -3px -3px 7px var(--ns-hi) !important; }
+.ns-Design--soft .t-TreeNav .a-TreeView-row.is-selected { box-shadow: inset 3px 3px 7px var(--ns-lo), inset -3px -3px 7px var(--ns-hi) !important; }
+.ns-Design--soft .t-Header { box-shadow: 0 6px 16px -10px var(--ns-lo); }
+.ns-Design--soft .ns-Search input { border: 0; background: var(--ns-bg); box-shadow: inset 2px 2px 5px var(--ns-lo), inset -2px -2px 5px var(--ns-hi); }
+
+/* Bold: neo-brutalist - ink outlines and a hard shadow */
+.ns-Design--bold { --ns-bg: light-dark(#fffdf5, #18181b); --ns-fg: light-dark(#111, #fafafa); --ns-muted: light-dark(#2b2b2b, #d4d4d8); --ns-ink-line: light-dark(#111, #fafafa);
+  --ns-line: var(--ns-ink-line); --ns-edge: 2; --ns-hover: light-dark(#f1eee2, #27272a); --ns-act-bg: var(--ns-a); --ns-act-fg: var(--ns-on); --ns-act-icon: var(--ns-on); --ns-r: .5rem; --ns-sec: light-dark(#111, #fafafa); }
+.ns-Design--bold .t-TreeNav .a-TreeView-row.is-selected { box-shadow: 0 0 0 2px var(--ns-ink-line), 3px 3px 0 2px var(--ns-ink-line) !important; }
+.ns-Design--bold .t-TreeNav .a-TreeView-label { font-weight: 600; }
+.ns-Design--bold .t-TreeNav [data-ns-section]::before { font-weight: 800; letter-spacing: .1em; }
+.ns-Design--bold .t-TreeNav .a-TreeView-badge { box-shadow: 0 0 0 1.5px var(--ns-ink-line); --ns-badge-bg: light-dark(#fde047, #fde047); --ns-badge-fg: #111; }
+.ns-Design--bold .t-Header { box-shadow: inset 0 -2px 0 var(--ns-ink-line); }
+.ns-Design--bold .ns-Search input { border: 2px solid var(--ns-ink-line); box-shadow: 2px 2px 0 var(--ns-ink-line); }
+
+/* Outline: a documentation-style tree with guide lines */
+.ns-Design--outline { --ns-bg: light-dark(#fff, #121418); --ns-hover: transparent; --ns-act-bg: transparent; --ns-act-fg: light-dark(var(--ns-ink), var(--ns-tint)); --ns-r: 0; --ns-py: .375rem; }
+.ns-Design--outline .t-TreeNav .a-TreeView-node--topLevel > ul { margin-inline-start: calc(var(--ns-gap) + 1.25rem); border-inline-start: 1px solid var(--ns-line); }
+.ns-Design--outline .t-TreeNav .a-TreeView-node--topLevel > ul .a-TreeView-row { margin-inline-start: -1px; }
+.ns-Design--outline .t-TreeNav .a-TreeView-node--topLevel > ul .a-TreeView-row.is-selected { box-shadow: inset 2px 0 0 var(--ns-a) !important; }
+.u-RTL .ns-Design--outline .t-TreeNav .a-TreeView-node--topLevel > ul .a-TreeView-row.is-selected, .ns-Design--outline.u-RTL .t-TreeNav .a-TreeView-node--topLevel > ul .a-TreeView-row.is-selected { box-shadow: inset -2px 0 0 var(--ns-a) !important; }
+.ns-Design--outline .t-TreeNav .a-TreeView-row.is-hover ~ .a-TreeView-content { color: light-dark(var(--ns-ink), var(--ns-tint)) !important; }
+.ns-Design--outline .t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-row.is-selected ~ .a-TreeView-content .a-TreeView-label { text-decoration: underline 2px; text-underline-offset: .3125rem; text-decoration-color: var(--ns-a); }
+
+/* Editorial: paper colours, serif labels, fine rules */
+.ns-Design--editorial { --ns-bg: light-dark(#f7f3ea, #1c1a17); --ns-fg: light-dark(#231f1a, #ede6d8); --ns-muted: light-dark(#5a5248, #b6ad9d); --ns-line: light-dark(#ddd3c1, #3a352e);
+  --ns-hover: light-dark(#efe8da, #26231f); --ns-act-bg: transparent; --ns-act-fg: light-dark(var(--ns-ink), var(--ns-tint)); --ns-r: 0; --ns-gap: .75rem; --ns-sec: light-dark(#6b5f4f, #a59b8a); }
+.ns-Design--editorial:not([class*="ns-Accent--"]) { --ns-a: #9f1239; --ns-a2: #7c2d12; --ns-ink: #881337; --ns-tint: #f9a8d4; --ns-on: #fff; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-label, .ns-Design--editorial .t-Header-logo-link, .ns-Design--editorial .t-TreeNav [data-ns-section]::before { font-family: Georgia, "Times New Roman", serif; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-label { font-size: calc(var(--ns-fs) + .0625rem); }
+.ns-Design--editorial .t-TreeNav [data-ns-section]::before { text-transform: none; font-style: italic; font-size: .8125rem; letter-spacing: 0; font-weight: 400; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-node--topLevel { border-block-end: 1px solid var(--ns-line); margin-inline: .75rem; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-node--topLevel .a-TreeView-row, .ns-Design--editorial .t-TreeNav .a-TreeView-node--topLevel .a-TreeView-content { margin-inline: 0; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-row.is-selected ~ .a-TreeView-content .a-TreeView-label { font-style: italic; }
+.ns-Design--editorial .t-TreeNav .a-TreeView-row.is-selected { box-shadow: inset 3px 0 0 var(--ns-a) !important; }
+.ns-Nav.ns-Design--editorial .t-Header .t-Header-logo-link::before { display: none; }
+.ns-Design--editorial .t-Header-logo-link { font-size: 1.25rem; font-weight: 700; font-style: italic; }
+
+/* Terminal: a console - monospace, the current item is a cursor line */
+.ns-Design--terminal { --ns-bg: #0b0f0c; --ns-fg: #d1fae5; --ns-muted: #86b89a; --ns-line: #1d2b22; --ns-hover: rgb(74 222 128 / .08); --ns-sec: #4ade80;
+  --ns-act-bg: rgb(74 222 128 / .14); --ns-act-fg: #bbf7d0; --ns-act-icon: #4ade80; --ns-parent: #4ade80; --ns-badge-bg: #4ade80; --ns-badge-fg: #052e16; --ns-focus: #4ade80; --ns-r: 0;
+  --ns-hdr-bg: #0b0f0c; --ns-hdr-fg: #d1fae5; --ns-hdr-line: #1d2b22; }
+.ns-Design--terminal.ns-Nav[class*="ns-Accent--"] { --ns-sec: var(--ns-tint); --ns-act-icon: var(--ns-tint); --ns-parent: var(--ns-tint); --ns-focus: var(--ns-tint); --ns-badge-bg: var(--ns-tint); }
+.ns-Design--terminal .t-Body-nav, .ns-Design--terminal .t-Header, .ns-Design--terminal .ns-Tip, .ns-Design--terminal .ns-TabBar { color-scheme: dark; }
+.ns-Design--terminal .t-TreeNav, .ns-Design--terminal .t-Header-logo-link, .ns-Design--terminal .ns-Search input { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.ns-Design--terminal .t-TreeNav [data-ns-section]::before { content: "# " attr(data-ns-section); text-transform: lowercase; letter-spacing: 0; }
+.ns-Design--terminal .t-TreeNav .a-TreeView-row.is-selected { box-shadow: inset 2px 0 0 var(--ns-sec) !important; }
+.ns-Design--terminal .t-TreeNav .a-TreeView-content.is-selected .a-TreeView-label::after { content: "_"; margin-inline-start: .125rem; animation: ns-blink 1s steps(1) infinite; }
+.ns-Nav.ns-Design--terminal .t-Header .t-Header-logo-link::before { content: ">"; width: auto; height: auto; background: none; box-shadow: none; color: var(--ns-sec); vertical-align: 0; }
+@keyframes ns-blink { 50% { opacity: 0; } }
+
+/* ---------- phones: the closed menu leaves no trace ---------- */
+.ns-Nav .t-TreeNav[aria-hidden="true"] .a-TreeView-badge { visibility: hidden; }
+@media (max-width: 479px) {
+  .ns-Nav.js-navCollapsed .ns-Search, .ns-Nav.js-navCollapsed .ns-Results { display: none; }
+  .ns-Design--floating.js-navCollapsed .t-Body-nav, .ns-Design--glass.js-navCollapsed .t-Body-nav { margin: 0; box-shadow: none; background: transparent; backdrop-filter: none; }
+}
+
+/* ---------- accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ns-Nav .t-Body-nav, .ns-Nav .t-Body-nav *, .ns-Nav .t-Header, .ns-TabBar, .ns-Tip { transition: none !important; animation: none !important; }
+}
+@media (forced-colors: active) {
+  .ns-Nav .t-TreeNav .a-TreeView-row.is-selected { outline: 2px solid Highlight !important; outline-offset: -2px; }
+  .ns-Nav .t-TreeNav .a-TreeView-row.is-focused { outline: 2px dashed CanvasText !important; }
+  .ns-Nav .t-TreeNav .a-TreeView-badge { border: 1px solid CanvasText; }
+  .ns-Nav .t-Body-nav { border-inline-end: 1px solid CanvasText; }
+  /* Universal Theme hides collapsed labels with a transparent colour, which forced colours would undo */
+  .ns-Nav.js-navCollapsed:not(.ns-Design--rail) .t-TreeNav .a-TreeView-label { forced-color-adjust: none; color: transparent !important; }
+}

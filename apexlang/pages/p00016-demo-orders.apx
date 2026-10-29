@@ -1,0 +1,81 @@
+page 16 (
+    name: Orders
+    alias: DEMO-ORDERS
+    title: Orders
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigationMenu {
+        overrideUserInterfaceLevel: true
+        list: @demo-menu
+        listPosition: side
+        listTemplate: @modern-side-navigation
+        templateOptions: [
+            #DEFAULT#
+            ns-Accent--indigo
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    css {
+        inline:
+            ```css
+            .nvx-Kpi { display: flex; flex-direction: column; gap: .125rem; }
+            .nvx-Kpi span { font-size: .8125rem; opacity: .75; }
+            .nvx-Kpi strong { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+            .nvx-Kpi small { font-size: .75rem; opacity: .7; }
+            .nvx-Table { width: 100%; }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: unrestricted
+        formAutoComplete: false
+    }
+
+    region title (
+        name: Orders
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="t-BreadcrumbRegion t-BreadcrumbRegion--showBreadcrumb t-BreadcrumbRegion--useBreadcrumbTitle">
+                  <div class="t-BreadcrumbRegion-body"><div class="t-BreadcrumbRegion-breadcrumb">
+                    <ul class="t-Breadcrumb"><li class="t-Breadcrumb-item"><a href="f?p=&APP_ID.:DEMO-DASHBOARD:&APP_SESSION.">Workspace</a></li><li class="t-Breadcrumb-item is-active"><h1 class="t-Breadcrumb-label">Orders</h1></li></ul>
+                  </div></div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region about (
+        name: Orders
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <p>A demo page for the <strong>Orders</strong> entry of the demo menu. Try the sub-levels of Projects, Reports and Settings, the badges on Inbox, Tasks and Orders, the section headings, the menu search (Ctrl+K) and the collapsed menu.</p>
+                <p><a href="f?p=&APP_ID.:DESIGNER:&APP_SESSION.">Open the Designer</a> to change the look.</p>
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+)

@@ -1,0 +1,203 @@
+page 19 (
+    name: Top Navigation
+    alias: DEMO-TOP-NAV
+    title: Top Navigation
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigationMenu {
+        overrideUserInterfaceLevel: true
+        list: @demo-menu
+        listPosition: top
+        listTemplate: @modern-top-navigation
+        templateOptions: [
+            #DEFAULT#
+            js-tabLike
+            ns-Accent--indigo
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    css {
+        inline:
+            ```css
+            .nvx-Kpi { display: flex; flex-direction: column; gap: .125rem; }
+            .nvx-Kpi span { font-size: .8125rem; opacity: .75; }
+            .nvx-Kpi strong { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+            .nvx-Kpi small { font-size: .75rem; opacity: .7; }
+            .nvx-Table { width: 100%; }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: unrestricted
+        formAutoComplete: false
+    }
+
+    region title (
+        name: Top Navigation
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="t-BreadcrumbRegion t-BreadcrumbRegion--showBreadcrumb t-BreadcrumbRegion--useBreadcrumbTitle">
+                  <div class="t-BreadcrumbRegion-body"><div class="t-BreadcrumbRegion-breadcrumb">
+                    <ul class="t-Breadcrumb"><li class="t-Breadcrumb-item"><a href="f?p=&APP_ID.:DEMO-DASHBOARD:&APP_SESSION.">Workspace</a></li><li class="t-Breadcrumb-item is-active"><h1 class="t-Breadcrumb-label">Dashboard</h1></li></ul>
+                  </div></div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region kpi-1 (
+        name: Open orders
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="nvx-Kpi"><span>Open orders</span><strong>128</strong><small>+12% this week</small></div>
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+            columnSpan: 3
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+    )
+
+    region kpi-2 (
+        name: Revenue
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="nvx-Kpi"><span>Revenue</span><strong>48,290</strong><small>+4.1% this month</small></div>
+                ```
+        }
+        layout {
+            sequence: 21
+            slot: body
+            startNewRow: false
+            columnSpan: 3
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+    )
+
+    region kpi-3 (
+        name: Tasks due
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="nvx-Kpi"><span>Tasks due</span><strong>17</strong><small>5 overdue</small></div>
+                ```
+        }
+        layout {
+            sequence: 22
+            slot: body
+            startNewRow: false
+            columnSpan: 3
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+    )
+
+    region kpi-4 (
+        name: New customers
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="nvx-Kpi"><span>New customers</span><strong>36</strong><small>+9 since Monday</small></div>
+                ```
+        }
+        layout {
+            sequence: 23
+            slot: body
+            startNewRow: false
+            columnSpan: 3
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+    )
+
+    region orders (
+        name: Recent orders
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <table class="t-Report-report nvx-Table"><thead><tr><th class="t-Report-colHead">Order</th><th class="t-Report-colHead">Customer</th><th class="t-Report-colHead">Status</th><th class="t-Report-colHead">Total</th></tr></thead><tbody>
+                <tr><td class="t-Report-cell">#10482</td><td class="t-Report-cell">Lena Fischer</td><td class="t-Report-cell">Shipped</td><td class="t-Report-cell">1,240.00</td></tr>
+                <tr><td class="t-Report-cell">#10481</td><td class="t-Report-cell">Omar Haddad</td><td class="t-Report-cell">Processing</td><td class="t-Report-cell">312.50</td></tr>
+                <tr><td class="t-Report-cell">#10480</td><td class="t-Report-cell">Priya Nair</td><td class="t-Report-cell">Shipped</td><td class="t-Report-cell">89.90</td></tr>
+                <tr><td class="t-Report-cell">#10479</td><td class="t-Report-cell">Jonas Berg</td><td class="t-Report-cell">Cancelled</td><td class="t-Report-cell">0.00</td></tr>
+                <tr><td class="t-Report-cell">#10478</td><td class="t-Report-cell">Maya Chen</td><td class="t-Report-cell">Delivered</td><td class="t-Report-cell">2,018.00</td></tr>
+                <tr><td class="t-Report-cell">#10477</td><td class="t-Report-cell">Tom Evans</td><td class="t-Report-cell">Delivered</td><td class="t-Report-cell">455.10</td></tr>
+                </tbody></table>
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region activity (
+        name: Activity
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <p>Lena Fischer updated the delivery address of order #10482. Omar Haddad added two items to the spring catalogue. The weekly sales report is ready to download.</p>
+                <p>This is a demo page of Navigation Studio: everything on it is invented. Open the Designer to try the menu looks.</p>
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+)

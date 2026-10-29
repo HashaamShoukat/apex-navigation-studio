@@ -1,0 +1,4 @@
+authentication no-authentication (
+    name: No Authentication
+    type: noAuth
+)

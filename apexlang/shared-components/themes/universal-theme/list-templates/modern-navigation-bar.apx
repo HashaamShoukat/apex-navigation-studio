@@ -1,0 +1,335 @@
+listTemplate modern-navigation-bar (
+    name: Modern Navigation Bar
+    templateClass: pullDownMenu
+    templateOptions {
+        default: [
+            ns-Bar--avatar
+            ns-Bar--search
+        ]
+    }
+    list {
+        beforeEntries: <ul class="t-NavigationBar ns-Bar #COMPONENT_CSS_CLASSES#" id="#LIST_ID#">
+        afterEntries:
+            ```html
+            </ul>
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>
+            /* Modern Navigation Bar: source in Navigation Studio _src/nav-bar-pre.js */
+            (()=>{const s=document.currentScript.previousElementSibling,e=/^(ns-(Bar|Accent)-|js-menu)/,t=()=>{const t=/[#&]nb=([^&]*)/.exec(location.hash);t&&s&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),decodeURIComponent(t[1]).split(/[\s,+]+/).forEach((t=>e.test(t)&&s.classList.add(t))))};t(),window.addEventListener("hashchange",t)})();
+            </script>
+            ```
+    }
+    entry {
+        current:
+            ```html
+            <li class="t-NavigationBar-item is-active #A02#" aria-current="page">
+              <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>
+                <span class="t-Icon fa #ICON_CSS_CLASSES#" aria-hidden="true" #IMAGE_ATTR#></span><span class="t-Button-label">#TEXT_ESC_SC#</span><span class="t-Button-badge">#A01#</span>
+              </a>
+            </li>
+            ```
+        currentWithSublist:
+            ```html
+            <li class="t-NavigationBar-item is-active #A02#" aria-current="page">
+              <button class="t-Button t-Button--icon t-Button--header t-Button--navBar" type="button" id="#LIST_ITEM_ID#" data-menu="menu_#LIST_ITEM_ID#" title="#A04#">
+                <span class="t-Icon fa #ICON_CSS_CLASSES#" aria-hidden="true" #IMAGE_ATTR#></span><span class="t-Button-label">#TEXT_ESC_SC#</span><span class="t-Button-badge">#A01#</span><span class="a-Icon icon-down-arrow" aria-hidden="true"></span>
+              </button>
+            ```
+        noncurrent:
+            ```html
+            <li class="t-NavigationBar-item #A02#">
+              <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>
+                <span class="t-Icon fa #ICON_CSS_CLASSES#" aria-hidden="true" #IMAGE_ATTR#></span><span class="t-Button-label">#TEXT_ESC_SC#</span><span class="t-Button-badge">#A01#</span>
+              </a>
+            </li>
+            ```
+        noncurrentWithSublist:
+            ```html
+            <li class="t-NavigationBar-item #A02#">
+              <button class="t-Button t-Button--icon t-Button--header t-Button--navBar" type="button" id="#LIST_ITEM_ID#" data-menu="menu_#LIST_ITEM_ID#" title="#A04#">
+                <span class="t-Icon fa #ICON_CSS_CLASSES#" aria-hidden="true" #IMAGE_ATTR#></span><span class="t-Button-label">#TEXT_ESC_SC#</span><span class="t-Button-badge">#A01#</span><span class="a-Icon icon-down-arrow" aria-hidden="true"></span>
+              </button>
+            ```
+    }
+    sublist {
+        beforeEntries: <div class="t-NavigationBar-menu u-DisplayNone" id="menu_#PARENT_LIST_ITEM_ID#"><ul>
+        afterEntries: </ul></div></li>
+    }
+    sublistEntry {
+        current: <li class="#A02#" data-current="true" data-icon="#ICON_CSS_CLASSES#"><a href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        currentWithSublist: <li class="#A02#" data-current="true" data-icon="#ICON_CSS_CLASSES#"><a href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        noncurrent: <li class="#A02#" data-current="false" data-icon="#ICON_CSS_CLASSES#"><a href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        noncurrentWithSublist: <li class="#A02#" data-current="false" data-icon="#ICON_CSS_CLASSES#"><a href="#LINK#" title="#A04#" target="#A06#" data-otel-label="#A10#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+    }
+    javaScript {
+        executeWhenPageLoads:
+            ```javascript-browser
+            // Modern Navigation Bar: source in Navigation Studio _src/nav-bar.js
+            !function(t){const n=t=>apex.util.escapeHTML(String(t));t(".ns-Bar").each((function(){const a=t(this);if(a.find(".ns-User > .t-Button").each((function(){if(!a.hasClass("ns-Bar--avatar")||t(this).find(".ns-Avatar").length)return;const e=t(this).find(".t-Button-label").text().trim().split(/[\s._@-]+/).filter(Boolean).map((t=>t[0])).slice(0,2).join("").toUpperCase();t(this).find(".t-Icon").first().replaceWith('<span class="ns-Avatar" aria-hidden="true">'+n(e||"?")+"</span>")})),!a.find(".ns-SearchItem").length){const e=((t,n)=>{const a=apex.lang.getMessage(t);return a&&a!==t?a:n})("MODERN_NAV.SEARCH","Search menu");t('<li class="t-NavigationBar-item ns-SearchItem"><button type="button" class="t-Button t-Button--icon t-Button--header t-Button--navBar ns-SearchBtn" title="'+n(e)+'"><span class="t-Icon fa fa-search" aria-hidden="true"></span><span class="t-Button-label">'+n(e)+"</span><kbd>"+(/Mac|iP/.test(navigator.platform)?"⌘":"Ctrl ")+"K</kbd></button></li>").prependTo(a).on("click","button",(()=>t(document).trigger("ns-search")))}}))}(apex.jQuery);
+            ```
+    }
+    css {
+        inline:
+            ```css
+            .ns-Bar { --nb-a: var(--ns-a, var(--ut-palette-primary, #4f46e5)); --nb-on: var(--ns-on, var(--ut-palette-primary-contrast, #fff));
+            --nb-fg: var(--ns-hdr-fg, currentColor); --nb-hover: color-mix(in srgb, currentColor 9%, transparent); --nb-line: color-mix(in srgb, currentColor 18%, transparent);
+            --nb-badge-bg: var(--ns-hb-bg, var(--nb-a)); --nb-badge-fg: var(--ns-hb-fg, var(--nb-on)); --nb-r: .625rem; gap: .25rem; align-items: center; }
+            .ns-Bar[class*="ns-Accent--"] { --ns-hb-bg: var(--nb-a); --ns-hb-fg: var(--nb-on); }
+            .ns-Bar.ns-Accent--ocean { --nb-a: #0369a1; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--indigo { --nb-a: #4f46e5; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--violet { --nb-a: #7c3aed; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--emerald { --nb-a: #047857; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--rose { --nb-a: #e11d48; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--amber { --nb-a: #f59e0b; --nb-on: #1c1303; }
+            .ns-Bar.ns-Accent--slate { --nb-a: #475569; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--wine { --nb-a: #9f1239; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--tangerine { --nb-a: #c2410c; --nb-on: #fff; }
+            .ns-Bar.ns-Accent--cyan { --nb-a: #0e7490; --nb-on: #fff; }
+            .ns-Bar .t-Button--navBar { --a-button-background-color: transparent; --a-button-text-color: var(--nb-fg); --a-button-hover-background-color: var(--nb-hover);
+            --a-button-hover-text-color: var(--nb-fg); --a-button-active-background-color: var(--nb-line); --a-button-focus-background-color: transparent; --a-button-border-radius: var(--nb-r);
+            --a-button-padding-x: .625rem; position: relative; min-height: 2.25rem; color: var(--nb-fg); }
+            .ns-Bar .t-Button--navBar:focus-visible { outline: 2px solid var(--nb-a); outline-offset: 1px; }
+            .ns-Bar .t-NavigationBar-item.is-active .t-Button--navBar { --a-button-background-color: var(--nb-line); }
+            .ns-Bar .t-Button--navBar .t-Icon { font-size: 1.0625rem; opacity: .9; }
+            .ns-Bar .t-Button--navBar .t-Icon:not([class*="fa-"]) { display: none; }
+            @media (min-width: 640px) {
+            .ns-Bar .t-Button--navBar .t-Button-label { display: inline; margin-inline-start: .4375rem; font-weight: 500; }
+            }
+            .ns-Bar .t-Button--navBar .t-Button-badge { top: .125rem; right: .125rem; min-width: 1.0625rem; padding: 0 .3125rem; border-radius: 999px; background: var(--nb-badge-bg); color: var(--nb-badge-fg);
+            font-size: .625rem; font-weight: 700; line-height: 1.0625rem; text-align: center; box-shadow: 0 0 0 2px var(--ns-hdr-bg, var(--ut-header-background-color, #fff)); font-variant-numeric: tabular-nums; }
+            .u-RTL .ns-Bar .t-Button--navBar .t-Button-badge { right: auto; left: .125rem; }
+            @media (min-width: 640px) {
+            .ns-Bar:not(.ns-Bar--icons) .t-Button--navBar .t-Button-badge { position: static; margin-inline-start: .375rem; box-shadow: none; }
+            }
+            .ns-Bar.ns-Bar--badgeRed { --nb-badge-bg: #dc2626; --nb-badge-fg: #fff; }
+            .ns-Bar.ns-Bar--badgeDot .t-Button-badge:not(:empty) { position: absolute !important; top: .375rem !important; min-width: 0; width: .5rem; height: .5rem; padding: 0; font-size: 0; margin: 0;
+            box-shadow: 0 0 0 2px var(--ns-hdr-bg, var(--ut-header-background-color, #fff)) !important; }
+            .ns-Bar.ns-Bar--pulse .t-Button-badge:not(:empty) { animation: nb-pulse 2.4s ease-out infinite; }
+            @keyframes nb-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--nb-badge-bg) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
+            .ns-Bar.ns-Bar--icons .t-Button--navBar .t-Button-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+            .ns-Bar.ns-Bar--icons .t-Button--navBar { --a-button-padding-x: .5rem; min-width: 2.25rem; justify-content: center; }
+            .ns-Bar.ns-Bar--icons .t-Button--navBar .a-Icon.icon-down-arrow, .ns-Bar.ns-Bar--icons .ns-SearchBtn kbd { display: none !important; }
+            .ns-Bar.ns-Bar--icons .ns-SearchBtn { min-width: 2.25rem !important; }
+            .ns-Bar.ns-Bar--pills .t-Button--navBar { --a-button-background-color: var(--nb-hover); --nb-r: 999px; --a-button-hover-background-color: var(--nb-line); }
+            .ns-Bar.ns-Bar--segmented { gap: 0; padding: .1875rem; border-radius: .75rem; background: var(--nb-hover); box-shadow: inset 0 0 0 1px var(--nb-line); }
+            .ns-Bar.ns-Bar--segmented .t-Button--navBar { --nb-r: .5625rem; --a-button-hover-background-color: light-dark(#fff, rgb(255 255 255 / .1)); min-height: 2rem; }
+            .ns-Bar.ns-Bar--outline .t-Button--navBar { box-shadow: inset 0 0 0 1px var(--nb-line); }
+            .ns-Bar.ns-Bar--outline .t-Button--navBar:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 35%, transparent); }
+            .ns-Avatar { display: inline-grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--ns-hb-bg, var(--nb-a));
+            color: var(--ns-hb-fg, var(--nb-on)); font-size: .6875rem; font-weight: 700; letter-spacing: .02em; flex: none; box-shadow: 0 0 0 2px var(--ns-hdr-bg, var(--ut-header-background-color, #fff)), 0 0 0 3px var(--nb-line); }
+            .ns-Bar .ns-User .t-Button--navBar { --a-button-padding-x: .25rem; }
+            @media (min-width: 640px) { .ns-Bar .ns-User .t-Button--navBar { padding-inline-end: .625rem; } }
+            .ns-Bar .ns-SearchItem { display: none; }
+            .ns-HasSearch .ns-Bar.ns-Bar--search .ns-SearchItem { display: block; }
+            .ns-Bar .ns-SearchBtn kbd { display: none; }
+            @media (min-width: 768px) {
+            .ns-Bar .ns-SearchBtn { min-width: 13rem; justify-content: flex-start; box-shadow: inset 0 0 0 1px var(--nb-line); --a-button-background-color: var(--ns-hdr-field, var(--nb-hover)); color: var(--nb-fg); }
+            .ns-Bar .ns-SearchBtn .t-Button-label { flex: 1; text-align: start; font-weight: 400; }
+            .ns-Bar .ns-SearchBtn kbd { display: inline; padding: 0 .3125rem; border-radius: .3125rem; box-shadow: inset 0 0 0 1px var(--nb-line); font: inherit; font-size: .625rem; font-weight: 600; line-height: 1.125rem; }
+            .ns-Bar:not(.ns-Bar--icons) .ns-SearchItem { margin-inline-end: .5rem; }
+            }
+            .t-NavigationBar-menu.a-Menu { --a-menu-border-radius: .75rem; border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px rgb(15 23 42 / .08); }
+            .t-NavigationBar-menu.a-Menu .a-Menu-item { border-radius: .5rem; }
+            @media (prefers-reduced-motion: reduce) { .ns-Bar .t-Button-badge { animation: none !important; } }
+            @media (forced-colors: active) { .ns-Bar .t-Button-badge, .ns-Avatar { border: 1px solid CanvasText; } }
+            ```
+    }
+    attributeDescriptions {
+        a01: Badge Value
+        a02: List Item CSS Classes
+        a04: Title Attribute
+        a06: Link Target
+        a10: OpenTelemetry Label
+    }
+    comments {
+        comments: Modern Navigation Bar (Navigation Studio) - a copy of Universal Theme's Navigation Bar. Takes the accent and header colours of Modern Side Navigation / Modern Top Navigation. List entry attribute 1 = badge value, attribute 2 = list item CSS classes (ns-User on the user entry shows the initials avatar; icon-only, no-icon as in Universal Theme). Optional text message MODERN_NAV.SEARCH.
+    }
+
+    templateOption bar-icons (
+        name: Icons Only
+        group: @list/ns-bar-style
+        sequence: 10
+        appearance {
+            cssClasses: ns-Bar--icons
+        }
+    )
+
+    templateOption bar-pills (
+        name: Pills
+        group: @list/ns-bar-style
+        sequence: 20
+        appearance {
+            cssClasses: ns-Bar--pills
+        }
+    )
+
+    templateOption bar-segmented (
+        name: Segmented
+        group: @list/ns-bar-style
+        sequence: 30
+        appearance {
+            cssClasses: ns-Bar--segmented
+        }
+    )
+
+    templateOption bar-outline (
+        name: Outlined
+        group: @list/ns-bar-style
+        sequence: 40
+        appearance {
+            cssClasses: ns-Bar--outline
+        }
+    )
+
+    templateOption accent-ocean (
+        name: Ocean
+        group: @list/ns-bar-accent
+        sequence: 10
+        appearance {
+            cssClasses: ns-Accent--ocean
+        }
+    )
+
+    templateOption accent-indigo (
+        name: Indigo
+        group: @list/ns-bar-accent
+        sequence: 20
+        appearance {
+            cssClasses: ns-Accent--indigo
+        }
+    )
+
+    templateOption accent-violet (
+        name: Violet
+        group: @list/ns-bar-accent
+        sequence: 30
+        appearance {
+            cssClasses: ns-Accent--violet
+        }
+    )
+
+    templateOption accent-emerald (
+        name: Emerald
+        group: @list/ns-bar-accent
+        sequence: 40
+        appearance {
+            cssClasses: ns-Accent--emerald
+        }
+    )
+
+    templateOption accent-rose (
+        name: Rose
+        group: @list/ns-bar-accent
+        sequence: 50
+        appearance {
+            cssClasses: ns-Accent--rose
+        }
+    )
+
+    templateOption accent-amber (
+        name: Amber
+        group: @list/ns-bar-accent
+        sequence: 60
+        appearance {
+            cssClasses: ns-Accent--amber
+        }
+    )
+
+    templateOption accent-slate (
+        name: Slate
+        group: @list/ns-bar-accent
+        sequence: 70
+        appearance {
+            cssClasses: ns-Accent--slate
+        }
+    )
+
+    templateOption accent-wine (
+        name: Wine
+        group: @list/ns-bar-accent
+        sequence: 80
+        appearance {
+            cssClasses: ns-Accent--wine
+        }
+    )
+
+    templateOption accent-tangerine (
+        name: Tangerine
+        group: @list/ns-bar-accent
+        sequence: 90
+        appearance {
+            cssClasses: ns-Accent--tangerine
+        }
+    )
+
+    templateOption accent-cyan (
+        name: Cyan
+        group: @list/ns-bar-accent
+        sequence: 100
+        appearance {
+            cssClasses: ns-Accent--cyan
+        }
+    )
+
+    templateOption bar-badge-red (
+        name: Red
+        group: @list/ns-bar-badge
+        sequence: 10
+        appearance {
+            cssClasses: ns-Bar--badgeRed
+        }
+    )
+
+    templateOption bar-badge-dot (
+        name: Dot
+        group: @list/ns-bar-badge
+        sequence: 20
+        appearance {
+            cssClasses: ns-Bar--badgeDot
+        }
+    )
+
+    templateOption bar-avatar (
+        name: User Avatar
+        sequence: 100
+        appearance {
+            cssClasses: ns-Bar--avatar
+        }
+        help {
+            helpText: The entry with list item CSS class ns-User (attribute 2) shows the initials of its label instead of the icon.
+        }
+    )
+
+    templateOption bar-search (
+        name: Search Button
+        sequence: 110
+        appearance {
+            cssClasses: ns-Bar--search
+        }
+        help {
+            helpText: A Search button that opens the menu search of Modern Side Navigation (when Menu Search is on).
+        }
+    )
+
+    templateOption bar-pulse (
+        name: Pulsing Badges
+        sequence: 120
+        appearance {
+            cssClasses: ns-Bar--pulse
+        }
+        help {
+            helpText: A soft pulse around badges. Off for users who prefer reduced motion.
+        }
+    )
+
+    templateOption menu-callout (
+        name: Display Menu Callout
+        sequence: 130
+        appearance {
+            cssClasses: js-menu-callout
+        }
+        help {
+            helpText: Display a callout arrow on the drop-down menus.
+        }
+    )
+
+)

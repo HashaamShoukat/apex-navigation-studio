@@ -1,0 +1,124 @@
+page 3 (
+    name: How to Use
+    alias: HOW-TO-USE
+    title: Navigation Studio - How to Use
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    css {
+        inline:
+            ```css
+            .nvs-Doc { max-width: 60rem; line-height: 1.7; }
+            .nvs-Doc h3 { margin: 1.75rem 0 .5rem; font-size: 1.125rem; }
+            .nvs-Doc h3:first-child { margin-top: 0; }
+            .nvs-Doc ol, .nvs-Doc ul { padding-inline-start: 1.25rem; margin: .25rem 0 .75rem; }
+            .nvs-Doc li { margin: .2rem 0; }
+            .nvs-Doc pre { margin: .5rem 0 1rem; padding: .875rem 1rem; overflow-x: auto; border-radius: 8px; background: #1f2329; color: #e6edf3; font-size: .8125rem; line-height: 1.55; }
+            .nvs-Doc p code, .nvs-Doc li code, .nvs-Doc td code { padding: .05rem .35rem; border-radius: 4px; background: rgba(127,127,127,.14); font-size: .8125rem; }
+            .nvs-Doc table { width: 100%; border-collapse: collapse; margin: .5rem 0 1rem; font-size: .875rem; }
+            .nvs-Doc th, .nvs-Doc td { padding: .45rem .6rem; border-bottom: 1px solid var(--ut-component-border-color, #e4e7ec); text-align: left; vertical-align: top; }
+            .nvs-Doc th { font-weight: 700; opacity: .8; }
+            .nvs-Doc td:first-child { font-weight: 600; white-space: nowrap; }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: How to Use
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region guide (
+        name: Use Navigation Studio in Your Own App
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="nvs-Doc">
+                <h3>1. Get Navigation Studio into your workspace</h3>
+                <ol>
+                  <li>Download <code>navigation-studio.sql</code> from <a href="https://github.com/HashaamShoukat/apex-navigation-studio" target="_blank" rel="noopener">GitHub</a>.</li>
+                  <li><strong>App Builder &gt; Import</strong>, install it with any application ID. No database objects; APEX 26.1 or later.</li>
+                </ol>
+
+                <h3>2. Copy the templates into your application</h3>
+                <p>In <em>your</em> application: <strong>Shared Components &gt; Templates &gt; Create &gt; List &gt; As a Copy of an Existing Template</strong>, copy from <strong>Navigation Studio</strong> and pick the ones you need (tick <em>Subscribe</em> for later updates):</p>
+                <table>
+                  <tr><th>Template</th><th>Use it for</th></tr>
+                  <tr><td>Modern Side Navigation</td><td>The side navigation menu (a copy of Universal Theme's Side Navigation Menu).</td></tr>
+                  <tr><td>Modern Top Navigation</td><td>The top navigation menu (a copy of Top Navigation Menu).</td></tr>
+                  <tr><td>Modern Navigation Bar</td><td>The navigation bar - user menu, notifications, help. It takes the colours of the menu templates.</td></tr>
+                </table>
+
+                <h3>3. Switch your application to them</h3>
+                <ol>
+                  <li><strong>Shared Components &gt; User Interface Attributes &gt; Navigation Menu</strong>: List Template = <strong>Modern Side Navigation</strong> (or Modern Top Navigation with Position = Top), then the <strong>Template Options</strong> you chose in the Designer.</li>
+                  <li><strong>Navigation Bar</strong>: List Template = <strong>Modern Navigation Bar</strong> and its Template Options.</li>
+                </ol>
+                <p>The Designer gives you the options and the same settings as APEXlang for <code>application.apx</code>. Nothing else changes: the templates keep Universal Theme's markup and ids, so the collapse button, keyboard, remembered state and phone overlay work as before.</p>
+
+                <h3>4. Make the most of the list</h3>
+                <table>
+                  <tr><th>In the list</th><th>What it does</th></tr>
+                  <tr><td>Label <code>Inbox [12]</code></td><td>A badge with 12 (side and top menu; Universal Theme's own syntax). Use a substitution for a live count: <code>Inbox [&amp;P0_UNREAD.]</code>.</td></tr>
+                  <tr><td>Attribute 3</td><td>Side menu: a section heading above the entry, e.g. <em>Reports</em>. A divider line when the menu is collapsed.</td></tr>
+                  <tr><td>Navigation bar: Attribute 1</td><td>The badge value of a navigation bar entry.</td></tr>
+                  <tr><td>Navigation bar: Attribute 2</td><td>List item CSS classes. <code>ns-User</code> shows the initials of the label in a round avatar (option User Avatar); <code>icon-only</code> and <code>no-icon</code> work as in Universal Theme.</td></tr>
+                </table>
+
+                <h3>5. What the options do</h3>
+                <ul>
+                  <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it; the navigation bar's <em>Search Button</em> opens it too.</li>
+                  <li><strong>Tooltips When Collapsed</strong> - the entry's name next to the icon on the collapsed rail (mouse and keyboard).</li>
+                  <li><strong>Phone Bottom Bar</strong> - on phones the first four entries and a Menu button sit in a bar at the bottom, in reach of the thumb.</li>
+                  <li><strong>Header: Match the Menu</strong> - the header bar takes the menu's colours; <em>Keep Theme Header</em> leaves it to your theme style.</li>
+                  <li><strong>Color Scheme</strong> - the menu and header only; your theme style keeps the content. Midnight and Terminal are always dark.</li>
+                </ul>
+                <p>Texts can be translated with the text messages <code>MODERN_NAV.SEARCH</code>, <code>MODERN_NAV.NO_MATCH</code>, <code>MODERN_NAV.MENU</code> and <code>MODERN_NAV.QUICK_LINKS</code>.</p>
+
+                <h3>6. Good to know</h3>
+                <ul>
+                  <li>Each template is self-contained: its CSS (Cascading Style Sheet &gt; Inline) and JavaScript travel with it. Keep the small script in <em>After List Entries</em>: it applies the look before the menu is drawn.</li>
+                  <li>The source is generated from <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code> rather than editing the minified JavaScript in the template.</li>
+                  <li>Users who prefer reduced motion get no animations; Windows high-contrast mode is respected.</li>
+                </ul>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+)

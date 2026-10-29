@@ -1,0 +1,9 @@
+{
+  "name": "navigation-studio-build",
+  "private": true,
+  "description": "Builds the Navigation Studio APEXlang sources (cd apexlang; node _src/build.mjs) and runs the QA harness (qa/)",
+  "type": "module",
+  "devDependencies": {
+    "terser": "5.36.0"
+  }
+}

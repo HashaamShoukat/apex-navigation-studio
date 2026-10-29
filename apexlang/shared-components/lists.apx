@@ -1,0 +1,751 @@
+list navigation-bar (
+    name: Navigation Bar
+
+    entry github (
+        label: GitHub
+        icon {
+            imageIconCssClasses: fa-github
+        }
+        layout {
+            sequence: 10
+        }
+        serverSideCondition {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID < 10
+        }
+        link {
+            target: {
+                type: url
+                url: https://github.com/HashaamShoukat/apex-navigation-studio
+            }
+        }
+    )
+
+    entry nb-notifications (
+        label: Notifications
+        icon {
+            imageIconCssClasses: fa-bell-o
+        }
+        layout {
+            sequence: 20
+        }
+        serverSideCondition {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID >= 10
+        }
+        link {
+            target: {
+                type: url
+                url: #
+            }
+        }
+        userDefinedAttributes {
+            1: 4
+        }
+    )
+
+    entry nb-help (
+        label: Help
+        icon {
+            imageIconCssClasses: fa-question-circle-o
+        }
+        layout {
+            sequence: 30
+        }
+        serverSideCondition {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID >= 10
+        }
+        link {
+            target: {
+                type: url
+                url: #
+            }
+        }
+    )
+
+    entry nb-user (
+        label: Sam Taylor
+        icon {
+            imageIconCssClasses: fa-user
+        }
+        layout {
+            sequence: 40
+        }
+        serverSideCondition {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID >= 10
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+        userDefinedAttributes {
+            2: ns-User
+        }
+    )
+
+    entry nb-profile (
+        label: Profile
+        icon {
+            imageIconCssClasses: fa-user
+        }
+        layout {
+            sequence: 10
+            parentEntry: @nb-user
+        }
+        link {
+            target: {
+                type: url
+                url: #
+            }
+        }
+    )
+
+    entry nb-settings (
+        label: Settings
+        icon {
+            imageIconCssClasses: fa-gear
+        }
+        layout {
+            sequence: 20
+            parentEntry: @nb-user
+        }
+        link {
+            target: {
+                type: url
+                url: #
+            }
+        }
+    )
+
+    entry nb-signout (
+        label: Sign Out
+        icon {
+            imageIconCssClasses: fa-sign-out
+        }
+        layout {
+            sequence: 30
+            parentEntry: @nb-user
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+)
+
+list navigation-menu (
+    name: Navigation Menu
+
+    entry home (
+        label: Gallery
+        icon {
+            imageIconCssClasses: fa-th-large
+        }
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+        userDefinedAttributes {
+            3: Navigation Studio
+        }
+    )
+
+    entry designer (
+        label: Designer
+        icon {
+            imageIconCssClasses: fa-paint-brush
+        }
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 2
+            }
+        }
+    )
+
+    entry how-to-use (
+        label: How to Use
+        icon {
+            imageIconCssClasses: fa-book
+        }
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 3
+            }
+        }
+    )
+
+    entry demo-side (
+        label: Side Menu Demo
+        icon {
+            imageIconCssClasses: fa-columns
+        }
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+        userDefinedAttributes {
+            3: Demos
+        }
+    )
+
+    entry demo-top (
+        label: Top Menu Demo
+        icon {
+            imageIconCssClasses: fa-window-maximize
+        }
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 19
+            }
+        }
+    )
+
+)
+
+list demo-menu (
+    name: Demo Menu
+
+    entry dashboard (
+        label: Dashboard
+        icon {
+            imageIconCssClasses: fa-home
+        }
+        layout {
+            sequence: 10
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 10 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+        userDefinedAttributes {
+            3: Workspace
+        }
+    )
+
+    entry inbox (
+        label: Inbox [12]
+        icon {
+            imageIconCssClasses: fa-inbox
+        }
+        layout {
+            sequence: 20
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 11 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 11
+            }
+        }
+    )
+
+    entry calendar (
+        label: Calendar
+        icon {
+            imageIconCssClasses: fa-calendar-o
+        }
+        layout {
+            sequence: 30
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 12 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 12
+            }
+        }
+    )
+
+    entry projects (
+        label: Projects
+        icon {
+            imageIconCssClasses: fa-folder-o
+        }
+        layout {
+            sequence: 40
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 13 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 13
+            }
+        }
+    )
+
+    entry projects-active (
+        label: Active
+        layout {
+            sequence: 10
+            parentEntry: @projects
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 13 and :REQUEST = 'ACTIVE'
+        }
+        link {
+            target: {
+                page: 13
+                request: ACTIVE
+            }
+        }
+    )
+
+    entry projects-archived (
+        label: Archived
+        layout {
+            sequence: 20
+            parentEntry: @projects
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 13 and :REQUEST = 'ARCHIVED'
+        }
+        link {
+            target: {
+                page: 13
+                request: ARCHIVED
+            }
+        }
+    )
+
+    entry projects-templates (
+        label: Templates
+        layout {
+            sequence: 30
+            parentEntry: @projects
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 13 and :REQUEST = 'TEMPLATES'
+        }
+        link {
+            target: {
+                page: 13
+                request: TEMPLATES
+            }
+        }
+    )
+
+    entry tasks (
+        label: Tasks [5]
+        icon {
+            imageIconCssClasses: fa-check-square-o
+        }
+        layout {
+            sequence: 50
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 14 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 14
+            }
+        }
+    )
+
+    entry customers (
+        label: Customers
+        icon {
+            imageIconCssClasses: fa-users
+        }
+        layout {
+            sequence: 60
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 15 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 15
+            }
+        }
+        userDefinedAttributes {
+            3: Sales
+        }
+    )
+
+    entry orders (
+        label: Orders [3]
+        icon {
+            imageIconCssClasses: fa-shopping-cart
+        }
+        layout {
+            sequence: 70
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 16 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 16
+            }
+        }
+    )
+
+    entry invoices (
+        label: Invoices
+        icon {
+            imageIconCssClasses: fa-file-text-o
+        }
+        layout {
+            sequence: 80
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 16 and :REQUEST = 'INVOICES'
+        }
+        link {
+            target: {
+                page: 16
+                request: INVOICES
+            }
+        }
+    )
+
+    entry products (
+        label: Products
+        icon {
+            imageIconCssClasses: fa-cube
+        }
+        layout {
+            sequence: 90
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 16 and :REQUEST = 'PRODUCTS'
+        }
+        link {
+            target: {
+                page: 16
+                request: PRODUCTS
+            }
+        }
+    )
+
+    entry reports (
+        label: Reports
+        icon {
+            imageIconCssClasses: fa-bar-chart
+        }
+        layout {
+            sequence: 100
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 17
+            }
+        }
+        userDefinedAttributes {
+            3: Insights
+        }
+    )
+
+    entry reports-sales (
+        label: Sales
+        layout {
+            sequence: 10
+            parentEntry: @reports
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'SALES'
+        }
+        link {
+            target: {
+                page: 17
+                request: SALES
+            }
+        }
+    )
+
+    entry reports-finance (
+        label: Finance
+        layout {
+            sequence: 20
+            parentEntry: @reports
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'FINANCE'
+        }
+        link {
+            target: {
+                page: 17
+                request: FINANCE
+            }
+        }
+    )
+
+    entry reports-team (
+        label: Team
+        layout {
+            sequence: 30
+            parentEntry: @reports
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'TEAM'
+        }
+        link {
+            target: {
+                page: 17
+                request: TEAM
+            }
+        }
+    )
+
+    entry reports-weekly (
+        label: Weekly
+        layout {
+            sequence: 10
+            parentEntry: @reports-team
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'WEEKLY'
+        }
+        link {
+            target: {
+                page: 17
+                request: WEEKLY
+            }
+        }
+    )
+
+    entry reports-monthly (
+        label: Monthly
+        layout {
+            sequence: 20
+            parentEntry: @reports-team
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'MONTHLY'
+        }
+        link {
+            target: {
+                page: 17
+                request: MONTHLY
+            }
+        }
+    )
+
+    entry analytics (
+        label: Analytics
+        icon {
+            imageIconCssClasses: fa-line-chart
+        }
+        layout {
+            sequence: 110
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 17 and :REQUEST = 'ANALYTICS'
+        }
+        link {
+            target: {
+                page: 17
+                request: ANALYTICS
+            }
+        }
+    )
+
+    entry files (
+        label: Files
+        icon {
+            imageIconCssClasses: fa-files-o
+        }
+        layout {
+            sequence: 120
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 13 and :REQUEST = 'FILES'
+        }
+        link {
+            target: {
+                page: 13
+                request: FILES
+            }
+        }
+    )
+
+    entry team (
+        label: Team
+        icon {
+            imageIconCssClasses: fa-user-circle-o
+        }
+        layout {
+            sequence: 130
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'TEAM'
+        }
+        link {
+            target: {
+                page: 18
+                request: TEAM
+            }
+        }
+        userDefinedAttributes {
+            3: Admin
+        }
+    )
+
+    entry integrations (
+        label: Integrations
+        icon {
+            imageIconCssClasses: fa-plug
+        }
+        layout {
+            sequence: 140
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'INTEGRATIONS'
+        }
+        link {
+            target: {
+                page: 18
+                request: INTEGRATIONS
+            }
+        }
+    )
+
+    entry settings (
+        label: Settings
+        icon {
+            imageIconCssClasses: fa-gear
+        }
+        layout {
+            sequence: 150
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and (:REQUEST is null or :REQUEST not in ('ACTIVE','ARCHIVED','TEMPLATES','INVOICES','PRODUCTS','SALES','FINANCE','TEAM','WEEKLY','MONTHLY','ANALYTICS','FILES','INTEGRATIONS','PROFILE','SECURITY','BILLING','HELP'))
+        }
+        link {
+            target: {
+                page: 18
+            }
+        }
+    )
+
+    entry settings-profile (
+        label: Profile
+        layout {
+            sequence: 10
+            parentEntry: @settings
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'PROFILE'
+        }
+        link {
+            target: {
+                page: 18
+                request: PROFILE
+            }
+        }
+    )
+
+    entry settings-security (
+        label: Security
+        layout {
+            sequence: 20
+            parentEntry: @settings
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'SECURITY'
+        }
+        link {
+            target: {
+                page: 18
+                request: SECURITY
+            }
+        }
+    )
+
+    entry settings-billing (
+        label: Billing
+        layout {
+            sequence: 30
+            parentEntry: @settings
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'BILLING'
+        }
+        link {
+            target: {
+                page: 18
+                request: BILLING
+            }
+        }
+    )
+
+    entry help (
+        label: Help Center
+        icon {
+            imageIconCssClasses: fa-question-circle-o
+        }
+        layout {
+            sequence: 160
+        }
+        isCurrent {
+            type: expression
+            plsqlExpression: :APP_PAGE_ID = 18 and :REQUEST = 'HELP'
+        }
+        link {
+            target: {
+                page: 18
+                request: HELP
+            }
+        }
+    )
+
+)

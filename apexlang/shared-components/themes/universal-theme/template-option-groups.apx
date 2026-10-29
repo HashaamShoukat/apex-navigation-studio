@@ -1,0 +1,167 @@
+templateOptionGroup ns-design (
+    templateType: list
+    name: Design
+    sequence: 5
+    settings {
+        nullText: Clean
+    }
+    help {
+        helpText: The overall look of the menu and the header bar. Accent Color, Color Scheme, Density and Badges still change it.
+    }
+)
+
+templateOptionGroup ns-accent (
+    templateType: list
+    name: Accent Color
+    sequence: 10
+    settings {
+        nullText: Theme Color
+    }
+    help {
+        helpText: The colour of the current page, badges and focus rings. Theme Color uses your theme style's primary colour.
+    }
+)
+
+templateOptionGroup ns-scheme (
+    templateType: list
+    name: Color Scheme
+    sequence: 20
+    settings {
+        nullText: Light
+    }
+    help {
+        helpText: Midnight and Terminal are always dark.
+    }
+)
+
+templateOptionGroup ns-collapse (
+    templateType: list
+    name: Collapse Mode
+    sequence: 30
+    help {
+        helpText: What the menu shows when it is collapsed on large screens. Phones always hide it.
+    }
+)
+
+templateOptionGroup ns-header (
+    templateType: list
+    name: Header
+    sequence: 40
+    settings {
+        nullText: Match the Menu
+    }
+    help {
+        helpText: Match the Menu colours the header bar like the menu. Keep Theme Header leaves it to your theme style.
+    }
+)
+
+templateOptionGroup ns-density (
+    templateType: list
+    name: Density
+    sequence: 50
+    settings {
+        nullText: Comfortable
+    }
+)
+
+templateOptionGroup ns-badge (
+    templateType: list
+    name: Badges
+    sequence: 60
+    settings {
+        nullText: Accent
+    }
+    help {
+        helpText: Badges come from labels like "Inbox [12]". Dot shows a dot without the number.
+    }
+)
+
+templateOptionGroup ns-width (
+    templateType: list
+    name: Width
+    sequence: 70
+    settings {
+        nullText: Regular
+    }
+    advanced {
+        isAdvancedOption: true
+    }
+)
+
+templateOptionGroup ns-bar-style (
+    templateType: list
+    name: Style
+    sequence: 5
+    settings {
+        nullText: Icon and Label
+    }
+    help {
+        helpText: Labels show from 640px up; phones show icons only.
+    }
+)
+
+templateOptionGroup ns-bar-accent (
+    templateType: list
+    name: Accent Color
+    sequence: 10
+    settings {
+        nullText: Match the Menu
+    }
+    help {
+        helpText: Match the Menu uses the accent of Modern Side / Top Navigation, or your theme colour.
+    }
+)
+
+templateOptionGroup ns-bar-badge (
+    templateType: list
+    name: Badges
+    sequence: 20
+    settings {
+        nullText: Accent
+    }
+    help {
+        helpText: Badges come from list entry attribute 1.
+    }
+)
+
+templateOptionGroup ns-top-design (
+    templateType: list
+    name: Design
+    sequence: 5
+    settings {
+        nullText: Underline
+    }
+    help {
+        helpText: The look of the header and the menu bar.
+    }
+)
+
+templateOptionGroup ns-top-accent (
+    templateType: list
+    name: Accent Color
+    sequence: 10
+    settings {
+        nullText: Theme Color
+    }
+)
+
+templateOptionGroup ns-top-scheme (
+    templateType: list
+    name: Color Scheme
+    sequence: 20
+    settings {
+        nullText: Light
+    }
+    help {
+        helpText: Midnight is always dark.
+    }
+)
+
+templateOptionGroup ns-top-header (
+    templateType: list
+    name: Header
+    sequence: 30
+    settings {
+        nullText: Match the Menu
+    }
+)

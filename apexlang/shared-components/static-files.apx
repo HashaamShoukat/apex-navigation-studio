@@ -1,0 +1,95 @@
+file "gallery/bold-amber.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/clean-dark-cyan.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/clean-indigo.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/editorial.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/floating-dark-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/floating-ocean.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/glass-ocean-collapsed.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/glass-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/gradient-indigo.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/gradient-tangerine.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/inset-dark-emerald.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/inset-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/midnight-rose-collapsed.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/midnight-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/outline-emerald.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/rail-emerald.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/soft-indigo.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/terminal.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-glass-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-gradient-ocean.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-midnight-violet.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-pills-rose.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-segmented-emerald.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/top-underline-indigo.jpg" (
+    mimeType: image/jpeg
+)
