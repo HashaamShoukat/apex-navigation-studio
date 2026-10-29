@@ -40,7 +40,8 @@ background: linear-gradient(135deg, var(--ns-a), var(--ns-a2)); box-shadow: inse
 .ns-TopNav .t-Header-nav .a-Icon.icon-menu-split-drop-down::before { content: ""; width: .4375rem; height: .4375rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); opacity: .75; }
 .ns-TopBadge { display: inline-block; margin-inline-start: .375rem; min-width: 1.125rem; padding: 0 .3125rem; border-radius: 999px; background: var(--ns-hb-bg); color: var(--ns-hb-fg);
 font-size: .6875rem; font-weight: 600; line-height: 1.125rem; text-align: center; vertical-align: 1px; font-variant-numeric: tabular-nums; }
-.ns-TopNav .a-Menu.a-Menu--top, .ns-TopNav .a-MenuBar-item--overflow .a-Menu { border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px rgb(15 23 42 / .08); }
+.ns-TopNav .a-Menu { padding: 0; border: 0; box-shadow: none; background: none; }
+.ns-TopNav .a-Menu > .a-Menu-content { border: 0; border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px light-dark(rgb(15 23 42 / .08), rgb(255 255 255 / .1)); }
 .ns-TopNav .a-Menu .a-Menu-item { border-radius: .5rem; }
 .ns-TopNav .a-Menu .a-Menu-item.a-Menu--current > .a-Menu-inner { color: var(--ns-ink); font-weight: 600; }
 .ns-Top--pills { --ns-cur-bg: light-dark(color-mix(in srgb, var(--ns-a) 11%, #fff), color-mix(in srgb, var(--ns-a) 28%, #15171c)); --ns-r: 999px; }

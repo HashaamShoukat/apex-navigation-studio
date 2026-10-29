@@ -56,7 +56,8 @@ color: var(--ns-hb-fg, var(--nb-on)); font-size: .6875rem; font-weight: 700; let
 .ns-Bar .ns-SearchBtn kbd { display: inline; padding: 0 .3125rem; border-radius: .3125rem; box-shadow: inset 0 0 0 1px var(--nb-line); font: inherit; font-size: .625rem; font-weight: 600; line-height: 1.125rem; }
 .ns-Bar:not(.ns-Bar--icons) .ns-SearchItem { margin-inline-end: .5rem; }
 }
-.t-NavigationBar-menu.a-Menu { --a-menu-border-radius: .75rem; border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px rgb(15 23 42 / .08); }
+.t-NavigationBar-menu.a-Menu { --a-menu-border-radius: .75rem; padding: 0; border: 0; box-shadow: none; background: none; }
+.t-NavigationBar-menu.a-Menu > .a-Menu-content { border: 0; border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px light-dark(rgb(15 23 42 / .08), rgb(255 255 255 / .1)); }
 .t-NavigationBar-menu.a-Menu .a-Menu-item { border-radius: .5rem; }
 @media (prefers-reduced-motion: reduce) { .ns-Bar .t-Button-badge { animation: none !important; } }
 @media (forced-colors: active) { .ns-Bar .t-Button-badge, .ns-Avatar { border: 1px solid CanvasText; } }

@@ -53,8 +53,10 @@
 /* badges: "Inbox [12]" */
 .ns-TopBadge { display: inline-block; margin-inline-start: .375rem; min-width: 1.125rem; padding: 0 .3125rem; border-radius: 999px; background: var(--ns-hb-bg); color: var(--ns-hb-fg);
   font-size: .6875rem; font-weight: 600; line-height: 1.125rem; text-align: center; vertical-align: 1px; font-variant-numeric: tabular-nums; }
-/* the drop-down menus */
-.ns-TopNav .a-Menu.a-Menu--top, .ns-TopNav .a-MenuBar-item--overflow .a-Menu { border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px rgb(15 23 42 / .08); }
+/* the drop-down menus: one frame - Universal Theme draws the panel on .a-Menu-content, so the frame goes there and the
+   outer .a-Menu stays bare (a frame on both shows a panel inside a panel) */
+.ns-TopNav .a-Menu { padding: 0; border: 0; box-shadow: none; background: none; }
+.ns-TopNav .a-Menu > .a-Menu-content { border: 0; border-radius: .75rem; padding: .25rem; box-shadow: 0 12px 32px -8px rgb(15 23 42 / .28), 0 0 0 1px light-dark(rgb(15 23 42 / .08), rgb(255 255 255 / .1)); }
 .ns-TopNav .a-Menu .a-Menu-item { border-radius: .5rem; }
 .ns-TopNav .a-Menu .a-Menu-item.a-Menu--current > .a-Menu-inner { color: var(--ns-ink); font-weight: 600; }
 
