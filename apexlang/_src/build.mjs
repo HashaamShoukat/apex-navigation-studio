@@ -97,6 +97,9 @@ const UT_PREPAINT = `(() => {
 
 async function sideTemplate() {
     const before = `${cssFile("side-nav", minCss(read("side-nav.css")))}
+<script #APEX_CSP_NONCE_ATTRIBUTE#>
+${await minJs(read("side-nav-flyout.js"), "/* Flyout: source in Navigation Studio _src/side-nav-flyout.js */\n")}
+</script>
 <div class="t-Body-nav" id="t_Body_nav" role="navigation" aria-label="&"APP_TEXT$APEX.TEMPLATE.APPLICATION".">
   <div class="a-TreeView t-TreeNav #COMPONENT_CSS_CLASSES#" id="t_TreeNav" data-id="#PARENT_STATIC_ID#_tree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL".">
     <ul>`;
@@ -166,3 +169,11 @@ const extra = [];
 extra.push(...await (await import("./build-bar-top.mjs")).build({ read, minCss, minJs, cssFile, field, block, options, THEME, BAR, TOP }));
 fs.writeFileSync(THEME + "template-option-groups.apx", groups([SIDE, ...extra]));
 console.log(LIMITS.join("\n"));
+
+// static-files.apx: every file under static-files/ (gallery thumbnails, the templates' CSS)
+const SF = ROOT + "shared-components/static-files/";
+const MIME = { ".jpg": "image/jpeg", ".png": "image/png", ".css": "text/css", ".svg": "image/svg+xml", ".js": "text/javascript" };
+const files = fs.readdirSync(SF, { recursive: true }).map(f => f.split("\\").join("/")).filter(f => fs.statSync(SF + f).isFile()).sort();
+fs.writeFileSync(ROOT + "shared-components/static-files.apx",
+    files.map(f => `file "${f}" (\n    mimeType: ${MIME[f.slice(f.lastIndexOf("."))] || "application/octet-stream"}\n)\n`).join("\n"));
+console.log("static-files.apx", files.length, "files");

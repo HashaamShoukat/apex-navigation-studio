@@ -28,6 +28,8 @@ export const SIDE = {
           options: ACCENTS.map(([id, name]) => ["ns-Accent--" + id, name]) },
         { id: "ns-scheme", name: "Color Scheme", seq: 20, nul: "Light", help: "Midnight and Terminal are always dark.",
           options: [["ns-Scheme--dark", "Dark"], ["ns-Scheme--auto", "Follow Device Setting"]] },
+        { id: "ns-sub", name: "Sub-menus", seq: 25, nul: "Expand in Place", help: "How the sub-levels of an entry open. Flyout shows them in a panel beside the menu - on hover, on a tap on the arrow, or with the Right arrow key - also on the collapsed icon rail. Phones always expand in place.",
+          options: [["ns-Sub--flyout", "Flyout"]] },
         { id: "ns-collapse", name: "Collapse Mode", seq: 30, help: "What the menu shows when it is collapsed on large screens. Phones always hide it.",
           options: [["js-navCollapsed--default", "Icons"], ["js-navCollapsed--hidden", "Hidden"]] },
         { id: "ns-header", name: "Header", seq: 40, nul: "Match the Menu", help: "Match the Menu colours the header bar like the menu. Keep Theme Header leaves it to your theme style.",
@@ -49,7 +51,7 @@ export const SIDE = {
 };
 
 export const BAR = {
-    defaults: ["ns-Bar--avatar", "ns-Bar--search"],
+    defaults: ["ns-Bar--avatar"],
     comment: "Modern Navigation Bar (Navigation Studio) - a copy of Universal Theme's Navigation Bar. Takes the accent and header colours of Modern Side Navigation / Modern Top Navigation. List entry attribute 1 = badge value, attribute 2 = list item CSS classes (ns-User on the user entry shows the initials avatar; icon-only, no-icon as in Universal Theme). Optional text message MODERN_NAV.SEARCH.",
     groups: [
         { id: "ns-bar-style", name: "Style", seq: 5, nul: "Icon and Label", help: "Labels show from 640px up; phones show icons only.",
@@ -61,7 +63,7 @@ export const BAR = {
     ],
     singles: [
         ["ns-Bar--avatar", "User Avatar", 100, "The entry with list item CSS class ns-User (attribute 2) shows the initials of its label instead of the icon."],
-        ["ns-Bar--search", "Search Button", 110, "A Search button that opens the menu search of Modern Side Navigation (when Menu Search is on)."],
+        ["ns-Bar--search", "Search Button", 110, "A Search button that opens the menu search of Modern Side Navigation (when Menu Search is on). Shown only while the menu is collapsed or hidden - when it is expanded, its search field is already in view."],
         ["ns-Bar--pulse", "Pulsing Badges", 120, "A soft pulse around badges. Off for users who prefer reduced motion."],
         ["js-menu-callout", "Display Menu Callout", 130, "Display a callout arrow on the drop-down menus."]
     ]

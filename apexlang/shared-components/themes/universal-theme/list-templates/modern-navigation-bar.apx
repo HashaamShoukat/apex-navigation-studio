@@ -4,7 +4,6 @@ listTemplate modern-navigation-bar (
     templateOptions {
         default: [
             ns-Bar--avatar
-            ns-Bar--search
         ]
     }
     list {
@@ -240,7 +239,7 @@ listTemplate modern-navigation-bar (
             cssClasses: ns-Bar--search
         }
         help {
-            helpText: A Search button that opens the menu search of Modern Side Navigation (when Menu Search is on).
+            helpText: A Search button that opens the menu search of Modern Side Navigation (when Menu Search is on). Shown only while the menu is collapsed or hidden - when it is expanded, its search field is already in view.
         }
     )
 

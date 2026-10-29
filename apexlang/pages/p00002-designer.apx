@@ -15,12 +15,12 @@ page 2 (
             // Designer: every choice is a template option (a CSS class) of Modern Side / Top Navigation or Modern Navigation Bar.
             // The preview iframe shows the real demo page; the classes travel in its URL hash (#ns=<menu>&nb=<bar>&nsx=<state>).
             (function ($) {
-                var DEF = { side: "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar".split(" "), top: "js-tabLike".split(" "), bar: "ns-Bar--avatar ns-Bar--search".split(" ") };
+                var DEF = { side: "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar".split(" "), top: "js-tabLike".split(" "), bar: "ns-Bar--avatar".split(" ") };
                 // t: side / top / nav (both menus) / bar
                 var SELECTS = [
                     { item: "P2_DESIGN", group: "Design", t: "side" }, { item: "P2_TOP_DESIGN", group: "Design", t: "top" },
                     { item: "P2_ACCENT", group: "Accent Color", t: "nav" }, { item: "P2_SCHEME", group: "Color Scheme", t: "nav" },
-                    { item: "P2_COLLAPSE", group: "Collapse Mode", t: "side" }, { item: "P2_HEADER", group: "Header", t: "nav" },
+                    { item: "P2_SUB", group: "Sub-menus", t: "side" }, { item: "P2_COLLAPSE", group: "Collapse Mode", t: "side" }, { item: "P2_HEADER", group: "Header", t: "nav" },
                     { item: "P2_DENSITY", group: "Density", t: "side" }, { item: "P2_BADGE", group: "Badges", t: "side" }, { item: "P2_WIDTH", group: "Width", t: "side" },
                     { item: "P2_BAR_STYLE", group: "Style", t: "bar" }, { item: "P2_BAR_ACCENT", group: "Accent Color", t: "bar" }, { item: "P2_BAR_BADGE", group: "Badges", t: "bar" }
                 ];
@@ -94,7 +94,7 @@ page 2 (
                 function render() {
                     var c = chosen(), want = pageUrl(), state = c.pos === "side" && $v("P2_STATE") === "COLLAPSED" ? "collapsed" : "expanded",
                         hash = "#ns=" + encodeURIComponent(c.nav.join(" ")) + "&nb=" + encodeURIComponent(c.bar.join(" ")) + "&nsx=" + state,
-                        reloadKey = want + "|" + $v("P2_COLLAPSE");
+                        reloadKey = want + "|" + $v("P2_COLLAPSE") + "|" + $v("P2_SUB");
                     relevance(c);
                     // a new page or Collapse Mode needs a fresh load; everything else follows the hash without a reload
                     if (reloadKey !== lastReload) {
@@ -377,6 +377,32 @@ page 2 (
         }
         layout {
             sequence: 20
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_SUB (
+        type: selectList
+        label {
+            label: Sub-menus
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Flyout;ns-Sub--flyout
+            nullDisplayValue: Expand in Place
+        }
+        layout {
+            sequence: 28
             region: @options
             slot: regionBody
             alignment: left
@@ -798,7 +824,7 @@ page 2 (
         }
         default {
             type: static
-            staticValue: Y
+            staticValue: N
         }
         sessionState {
             storage: request

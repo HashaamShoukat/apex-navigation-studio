@@ -1,7 +1,7 @@
 // Ready-made looks for the Gallery. side / top = Modern Side / Top Navigation options, bar = Modern Navigation Bar options,
 // state = how the side menu is shown in the thumbnail. Thumbnails: static files gallery/<id>.jpg (qa/thumbs.cjs).
 export const SIDE_DEFAULTS = "js-navCollapsed--default ns-Fx--tips ns-Fx--search ns-Fx--tabbar";
-export const BAR_DEFAULTS = "ns-Bar--avatar ns-Bar--search";
+export const BAR_DEFAULTS = "ns-Bar--avatar";
 export const TOP_DEFAULTS = "js-tabLike";
 
 export const PRESETS = [
@@ -23,6 +23,8 @@ export const PRESETS = [
     ["gradient-tangerine", "Gradient - Tangerine", "side light", "ns-Design--gradient ns-Accent--tangerine", "ns-Bar--pills"],
     ["floating-dark-violet", "Floating - Dark, Compact", "side dark", "ns-Design--floating ns-Accent--violet ns-Scheme--dark ns-Density--compact", "ns-Bar--pills"],
     ["glass-ocean-collapsed", "Glass - Collapsed", "side light collapsed", "ns-Design--glass ns-Accent--ocean", "ns-Bar--pills", "collapsed"],
+    ["floating-flyout", "Floating - Flyout", "side light flyout", "ns-Design--floating ns-Accent--indigo ns-Sub--flyout", "ns-Bar--pills"],
+    ["midnight-flyout", "Midnight - Flyout", "side dark collapsed flyout", "ns-Design--midnight ns-Accent--cyan ns-Sub--flyout", "ns-Bar--icons", "collapsed"],
     ["top-underline-indigo", "Top - Underline", "top light", "ns-Accent--indigo", ""],
     ["top-pills-rose", "Top - Pills", "top light", "ns-Top--pills ns-Accent--rose", "ns-Bar--pills"],
     ["top-segmented-emerald", "Top - Segmented", "top light", "ns-Top--segmented ns-Accent--emerald", "ns-Bar--icons"],

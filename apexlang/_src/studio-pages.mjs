@@ -92,7 +92,7 @@ const galleryLoad = `(function ($) {
     box.innerHTML = NS_PRESETS.map(function (p) {
         return '<article class="nvs-Card" data-tags="' + esc(p.tags) + '">' +
             '<a class="nvs-Card-shot" href="' + esc(designer + look(p)) + '" aria-label="' + esc("Customize " + p.name) + '"><img src="' + esc(files + "gallery/" + p.id + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
-            '<div class="nvs-Card-body"><h3 class="nvs-Card-title">' + esc(p.name) + '</h3><span class="nvs-Card-type">' + (p.pos === "top" ? "Top menu" : "Side menu") + (/collapsed/.test(p.tags) ? " - collapsed" : "") + '</span>' +
+            '<div class="nvs-Card-body"><h3 class="nvs-Card-title">' + esc(p.name) + '</h3><span class="nvs-Card-type">' + (p.pos === "top" ? "Top menu" : "Side menu") + (/collapsed/.test(p.tags) ? " - collapsed" : "") + (/flyout/.test(p.tags) ? " - flyout" : "") + '</span>' +
             '<div class="nvs-Card-actions"><a class="t-Button t-Button--small t-Button--hot" href="' + esc(designer + look(p)) + '"><span class="t-Button-label">Customize</span></a>' +
             '<a class="t-Button t-Button--small" target="_blank" rel="noopener" href="' + esc(demo(p) + full(p)) + '"><span class="t-Button-label">Full Screen</span></a></div></div></article>';
     }).join("");
@@ -141,6 +141,7 @@ const galleryHero = `<div class="nvs-Hero">
   <button type="button" data-f="light" aria-pressed="false">Light</button>
   <button type="button" data-f="dark" aria-pressed="false">Dark</button>
   <button type="button" data-f="collapsed" aria-pressed="false">Collapsed</button>
+  <button type="button" data-f="flyout" aria-pressed="false">Flyout</button>
 </div>`;
 const gallery = [pageHead(1, "Gallery", "HOME", "Navigation Studio - Gallery"), js(galleryFn, galleryLoad), cssBlock(galleryCss), pageSec, "",
     staticRegion("hero", "Navigation Studio", 10, galleryHero), "",
@@ -158,7 +159,7 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     var SELECTS = [
         { item: "P2_DESIGN", group: "Design", t: "side" }, { item: "P2_TOP_DESIGN", group: "Design", t: "top" },
         { item: "P2_ACCENT", group: "Accent Color", t: "nav" }, { item: "P2_SCHEME", group: "Color Scheme", t: "nav" },
-        { item: "P2_COLLAPSE", group: "Collapse Mode", t: "side" }, { item: "P2_HEADER", group: "Header", t: "nav" },
+        { item: "P2_SUB", group: "Sub-menus", t: "side" }, { item: "P2_COLLAPSE", group: "Collapse Mode", t: "side" }, { item: "P2_HEADER", group: "Header", t: "nav" },
         { item: "P2_DENSITY", group: "Density", t: "side" }, { item: "P2_BADGE", group: "Badges", t: "side" }, { item: "P2_WIDTH", group: "Width", t: "side" },
         { item: "P2_BAR_STYLE", group: "Style", t: "bar" }, { item: "P2_BAR_ACCENT", group: "Accent Color", t: "bar" }, { item: "P2_BAR_BADGE", group: "Badges", t: "bar" }
     ];
@@ -232,7 +233,7 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     function render() {
         var c = chosen(), want = pageUrl(), state = c.pos === "side" && $v("P2_STATE") === "COLLAPSED" ? "collapsed" : "expanded",
             hash = "#ns=" + encodeURIComponent(c.nav.join(" ")) + "&nb=" + encodeURIComponent(c.bar.join(" ")) + "&nsx=" + state,
-            reloadKey = want + "|" + $v("P2_COLLAPSE");
+            reloadKey = want + "|" + $v("P2_COLLAPSE") + "|" + $v("P2_SUB");
         relevance(c);
         // a new page or Collapse Mode needs a fresh load; everything else follows the hash without a reload
         if (reloadKey !== lastReload) {
@@ -443,6 +444,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Navigation Studio - Desig
     sel("P2_TOP_DESIGN", "Design", 6, TOP_DESIGNS.slice(1).map(([id, n]) => `${n};ns-Top--${id}`).join(","), "Underline", ""), "",
     sel("P2_ACCENT", "Accent Color", 10, ACC, "Theme Color", "ns-Accent--indigo"), "",
     sel("P2_SCHEME", "Color Scheme", 20, "Dark;ns-Scheme--dark,Follow Device Setting;ns-Scheme--auto", "Light", ""), "",
+    sel("P2_SUB", "Sub-menus", 28, "Flyout;ns-Sub--flyout", "Expand in Place", ""), "",
     sel("P2_COLLAPSE", "Collapse Mode", 30, "Icons;js-navCollapsed--default,Hidden;js-navCollapsed--hidden", false, "js-navCollapsed--default"), "",
     sel("P2_HEADER", "Header", 40, "Keep Theme Header;ns-Header--theme", "Match the Menu", ""), "",
     sel("P2_DENSITY", "Density", 50, "Compact;ns-Density--compact,Spacious;ns-Density--spacious", "Comfortable", ""), "",
@@ -458,7 +460,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Navigation Studio - Desig
     sel("P2_BAR_ACCENT", "Navigation Bar Accent", 91, ACC, "Match the Menu", ""), "",
     sel("P2_BAR_BADGE", "Navigation Bar Badges", 92, "Red;ns-Bar--badgeRed,Dot;ns-Bar--badgeDot", "Accent", ""), "",
     sw("P2_AVATAR", "User Avatar", 93, "Y", true), "",
-    sw("P2_BAR_SEARCH", "Search Button", 94, "Y", false), "",
+    sw("P2_BAR_SEARCH", "Search Button", 94, "N", false), "",
     sw("P2_PULSE", "Pulsing Badges", 95, "N", true), "",
     radio("P2_DEVICE", "Preview On", 10, "Desktop;DESKTOP,Tablet;TABLET,Phone;PHONE", "DESKTOP"), "",
     radio("P2_STATE", "Menu", 15, "Expanded;EXPANDED,Collapsed;COLLAPSED", "EXPANDED"), "",
@@ -532,14 +534,16 @@ const howHtml = `<div class="nvs-Doc">
 <table>
   <tr><th>In the list</th><th>What it does</th></tr>
   <tr><td>Label <code>Inbox [12]</code></td><td>A badge with 12 (side and top menu; Universal Theme's own syntax). Use a substitution for a live count: <code>Inbox [&amp;P0_UNREAD.]</code>.</td></tr>
-  <tr><td>Attribute 3</td><td>Side menu: a section heading above the entry, e.g. <em>Reports</em>. A divider line when the menu is collapsed.</td></tr>
+  <tr><td>Attribute 3</td><td>Side menu: a section heading above the entry. Type the heading (e.g. <em>Reports</em>) in the entry's <strong>User Defined Attributes &gt; 3</strong> (Shared Components &gt; Lists &gt; your list &gt; the entry). It is shown above that entry and starts a new group; when the menu is collapsed it becomes a divider line. The demo menu's WORKSPACE, SALES, INSIGHTS and ADMIN, and the NAVIGATION STUDIO and DEMOS headings of this app's own menu, are made this way.</td></tr>
   <tr><td>Navigation bar: Attribute 1</td><td>The badge value of a navigation bar entry.</td></tr>
   <tr><td>Navigation bar: Attribute 2</td><td>List item CSS classes. <code>ns-User</code> shows the initials of the label in a round avatar (option User Avatar); <code>icon-only</code> and <code>no-icon</code> work as in Universal Theme.</td></tr>
 </table>
 
 <h3>5. What the options do</h3>
 <ul>
-  <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it; the navigation bar's <em>Search Button</em> opens it too.</li>
+  <li><strong>Menu Search</strong> - a field above the side menu that finds every entry, sub-levels too. <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd>) or <kbd>/</kbd> opens it.</li>
+  <li><strong>Search Button</strong> (navigation bar, off by default) - a button that opens that search field. It shows only while the side menu is collapsed or hidden; when the menu is expanded the field is already in view.</li>
+  <li><strong>Sub-menus: Flyout</strong> - sub-levels open in a panel beside the menu instead of expanding in place: on hover, with a tap on the arrow, or with the Right arrow key (Up / Down move inside it, Left or Escape closes it). It works on the collapsed icon rail too. Phones always expand in place.</li>
   <li><strong>Tooltips When Collapsed</strong> - the entry's name next to the icon on the collapsed rail (mouse and keyboard).</li>
   <li><strong>Phone Bottom Bar</strong> - on phones the first four entries and a Menu button sit in a bar at the bottom, in reach of the thumb.</li>
   <li><strong>Header: Match the Menu</strong> - the header bar takes the menu's colours; <em>Keep Theme Header</em> leaves it to your theme style.</li>
