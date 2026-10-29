@@ -4,6 +4,8 @@
 
 Modern looks for the APEX navigation - **the side navigation menu, the top menu and the navigation bar**. 12 side menu designs, 6 top menu designs, a navigation bar that matches them, light and dark. Every look is a template option: nothing to code.
 
+**[Live demo](https://oracleapex.com/ords/r/hashaam-admin/navigation-studio/home)** - browse the gallery and try every option in the Designer (no sign-in needed).
+
 ![Navigation Studio preview](docs/images/preview.gif)
 
 Navigation Studio is a small APEX application: a **Gallery** of ready-made looks, a **Designer** that previews every option live on phone, tablet and desktop and hands you the options as APEXlang, demo pages with a long menu, and three **list templates** that you copy into your own application:
