@@ -33,7 +33,7 @@ prompt APPLICATION 212 - Navigation Studio
 -- Application Export:
 --   Application:     212
 --   Name:            Navigation Studio
---   Date and Time:   12:58 Thursday October 29, 2026
+--   Date and Time:   15:59 Monday November 2, 2026
 --   Exported By:     WKSP_FMD
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -104,7 +104,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'Navigation Studio'
 ,p_file_prefix=>nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
-,p_files_version=>2461343125800
+,p_files_version=>2461347154250
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -9192,7 +9192,7 @@ wwv_flow_imp_shared.create_theme(
 ,p_default_required_label=>1610598484065263269
 ,p_default_navbar_list_template=>wwv_flow_imp.id(11831897030985637)
 ,p_file_prefix=>nvl(wwv_flow_application_install.get_static_theme_file_prefix(42),'#APEX_FILES#themes/theme_42/26.1/')
-,p_files_version=>2461343125800
+,p_files_version=>2461347154250
 ,p_icon_library=>'FONTAPEX'
 ,p_javascript_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.stickyWidget#MIN#.js?v=#APEX_VERSION#',
@@ -9707,21 +9707,22 @@ wwv_flow_imp_shared.create_list_template(
 ,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'apex.jQuery(''body'').addClass(''t-PageBody--leftNav'');',
 '// Modern Side Navigation: source in Navigation Studio _src/side-nav.js',
-'!function(e){const t=document.body,a=e("#t_TreeNav"),n=a[0],s=e=>t.classList.contains(e),o=(e,t)=>{const a=apex.lang.getMessage(e);return a&&a!==e?a:t};if(!n)return;const r=()=>(window.nsSections||[]).forEach(((e,t)=>{const a=n.querySelectorAll(":sco'
-||'pe > ul > li.a-TreeView-node--topLevel")[t];a&&e&&a.setAttribute("data-ns-section",e)})),l=()=>{r();const e=document.getElementById("t_Body_nav"),t=n.querySelector(".a-TreeView-row.is-selected");e&&t&&t.getBoundingClientRect().bottom>e.getBoundingCli'
-||'entRect().bottom&&(e.scrollTop+=t.getBoundingClientRect().top-e.getBoundingClientRect().top-e.clientHeight/2)};a.on("treeviewcreate",l),r(),setTimeout(l,0);const i=e(".ns-Search input"),c=e("#ns_results");if(i.length){const n=o("MODERN_NAV.SEARCH","S'
-||unistr('earch menu");i.attr({placeholder:n,"aria-label":n,"aria-controls":"ns_results"}),i.next("kbd").text((/Mac|iP/.test(navigator.platform)?"\2318":"Ctrl ")+"K");let r=null;const l=()=>{if(r)return r;r=[];const e=a.treeView("getNodeAdapter"),t=(a,n)=>{for(let')
-||' s=0;s<(e.childCount(a)||0);s++){const o=e.child(a,s),l=e.getLabel(o).replace(/\s*\[.*?\]\s*$/,""),i=e.getLink(o);i&&r.push({l,href:i,path:n}),t(o,n?n+" / "+l:l)}};return t(e.root(),""),r},p=()=>{const a=i.val().trim().toLowerCase();if(e(".ns-Search"'
-||').toggleClass("has-text",!!a),t.classList.toggle("ns-Searching",!!a),!a)return void c.empty();const n=l().filter((e=>(e.l+" "+e.path).toLowerCase().includes(a))).slice(0,12);c.html(n.length?n.map((e=>''<li><a href="''+apex.util.escapeHTML(e.href)+''">''+'
-||'apex.util.escapeHTML(e.l)+(e.path?"<small>"+apex.util.escapeHTML(e.path)+"</small>":"")+"</a></li>")).join(""):''<li class="ns-None">''+apex.util.escapeHTML(o("MODERN_NAV.NO_MATCH","No matching pages"))+"</li>")};i.on("input",p).on("keydown",(e=>{if("A'
-||'rrowDown"===e.key&&(e.preventDefault(),c.find("a").first().trigger("focus")),"Enter"===e.key){const t=c.find("a")[0];t&&(e.preventDefault(),t.click())}"Escape"===e.key&&(i.val(""),p())})),c.on("keydown","a",(e=>{const t=c.find("a"),a=t.index(e.target'
-||');if("ArrowDown"===e.key||"ArrowUp"===e.key){e.preventDefault();(t[a+("ArrowDown"===e.key?1:-1)]||i[0]).focus()}"Escape"===e.key&&i.trigger("focus")}));const u=()=>{!s("js-navCollapsed")&&s("js-navExpanded")||e("#t_Button_navControl").trigger("click"'
+'!function(e){const t=document.body,n=e("#t_TreeNav"),a=n[0],s=e=>t.classList.contains(e),r=(e,t)=>{const n=apex.lang.getMessage(e);return n&&n!==e?n:t};if(!a)return;const o=()=>(window.nsSections||[]).forEach(((e,t)=>{const n=a.querySelectorAll(":sco'
+||'pe > ul > li.a-TreeView-node--topLevel")[t];n&&e&&n.setAttribute("data-ns-section",e)})),l=()=>{o();const e=document.getElementById("t_Body_nav"),t=a.querySelector(".a-TreeView-row.is-selected");e&&t&&t.getBoundingClientRect().bottom>e.getBoundingCli'
+||'entRect().bottom&&(e.scrollTop+=t.getBoundingClientRect().top-e.getBoundingClientRect().top-e.clientHeight/2)};n.on("treeviewcreate",l),o(),setTimeout(l,0);const i=e(".ns-Search input"),c=e("#ns_results");if(i.length){const a=r("MODERN_NAV.SEARCH","S'
+||unistr('earch menu");i.attr({placeholder:a,"aria-label":a,"aria-controls":"ns_results"}),i.next("kbd").text((/Mac|iP/.test(navigator.platform)?"\2318":"Ctrl ")+"K");let o=null;const l=()=>{if(o)return o;o=[];const e=n.treeView("getNodeAdapter"),t=(n,a)=>{for(let')
+||' s=0;s<(e.childCount(n)||0);s++){const r=e.child(n,s),l=e.getLabel(r).replace(/\s*\[.*?\]\s*$/,""),i=e.getLink(r);i&&o.push({l,href:i,path:a}),t(r,a?a+" / "+l:l)}};return t(e.root(),""),o},p=()=>{const n=i.val().trim().toLowerCase();if(e(".ns-Search"'
+||').toggleClass("has-text",!!n),t.classList.toggle("ns-Searching",!!n),!n)return void c.empty();const a=l().filter((e=>(e.l+" "+e.path).toLowerCase().includes(n))).slice(0,12);c.html(a.length?a.map((e=>''<li><a href="''+apex.util.escapeHTML(e.href)+''">''+'
+||'apex.util.escapeHTML(e.l)+(e.path?"<small>"+apex.util.escapeHTML(e.path)+"</small>":"")+"</a></li>")).join(""):''<li class="ns-None">''+apex.util.escapeHTML(r("MODERN_NAV.NO_MATCH","No matching pages"))+"</li>")};i.on("input",p).on("keydown",(e=>{if("A'
+||'rrowDown"===e.key&&(e.preventDefault(),c.find("a").first().trigger("focus")),"Enter"===e.key){const t=c.find("a")[0];t&&(e.preventDefault(),t.click())}"Escape"===e.key&&(i.val(""),p())})),c.on("keydown","a",(e=>{const t=c.find("a"),n=t.index(e.target'
+||');if("ArrowDown"===e.key||"ArrowUp"===e.key){e.preventDefault();(t[n+("ArrowDown"===e.key?1:-1)]||i[0]).focus()}"Escape"===e.key&&i.trigger("focus")}));const u=()=>{!s("js-navCollapsed")&&s("js-navExpanded")||e("#t_Button_navControl").trigger("click"'
 ||'),setTimeout((()=>i.trigger("focus")),120)};e(".ns-Search").on("click",(()=>{s("js-navCollapsed")&&u()})),e(document).on("keydown",(e=>{const t=/input|textarea|select/i.test(e.target.tagName)||e.target.isContentEditable;(("k"===e.key||"K"===e.key)&&('
-||'e.ctrlKey||e.metaKey)||"/"===e.key&&!t)&&(e.preventDefault(),u())})).on("ns-search",u),t.classList.add("ns-HasSearch")}if(s("ns-Fx--tabbar")){const a=[...n.querySelectorAll(":scope > ul > li.a-TreeView-node--topLevel")].slice(0,4).map((e=>{const t=e.'
-||'querySelector(".a-TreeView-label"),a=e.querySelector(".a-TreeView-content .fa"),n=e.querySelector(".a-TreeView-content").matches(".is-selected, .is-current--top");return''<a href="''+apex.util.escapeHTML(t.getAttribute("href")||"#")+''"''+(n?'' aria-curre'
-||'nt="page"'':"")+''><span class="''+apex.util.escapeHTML(a?a.className:"fa fa-file-o")+''" aria-hidden="true"></span><span>''+apex.util.escapeHTML((s=t)?s.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim():"")+"</span></a>";var s})).join("");e('''
-||'<nav class="ns-TabBar" aria-label="''+apex.util.escapeHTML(o("MODERN_NAV.QUICK_LINKS","Quick links"))+''">''+a+''<button type="button" aria-controls="t_Body_nav"><span class="fa fa-bars" aria-hidden="true"></span><span>''+apex.util.escapeHTML(o("MODERN_NA'
-||'V.MENU","Menu"))+"</span></button></nav>").appendTo(t).on("click","button",(()=>e("#t_Button_navControl").trigger("click")))}}(apex.jQuery);'))
+||'e.ctrlKey||e.metaKey)||"/"===e.key&&!t)&&(e.preventDefault(),u())})).on("ns-search",u),t.classList.add("ns-HasSearch")}if(s("ns-Fx--tabbar")){const n=[...a.querySelectorAll(":scope > ul > li.a-TreeView-node--topLevel")].slice(0,4).map((e=>{const t=e.'
+||'querySelector(".a-TreeView-label"),n=e.querySelector(".a-TreeView-content .fa"),a=e.querySelector(".a-TreeView-content").matches(".is-selected, .is-current--top");return''<a href="''+apex.util.escapeHTML(t.getAttribute("href")||"#")+''"''+(a?'' aria-curre'
+||'nt="page"'':"")+''><span class="''+apex.util.escapeHTML(n?n.className:"fa fa-file-o")+''" aria-hidden="true"></span><span>''+apex.util.escapeHTML((s=t)?s.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim():"")+"</span></a>";var s})).join("");e('''
+||'<nav class="ns-TabBar" aria-label="''+apex.util.escapeHTML(r("MODERN_NAV.QUICK_LINKS","Quick links"))+''">''+n+''<button type="button" aria-controls="t_Body_nav"><span class="fa fa-bars" aria-hidden="true"></span><span>''+apex.util.escapeHTML(r("MODERN_NA'
+||'V.MENU","Menu"))+"</span></button></nav>").appendTo(t).on("click","button",(()=>e("#t_Button_navControl").trigger("click")))}const p=parseInt(getComputedStyle(document.documentElement).getPropertyValue("--js-mq-lg"))||1200;let u=innerWidth;e.event.sp'
+||'ecial.apexwindowresized={trigger:()=>{if(innerWidth===u&&u<p&&s("js-navExpanded"))return!1;u=innerWidth}}}(apex.jQuery);'))
 ,p_theme_id=>42
 ,p_theme_class_id=>19
 ,p_default_template_options=>'js-navCollapsed--default:ns-Fx--tips:ns-Fx--search:ns-Fx--tabbar'
@@ -10618,6 +10619,7 @@ wwv_flow_imp_page.create_page(
 ,p_warn_on_unsaved_changes=>null
 ,p_autocomplete_on_off=>'OFF'
 ,p_protection_level=>'D'
+,p_page_component_map=>'14'
 );
 end;
 /
@@ -10720,6 +10722,7 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
+,p_page_component_map=>'13'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11852144698985847)
@@ -10923,6 +10926,7 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
+,p_page_component_map=>'17'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11852306341985848)
@@ -11463,6 +11467,7 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11855326663985849)
@@ -11584,6 +11589,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856201655985869)
@@ -11730,6 +11736,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856571201985869)
@@ -11791,6 +11798,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856877466985869)
@@ -11852,6 +11860,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857139270985869)
@@ -11913,6 +11922,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857439985985869)
@@ -11974,6 +11984,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857750150985869)
@@ -12035,6 +12046,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858089995985870)
@@ -12096,6 +12108,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858379434985870)
@@ -12157,6 +12170,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858640556985870)
@@ -12218,6 +12232,7 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11833425487985638)
 ,p_nav_list_template_options=>'#DEFAULT#:js-tabLike:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
+,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11859424897985871)

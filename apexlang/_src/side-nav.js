@@ -85,4 +85,14 @@
           apex.util.escapeHTML(msg("MODERN_NAV.MENU", "Menu")) + "</span></button></nav>").appendTo(body)
             .on("click", "button", () => $("#t_Button_navControl").trigger("click"));
     }
+
+    // APEX 26.2: Universal Theme fires apexwindowresized when the title bar changes size, and opening the menu below
+    // --js-mq-lg narrows it - the menu closed again at once on phones. Skip that event while the menu is open and the
+    // window kept its width.
+    const large = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--js-mq-lg")) || 1200;
+    let w = innerWidth;
+    $.event.special.apexwindowresized = { trigger: () => {
+        if (innerWidth === w && w < large && has("js-navExpanded")) { return false; }
+        w = innerWidth;
+    } };
 })(apex.jQuery);
