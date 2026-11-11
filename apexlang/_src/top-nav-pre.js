@@ -4,9 +4,11 @@
   // Navigation Studio designer preview: #ns=<template options>
   const look = () => {
     const m = /[#&]ns=([^&]*)/.exec(location.hash);
-    if (m) {
+    let want;
+    try { want = m && decodeURIComponent(m[1]).split(/[\s,+]+/); } catch (e) { /* a damaged link: keep the page's own look */ }
+    if (want) {
       [...nav.classList].forEach(c => OWN.test(c) && nav.classList.remove(c));
-      decodeURIComponent(m[1]).split(/[\s,+]+/).forEach(c => OWN.test(c) && nav.classList.add(c));
+      want.forEach(c => OWN.test(c) && nav.classList.add(c));
       [...body.classList].forEach(c => /^ns-(?!Bar-|TopNav$)/.test(c) && body.classList.remove(c));
     }
     body.classList.add("ns-TopNav");

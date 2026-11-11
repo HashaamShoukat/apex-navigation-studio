@@ -170,7 +170,15 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
         { item: "P2_AVATAR", css: "ns-Bar--avatar", label: "User Avatar", t: "bar" }, { item: "P2_BAR_SEARCH", css: "ns-Bar--search", label: "Search Button", t: "bar" },
         { item: "P2_PULSE", css: "ns-Bar--pulse", label: "Pulsing Badges", t: "bar" }
     ];
-    var frame = document.getElementById("nvd-frame"), app = frame.getAttribute("data-app"), session = frame.getAttribute("data-session"), lastReload = null;
+    var frame = document.getElementById("nvd-frame"), app = frame.getAttribute("data-app"), session = frame.getAttribute("data-session"), lastReload = null, current = "";
+    // the preview keeps the chosen look when a page finishes loading: a choice made while it was still loading, or
+    // another demo page opened from the menu inside the preview
+    frame.addEventListener("load", function () {
+        try {
+            var l = frame.contentWindow.location;
+            if (current && l.href !== "about:blank" && l.hash !== current) { l.hash = current; }
+        } catch (e) { /* cross-origin: ignore */ }
+    });
     function esc(s) { return apex.util.escapeHTML(String(s)); }
     function pos() { return $v("P2_POSITION") === "TOP" ? "top" : "side"; }
     function on(t) { return t === "nav" || t === "bar" || t === pos(); }
@@ -178,7 +186,10 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
 
     // a look passed from the Gallery: #look=<menu classes>&bar=<bar classes>&pos=side|top&st=expanded|collapsed
     (function fromHash() {
-        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+        var h = location.hash, g = function (k) {
+            var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h);
+            try { return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; /* a damaged link: start from the defaults */ }
+        };
         if (!g("look")) { return; }
         var nav = g("look").split(/\\s+/), bar = (g("bar") || "").split(/\\s+/);
         apex.item("P2_POSITION").setValue(g("pos") === "top" ? "TOP" : "SIDE", null, true);
@@ -233,13 +244,16 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     function render() {
         var c = chosen(), want = pageUrl(), state = c.pos === "side" && $v("P2_STATE") === "COLLAPSED" ? "collapsed" : "expanded",
             hash = "#ns=" + encodeURIComponent(c.nav.join(" ")) + "&nb=" + encodeURIComponent(c.bar.join(" ")) + "&nsx=" + state,
-            reloadKey = want + "|" + $v("P2_COLLAPSE") + "|" + $v("P2_SUB");
+            reloadKey = [want, $v("P2_COLLAPSE"), $v("P2_SUB"), $v("P2_SEARCH"), $v("P2_TABBAR")].join("|");
         relevance(c);
-        // a new page or Collapse Mode needs a fresh load; everything else follows the hash without a reload
+        current = hash;
+        // a new page, Collapse Mode, Sub-menus, Menu Search and Phone Bottom Bar need a fresh load (the menu reads them
+        // once, when it is drawn); everything else follows the hash without a reload
         if (reloadKey !== lastReload) {
-            var was = (frame.getAttribute("src") || "").split("#")[0];
-            frame.setAttribute("src", want + hash);
-            if (was === want) { try { frame.contentWindow.location.reload(); } catch (e) { /* cross-origin: ignore */ } }
+            var was = (frame.getAttribute("src") || "").split("#")[0], l = null;
+            try { l = frame.contentWindow.location; } catch (e) { /* cross-origin: start again from the demo page */ }
+            // same menu position: reload the page the preview is on (it may be another demo page by now) with the new look
+            if (was === want && l && l.href !== "about:blank") { l.hash = hash; l.reload(); } else { frame.setAttribute("src", want + hash); }
         } else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", want + hash); } }
         lastReload = reloadKey;
         var navName = c.pos === "top" ? "Modern Top Navigation" : "Modern Side Navigation";
@@ -268,10 +282,21 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     $(window).on("resize apexwindowresized", fit);
     fit();
     $(document).on("click", ".js-nvd-copy", function () {
-        var t = $(this).attr("data-target");
-        navigator.clipboard.writeText($("#" + t).text()).then(function () { apex.message.showPageSuccess("Copied."); });
+        var el = document.getElementById($(this).attr("data-target")), text = el.textContent;
+        function done() { apex.message.showPageSuccess("Copied."); }
+        // no clipboard access (plain http, or the browser said no): select the text so Ctrl+C takes it
+        function manual() {
+            var r = document.createRange(), ok = false;
+            r.selectNodeContents(el);
+            getSelection().removeAllRanges();
+            getSelection().addRange(r);
+            try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+            if (ok) { done(); } else { apex.message.alert("The browser did not allow copying. The text is selected - press Ctrl+C (Cmd+C)."); }
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, manual); } else { manual(); }
     });
-    $(document).on("click", ".js-nvd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
+    // the look as chosen now (the iframe's src attribute only knows the look of its last full load)
+    $(document).on("click", ".js-nvd-open", function () { window.open(pageUrl() + current, "_blank"); });
     render();
 })(apex.jQuery);`;
 const designerCss = `.nvd-Stage { display: flex; justify-content: center; align-items: center; height: min(80vh, 780px); min-height: 520px; overflow: hidden; border-radius: 12px;

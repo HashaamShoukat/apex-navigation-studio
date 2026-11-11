@@ -12,5 +12,6 @@ const { chromium } = require("playwright");
   await p.keyboard.press("Escape"); await p.focus("#t_MenuNav_3i"); await p.keyboard.press("ArrowDown"); await p.waitForTimeout(500);
   console.log("after ArrowDown on label:", await vis());
   console.log("errors:", errs);
+  if (errs.length) { process.exitCode = 1; }
   await b.close();
 })();

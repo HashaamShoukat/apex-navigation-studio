@@ -43,5 +43,6 @@ const D = "js-navCollapsed--default+ns-Fx--tips+ns-Fx--search+ns-Sub--flyout";
   console.log("phone tap arrow:", await box(p), "| expanded in place:", await p.evaluate(() => { const u = document.querySelector("#t_TreeNav_3 > ul"); return !!u && getComputedStyle(u).display !== "none"; }));
   await p.close();
   console.log("errors:", errs.length ? errs : "none");
+  if (errs.length) { process.exitCode = 1; }
   await b.close();
 })();

@@ -33,5 +33,6 @@ const { chromium } = require("playwright");
   await p.selectOption("#P2_DEVICE", "PHONE"); await p.waitForTimeout(800);
   await p.screenshot({ path: __dirname + "/out/mock-designer-side.png" });
   console.log("errors:", errs.length ? errs : "none");
+  if (errs.length || !cards || imgs < cards || !shown) { process.exitCode = 1; }
   await b.close();
 })();

@@ -85,7 +85,7 @@
       const links = [...box.querySelectorAll("a")], i = links.indexOf(e.target);
       if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); (links[i + (e.key === "ArrowDown" ? 1 : -1)] || links[e.key === "ArrowDown" ? 0 : links.length - 1]).focus(); }
       if (e.key === "Escape" || e.key === (dir > 0 ? "ArrowLeft" : "ArrowRight")) { e.preventDefault(); close(true); }
-    }
+    } else if (owner && e.key === "Escape") { close(); }
   });
   add("focusout", e => { if (box && box.contains(e.target) && !box.contains(e.relatedTarget)) { close(); } });
   add("scroll", e => { if (owner && !(box && box.contains(e.target))) { close(); } });

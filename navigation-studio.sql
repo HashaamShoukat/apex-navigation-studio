@@ -33,7 +33,7 @@ prompt APPLICATION 212 - Navigation Studio
 -- Application Export:
 --   Application:     212
 --   Name:            Navigation Studio
---   Date and Time:   15:59 Monday November 2, 2026
+--   Date and Time:   08:02 Wednesday November 11, 2026
 --   Exported By:     WKSP_FMD
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -104,7 +104,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'Navigation Studio'
 ,p_file_prefix=>nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
-,p_files_version=>2461347154250
+,p_files_version=>2461356080020
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -9192,7 +9192,7 @@ wwv_flow_imp_shared.create_theme(
 ,p_default_required_label=>1610598484065263269
 ,p_default_navbar_list_template=>wwv_flow_imp.id(11831897030985637)
 ,p_file_prefix=>nvl(wwv_flow_application_install.get_static_theme_file_prefix(42),'#APEX_FILES#themes/theme_42/26.1/')
-,p_files_version=>2461347154250
+,p_files_version=>2461356080020
 ,p_icon_library=>'FONTAPEX'
 ,p_javascript_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.stickyWidget#MIN#.js?v=#APEX_VERSION#',
@@ -9426,8 +9426,8 @@ wwv_flow_imp_shared.create_list_template(
 '</ul>',
 '<script #APEX_CSP_NONCE_ATTRIBUTE#>',
 '/* Modern Navigation Bar: source in Navigation Studio _src/nav-bar-pre.js */',
-'(()=>{const s=document.currentScript.previousElementSibling,e=/^(ns-(Bar|Accent)-|js-menu)/,t=()=>{const t=/[#&]nb=([^&]*)/.exec(location.hash);t&&s&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),decodeURIComponent(t[1]).split(/[\s'
-||',+]+/).forEach((t=>e.test(t)&&s.classList.add(t))))};t(),window.addEventListener("hashchange",t)})();',
+'(()=>{const t=document.currentScript.previousElementSibling,e=/^(ns-(Bar|Accent)-|js-menu)/,s=()=>{const s=/[#&]nb=([^&]*)/.exec(location.hash);if(!s||!t)return;let n;try{n=decodeURIComponent(s[1]).split(/[\s,+]+/)}catch(t){return}[...t.classList].fo'
+||'rEach((s=>e.test(s)&&t.classList.remove(s))),n.forEach((s=>e.test(s)&&t.classList.add(s)))};s(),window.addEventListener("hashchange",s)})();',
 '</script>'))
 ,p_before_sub_list=>'<div class="t-NavigationBar-menu u-DisplayNone" id="menu_#PARENT_LIST_ITEM_ID#"><ul>'
 ,p_after_sub_list=>'</ul></div></li>'
@@ -9707,22 +9707,21 @@ wwv_flow_imp_shared.create_list_template(
 ,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'apex.jQuery(''body'').addClass(''t-PageBody--leftNav'');',
 '// Modern Side Navigation: source in Navigation Studio _src/side-nav.js',
-'!function(e){const t=document.body,n=e("#t_TreeNav"),a=n[0],s=e=>t.classList.contains(e),r=(e,t)=>{const n=apex.lang.getMessage(e);return n&&n!==e?n:t};if(!a)return;const o=()=>(window.nsSections||[]).forEach(((e,t)=>{const n=a.querySelectorAll(":sco'
-||'pe > ul > li.a-TreeView-node--topLevel")[t];n&&e&&n.setAttribute("data-ns-section",e)})),l=()=>{o();const e=document.getElementById("t_Body_nav"),t=a.querySelector(".a-TreeView-row.is-selected");e&&t&&t.getBoundingClientRect().bottom>e.getBoundingCli'
-||'entRect().bottom&&(e.scrollTop+=t.getBoundingClientRect().top-e.getBoundingClientRect().top-e.clientHeight/2)};n.on("treeviewcreate",l),o(),setTimeout(l,0);const i=e(".ns-Search input"),c=e("#ns_results");if(i.length){const a=r("MODERN_NAV.SEARCH","S'
-||unistr('earch menu");i.attr({placeholder:a,"aria-label":a,"aria-controls":"ns_results"}),i.next("kbd").text((/Mac|iP/.test(navigator.platform)?"\2318":"Ctrl ")+"K");let o=null;const l=()=>{if(o)return o;o=[];const e=n.treeView("getNodeAdapter"),t=(n,a)=>{for(let')
-||' s=0;s<(e.childCount(n)||0);s++){const r=e.child(n,s),l=e.getLabel(r).replace(/\s*\[.*?\]\s*$/,""),i=e.getLink(r);i&&o.push({l,href:i,path:a}),t(r,a?a+" / "+l:l)}};return t(e.root(),""),o},p=()=>{const n=i.val().trim().toLowerCase();if(e(".ns-Search"'
-||').toggleClass("has-text",!!n),t.classList.toggle("ns-Searching",!!n),!n)return void c.empty();const a=l().filter((e=>(e.l+" "+e.path).toLowerCase().includes(n))).slice(0,12);c.html(a.length?a.map((e=>''<li><a href="''+apex.util.escapeHTML(e.href)+''">''+'
-||'apex.util.escapeHTML(e.l)+(e.path?"<small>"+apex.util.escapeHTML(e.path)+"</small>":"")+"</a></li>")).join(""):''<li class="ns-None">''+apex.util.escapeHTML(r("MODERN_NAV.NO_MATCH","No matching pages"))+"</li>")};i.on("input",p).on("keydown",(e=>{if("A'
-||'rrowDown"===e.key&&(e.preventDefault(),c.find("a").first().trigger("focus")),"Enter"===e.key){const t=c.find("a")[0];t&&(e.preventDefault(),t.click())}"Escape"===e.key&&(i.val(""),p())})),c.on("keydown","a",(e=>{const t=c.find("a"),n=t.index(e.target'
-||');if("ArrowDown"===e.key||"ArrowUp"===e.key){e.preventDefault();(t[n+("ArrowDown"===e.key?1:-1)]||i[0]).focus()}"Escape"===e.key&&i.trigger("focus")}));const u=()=>{!s("js-navCollapsed")&&s("js-navExpanded")||e("#t_Button_navControl").trigger("click"'
-||'),setTimeout((()=>i.trigger("focus")),120)};e(".ns-Search").on("click",(()=>{s("js-navCollapsed")&&u()})),e(document).on("keydown",(e=>{const t=/input|textarea|select/i.test(e.target.tagName)||e.target.isContentEditable;(("k"===e.key||"K"===e.key)&&('
-||'e.ctrlKey||e.metaKey)||"/"===e.key&&!t)&&(e.preventDefault(),u())})).on("ns-search",u),t.classList.add("ns-HasSearch")}if(s("ns-Fx--tabbar")){const n=[...a.querySelectorAll(":scope > ul > li.a-TreeView-node--topLevel")].slice(0,4).map((e=>{const t=e.'
-||'querySelector(".a-TreeView-label"),n=e.querySelector(".a-TreeView-content .fa"),a=e.querySelector(".a-TreeView-content").matches(".is-selected, .is-current--top");return''<a href="''+apex.util.escapeHTML(t.getAttribute("href")||"#")+''"''+(a?'' aria-curre'
-||'nt="page"'':"")+''><span class="''+apex.util.escapeHTML(n?n.className:"fa fa-file-o")+''" aria-hidden="true"></span><span>''+apex.util.escapeHTML((s=t)?s.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim():"")+"</span></a>";var s})).join("");e('''
-||'<nav class="ns-TabBar" aria-label="''+apex.util.escapeHTML(r("MODERN_NAV.QUICK_LINKS","Quick links"))+''">''+n+''<button type="button" aria-controls="t_Body_nav"><span class="fa fa-bars" aria-hidden="true"></span><span>''+apex.util.escapeHTML(r("MODERN_NA'
-||'V.MENU","Menu"))+"</span></button></nav>").appendTo(t).on("click","button",(()=>e("#t_Button_navControl").trigger("click")))}const p=parseInt(getComputedStyle(document.documentElement).getPropertyValue("--js-mq-lg"))||1200;let u=innerWidth;e.event.sp'
-||'ecial.apexwindowresized={trigger:()=>{if(innerWidth===u&&u<p&&s("js-navExpanded"))return!1;u=innerWidth}}}(apex.jQuery);'))
+'!function(e){const t=document.body,a=e("#t_TreeNav"),n=a[0],s=e=>t.classList.contains(e),o=(e,t)=>{const a=apex.lang.getMessage(e);return a&&a!==e?a:t};if(!n)return;const r=()=>(window.nsSections||[]).forEach(((e,t)=>{const a=n.querySelectorAll(":sco'
+||'pe > ul > li.a-TreeView-node--topLevel")[t];a&&e&&a.setAttribute("data-ns-section",e)})),l=()=>{r();const e=document.getElementById("t_Body_nav"),t=n.querySelector(".a-TreeView-row.is-selected");e&&t&&t.getBoundingClientRect().bottom>e.getBoundingCli'
+||'entRect().bottom&&(e.scrollTop+=t.getBoundingClientRect().top-e.getBoundingClientRect().top-e.clientHeight/2)};a.on("treeviewcreate",l),r(),setTimeout(l,0);const i=e(".ns-Search input"),c=e("#ns_results");if(i.length){const n=o("MODERN_NAV.SEARCH","S'
+||unistr('earch menu");i.attr({placeholder:n,"aria-label":n,"aria-controls":"ns_results"}),i.next("kbd").text((/Mac|iP/.test(navigator.platform)?"\2318":"Ctrl ")+"K");let r=null;const l=()=>{if(r)return r;r=[];const e=a.treeView("getNodeAdapter"),t=(a,n)=>{for(let')
+||' s=0;s<(e.childCount(a)||0);s++){const o=e.child(a,s),l=e.getLabel(o).replace(/\s*\[.*?\]\s*$/,""),i=e.getLink(o);i&&r.push({l,href:i,path:n}),t(o,n?n+" / "+l:l)}};return t(e.root(),""),r},p=()=>{const a=i.val().trim().toLowerCase();if(e(".ns-Search"'
+||').toggleClass("has-text",!!a),t.classList.toggle("ns-Searching",!!a),!a)return void c.empty();const n=l().filter((e=>(e.l+" "+e.path).toLowerCase().includes(a))).slice(0,12);c.html(n.length?n.map((e=>''<li><a href="''+apex.util.escapeHTML(e.href)+''">''+'
+||'apex.util.escapeHTML(e.l)+(e.path?"<small>"+apex.util.escapeHTML(e.path)+"</small>":"")+"</a></li>")).join(""):''<li class="ns-None">''+apex.util.escapeHTML(o("MODERN_NAV.NO_MATCH","No matching pages"))+"</li>")};i.on("input",p).on("keydown",(e=>{if("A'
+||'rrowDown"===e.key&&(e.preventDefault(),c.find("a").first().trigger("focus")),"Enter"===e.key){const t=c.find("a")[0];t&&(e.preventDefault(),t.click())}"Escape"===e.key&&(i.val(""),p())})),c.on("keydown","a",(e=>{const t=c.find("a"),a=t.index(e.target'
+||');if("ArrowDown"===e.key||"ArrowUp"===e.key){e.preventDefault();(t[a+("ArrowDown"===e.key?1:-1)]||i[0]).focus()}"Escape"===e.key&&i.trigger("focus")}));const u=()=>{!s("js-navCollapsed")&&s("js-navExpanded")||e("#t_Button_navControl").trigger("click"'
+||'),setTimeout((()=>i.trigger("focus")),120)};e(".ns-Search").on("click",(()=>{s("js-navCollapsed")&&u()})),e(document).on("keydown",(e=>{const t=/input|textarea|select/i.test(e.target.tagName)||e.target.isContentEditable,a=e.ctrlKey||e.metaKey;("k"!=='
+||'e.key&&"K"!==e.key||!a||e.altKey)&&("/"!==e.key||t||a||e.altKey)||(e.preventDefault(),u())})).on("ns-search",u),t.classList.add("ns-HasSearch")}if(s("ns-Fx--tabbar")){const a=[...n.querySelectorAll(":scope > ul > li.a-TreeView-node--topLevel")].slice'
+||'(0,4).map((e=>{const t=e.querySelector(".a-TreeView-label"),a=e.querySelector(".a-TreeView-content .fa"),n=e.querySelector(".a-TreeView-content").matches(".is-selected, .is-current--top");return''<a href="''+apex.util.escapeHTML(t.getAttribute("href")|'
+||'|"#")+''"''+(n?'' aria-current="page"'':"")+''><span class="''+apex.util.escapeHTML(a?a.className:"fa fa-file-o")+''" aria-hidden="true"></span><span>''+apex.util.escapeHTML((s=t)?s.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim():"")+"</span></'
+||'a>";var s})).join("");e(''<nav class="ns-TabBar" aria-label="''+apex.util.escapeHTML(o("MODERN_NAV.QUICK_LINKS","Quick links"))+''">''+a+''<button type="button" aria-controls="t_Body_nav"><span class="fa fa-bars" aria-hidden="true"></span><span>''+apex.uti'
+||'l.escapeHTML(o("MODERN_NAV.MENU","Menu"))+"</span></button></nav>").appendTo(t).on("click","button",(()=>e("#t_Button_navControl").trigger("click")))}}(apex.jQuery);'))
 ,p_theme_id=>42
 ,p_theme_class_id=>19
 ,p_default_template_options=>'js-navCollapsed--default:ns-Fx--tips:ns-Fx--search:ns-Fx--tabbar'
@@ -9732,18 +9731,18 @@ wwv_flow_imp_shared.create_list_template(
 '/* Flyout: source in Navigation Studio _src/side-nav-flyout.js */',
 '(()=>{const e=document,t=(t,r)=>e.addEventListener(t,r,!0),r=()=>e.body.classList.contains("ns-Sub--flyout")&&matchMedia("(min-width: 640px)").matches,o=e=>"rtl"===getComputedStyle(e).direction,n=e=>e.replace(/\s*\[.*?\]\s*$/,"");let a,l,i;const s=e='
 ||'>{const t=e.closest&&e.closest("#t_TreeNav .a-TreeView-node--topLevel");return t&&t.matches(".is-expandable, .is-collapsible")?t:null},c=e=>{clearTimeout(i),a&&(a.hidden=!0),e&&l&&l.querySelector(".a-TreeView-label").focus(),l=null},d=(t,r)=>{clearTi'
-||'meout(i);const s=apex.jQuery,c=apex.util.escapeHTML,d=s("#t_TreeNav"),u=d.treeView("getNodeAdapter"),g=d.treeView("getNodes",s(t).children(".a-TreeView-content"))[0],p=d.treeView("getSelectedNodes")[0];if(!g||!u.childCount(g))return;a||(a=e.createEle'
-||'ment("div"),a.className="ns-Flyout",a.setAttribute("role","group"),e.body.append(a));let w="";const f=(e,t)=>{for(let r=0;r<u.childCount(e);r++){const o=u.child(e,r);w+=''<a href="''+c(u.getLink(o)||"#")+''" style="--l:''+t+''"''+(o===p?'' aria-current="pag'
-||'e"'':"")+">"+c(n(u.getLabel(o)))+"</a>",f(o,t+1)}};f(g,0);const T=n(u.getLabel(g));a.setAttribute("aria-label",T),a.innerHTML="<p>"+c(T)+"</p>"+w,a.hidden=!1,l=t;const y=t.querySelector(".a-TreeView-row").getBoundingClientRect(),m=e.getElementById("t_'
+||'meout(i);const s=apex.jQuery,c=apex.util.escapeHTML,d=s("#t_TreeNav"),u=d.treeView("getNodeAdapter"),p=d.treeView("getNodes",s(t).children(".a-TreeView-content"))[0],g=d.treeView("getSelectedNodes")[0];if(!p||!u.childCount(p))return;a||(a=e.createEle'
+||'ment("div"),a.className="ns-Flyout",a.setAttribute("role","group"),e.body.append(a));let w="";const f=(e,t)=>{for(let r=0;r<u.childCount(e);r++){const o=u.child(e,r);w+=''<a href="''+c(u.getLink(o)||"#")+''" style="--l:''+t+''"''+(o===g?'' aria-current="pag'
+||'e"'':"")+">"+c(n(u.getLabel(o)))+"</a>",f(o,t+1)}};f(p,0);const T=n(u.getLabel(p));a.setAttribute("aria-label",T),a.innerHTML="<p>"+c(T)+"</p>"+w,a.hidden=!1,l=t;const y=t.querySelector(".a-TreeView-row").getBoundingClientRect(),m=e.getElementById("t_'
 ||'Body_nav").getBoundingClientRect();a.style.top=Math.max(8,Math.min(y.top-6,innerHeight-a.offsetHeight-8))+"px",a.style.left=(o(t)?m.left-a.offsetWidth-6:m.right+6)+"px",r&&a.querySelector("a").focus()};t("mouseover",(e=>{if(!r())return;if(a&&a.contai'
 ||'ns(e.target))return void clearTimeout(i);const t=s(e.target);clearTimeout(i),t?t!==l&&(i=setTimeout((()=>d(t)),l?60:160)):l&&(i=setTimeout((()=>c()),300))}));const u=e=>{if(!r())return;const t=e.target.closest&&e.target.closest("#t_TreeNav .a-TreeVie'
 ||'w-node--topLevel > .a-TreeView-toggle");if(t){if(e.preventDefault(),e.stopPropagation(),"click"===e.type){const e=t.parentElement;l===e?c():d(e)}}else"click"===e.type&&l&&!a.contains(e.target)&&c()};t("mousedown",u),t("click",u),t("keydown",(t=>{if(!'
-||'r())return;const n=s(t.target),l=a&&a.contains(t.target),i=o(t.target)?-1:1,u=t.target.matches&&t.target.matches("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content > .a-TreeView-label");if(n&&u&&t.key===(i>0?"ArrowRight":"ArrowLeft"))t.prev'
-||'entDefault(),t.stopPropagation(),d(n,!0);else if(u&&/^(ArrowDown|ArrowUp|Home|End|ArrowLeft|ArrowRight)$/.test(t.key)){t.preventDefault(),t.stopPropagation();const r=[...e.querySelectorAll("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content '
-||'> .a-TreeView-label")],o=r.indexOf(t.target),n={ArrowDown:r[o+1],ArrowUp:r[o-1],Home:r[0],End:r[r.length-1]}[t.key];n&&(t.target.tabIndex=-1,n.tabIndex=0,n.focus())}else if(l){const e=[...a.querySelectorAll("a")],r=e.indexOf(t.target);"ArrowDown"!==t'
-||'.key&&"ArrowUp"!==t.key||(t.preventDefault(),(e[r+("ArrowDown"===t.key?1:-1)]||e["ArrowDown"===t.key?0:e.length-1]).focus()),"Escape"!==t.key&&t.key!==(i>0?"ArrowLeft":"ArrowRight")||(t.preventDefault(),c(!0))}})),t("focusout",(e=>{a&&a.contains(e.ta'
-||'rget)&&!a.contains(e.relatedTarget)&&c()})),t("scroll",(e=>{!l||a&&a.contains(e.target)||c()})),addEventListener("resize",(()=>c()));const g=()=>{const t=e.querySelector("#t_TreeNav .a-TreeView-label[tabindex=''0'']");r()&&t&&!t.closest(".a-TreeView-no'
-||'de--topLevel > .a-TreeView-content")&&(t.tabIndex=-1,t.closest(".a-TreeView-node--topLevel").querySelector(".a-TreeView-label").tabIndex=0)};addEventListener("load",(()=>setTimeout(g,0)))})();',
+||'r())return;const n=s(t.target),i=a&&a.contains(t.target),u=o(t.target)?-1:1,p=t.target.matches&&t.target.matches("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content > .a-TreeView-label");if(n&&p&&t.key===(u>0?"ArrowRight":"ArrowLeft"))t.prev'
+||'entDefault(),t.stopPropagation(),d(n,!0);else if(p&&/^(ArrowDown|ArrowUp|Home|End|ArrowLeft|ArrowRight)$/.test(t.key)){t.preventDefault(),t.stopPropagation();const r=[...e.querySelectorAll("#t_TreeNav .a-TreeView-node--topLevel > .a-TreeView-content '
+||'> .a-TreeView-label")],o=r.indexOf(t.target),n={ArrowDown:r[o+1],ArrowUp:r[o-1],Home:r[0],End:r[r.length-1]}[t.key];n&&(t.target.tabIndex=-1,n.tabIndex=0,n.focus())}else if(i){const e=[...a.querySelectorAll("a")],r=e.indexOf(t.target);"ArrowDown"!==t'
+||'.key&&"ArrowUp"!==t.key||(t.preventDefault(),(e[r+("ArrowDown"===t.key?1:-1)]||e["ArrowDown"===t.key?0:e.length-1]).focus()),"Escape"!==t.key&&t.key!==(u>0?"ArrowLeft":"ArrowRight")||(t.preventDefault(),c(!0))}else l&&"Escape"===t.key&&c()})),t("focu'
+||'sout",(e=>{a&&a.contains(e.target)&&!a.contains(e.relatedTarget)&&c()})),t("scroll",(e=>{!l||a&&a.contains(e.target)||c()})),addEventListener("resize",(()=>c()));const p=()=>{const t=e.querySelector("#t_TreeNav .a-TreeView-label[tabindex=''0'']");r()&&'
+||'t&&!t.closest(".a-TreeView-node--topLevel > .a-TreeView-content")&&(t.tabIndex=-1,t.closest(".a-TreeView-node--topLevel").querySelector(".a-TreeView-label").tabIndex=0)};addEventListener("load",(()=>setTimeout(p,0)))})();',
 '</script>',
 '<div class="t-Body-nav" id="t_Body_nav" role="navigation" aria-label="&"APP_TEXT$APEX.TEMPLATE.APPLICATION".">',
 '  <div class="a-TreeView t-TreeNav #COMPONENT_CSS_CLASSES#" id="t_TreeNav" data-id="#PARENT_STATIC_ID#_tree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL".">',
@@ -9754,15 +9753,17 @@ wwv_flow_imp_shared.create_list_template(
 '</div>',
 '<script #APEX_CSP_NONCE_ATTRIBUTE#>',
 '/* Modern Side Navigation: source in Navigation Studio _src/side-nav-pre.js */',
-'(()=>{const e=document.getElementById("t_TreeNav"),t=document.body,s=document,n=/^(ns-(?!Bar-|Top-)|js-(navCollapsed--|defaultCollapsed|hideDefaultIcon))/,a=e=>t.classList.contains(e),o=o=>{const i=/[#&]ns=([^&]*)/.exec(location.hash),d=/[#&]nsx=(\w+'
-||')/.exec(location.hash);if(i){const c=decodeURIComponent(i[1]).split(/[\s,+]+/);[...e.classList].forEach((t=>n.test(t)&&(o||t.startsWith("ns-"))&&e.classList.remove(t))),c.forEach((t=>n.test(t)&&(o||t.startsWith("ns-"))&&e.classList.add(t))),[...t.cla'
-||'ssList].forEach((e=>/^ns-(?!Bar-|Top-|Nav$|HasSearch$|Searching$)/.test(e)&&t.classList.remove(e))),d&&o&&sessionStorage.setItem("ORA_WWV_apex.toggleCore.nav.&APP_ID..preferenceForExpanded","expanded"===d[1]),d&&!o&&"expanded"===d[1]!==a("js-navExpan'
-||'ded")&&s.getElementById("t_Button_navControl")?.click()}t.classList.add("ns-Nav"),e.classList.forEach((e=>e.startsWith("ns-")&&t.classList.add(e)))};o(!0),window.addEventListener("hashchange",(()=>o(!1))),a("ns-Fx--search")&&e.insertAdjacentHTML("bef'
-||'orebegin",''<div class="ns-Search" role="search"><span class="fa fa-search" aria-hidden="true"></span><input type="search" autocomplete="off" spellcheck="false"><kbd></kbd></div><ul class="ns-Results" id="ns_results"></ul>''),window.nsSections=[...e.qu'
-||'erySelectorAll(":scope > ul > li")].map((e=>e.getAttribute("data-section")||""));const i=s.createElement("div");i.className="ns-Tip",i.setAttribute("role","tooltip"),i.hidden=!0,t.append(i);const d=t=>{const s=t.target.closest(".a-TreeView-node--topL'
-||'evel"),n=s&&s.querySelector(".a-TreeView-label");if(i.hidden=!(n&&a("ns-Fx--tips")&&a("js-navCollapsed")&&!a("ns-Design--rail")),i.hidden)return;const o=s.querySelector(".a-TreeView-row").getBoundingClientRect(),d="rtl"===getComputedStyle(e).directio'
-||'n;i.textContent=n.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim(),i.style.top=o.top+o.height/2-i.offsetHeight/2+"px",i.style.left=(d?o.left-i.offsetWidth-10:o.right+10)+"px"},c=()=>{i.hidden=!0};e.addEventListener("mouseover",d),e.addEv'
-||'entListener("focusin",d),e.addEventListener("mouseleave",c),e.addEventListener("focusout",c)})();',
+'(()=>{const e=document.getElementById("t_TreeNav"),t=document.body,s=document,n=/^(ns-(?!Bar-|Top-)|js-(navCollapsed--|defaultCollapsed|hideDefaultIcon))/,a=e=>t.classList.contains(e),i=i=>{const o=/[#&]ns=([^&]*)/.exec(location.hash),d=/[#&]nsx=(\w+'
+||')/.exec(location.hash);let r;try{r=o&&decodeURIComponent(o[1]).split(/[\s,+]+/)}catch(e){}r&&([...e.classList].forEach((t=>n.test(t)&&(i||t.startsWith("ns-"))&&e.classList.remove(t))),r.forEach((t=>n.test(t)&&(i||t.startsWith("ns-"))&&e.classList.add'
+||'(t))),[...t.classList].forEach((e=>/^ns-(?!Bar-|Top-|Nav$|HasSearch$|Searching$)/.test(e)&&t.classList.remove(e))),d&&i&&sessionStorage.setItem("ORA_WWV_apex.toggleCore.nav.&APP_ID..preferenceForExpanded","expanded"===d[1]),d&&!i&&"expanded"===d[1]!='
+||'=a("js-navExpanded")&&s.getElementById("t_Button_navControl")?.click()),t.classList.add("ns-Nav"),e.classList.forEach((e=>e.startsWith("ns-")&&t.classList.add(e)))};i(!0),window.addEventListener("hashchange",(()=>i(!1))),a("ns-Fx--search")&&e.insertA'
+||'djacentHTML("beforebegin",''<div class="ns-Search" role="search"><span class="fa fa-search" aria-hidden="true"></span><input type="search" autocomplete="off" spellcheck="false"><kbd></kbd></div><ul class="ns-Results" id="ns_results"></ul>''),window.nsS'
+||'ections=[...e.querySelectorAll(":scope > ul > li")].map((e=>e.getAttribute("data-section")||""));const o=s.createElement("div");o.className="ns-Tip",o.setAttribute("role","tooltip"),o.hidden=!0,t.append(o);const d=t=>{const s=t.target.closest(".a-Tre'
+||'eView-node--topLevel"),n=s&&s.querySelector(".a-TreeView-label"),i=s&&a("ns-Sub--flyout")&&s.matches(".is-expandable, .is-collapsible")&&matchMedia("(min-width: 640px)").matches;if(o.hidden=!(n&&!i&&a("ns-Fx--tips")&&a("js-navCollapsed")&&!a("ns-Desi'
+||'gn--rail")),o.hidden)return;const d=s.querySelector(".a-TreeView-row").getBoundingClientRect(),r="rtl"===getComputedStyle(e).direction;o.textContent=n.childNodes[0].textContent.replace(/\s*\[.*?\]\s*$/,"").trim(),o.style.top=d.top+d.height/2-o.offset'
+||'Height/2+"px",o.style.left=(r?d.left-o.offsetWidth-10:d.right+10)+"px"},r=()=>{o.hidden=!0};e.addEventListener("mouseover",d),e.addEventListener("focusin",d),e.addEventListener("mouseleave",r),e.addEventListener("focusout",r),s.addEventListener("DOMC'
+||'ontentLoaded",(()=>{const e=window.apex&&apex.jQuery&&apex.jQuery.event.special,t=e&&e.apexwindowresized||{};if(!e||t.navFix)return;const n=parseInt(getComputedStyle(s.documentElement).getPropertyValue("--js-mq-lg"))||1200;let i=innerWidth;e.apexwind'
+||'owresized={...t,navFix:!0,trigger(...e){return!(innerWidth===i&&i<n&&a("js-navExpanded"))&&(i=innerWidth,t.trigger&&t.trigger.apply(this,e))}}}))})();',
 '(() => {',
 '  const pref = "ORA_WWV_apex.toggleCore.nav.&APP_ID..preferenceForExpanded",',
 '        nav  = document.getElementById(''t_TreeNav'').classList,',
@@ -10284,7 +10285,7 @@ wwv_flow_imp_shared.create_list_template(
 '// Modern Top Navigation: source in Navigation Studio _src/top-nav.js',
 '!function(e){const a=e("#t_MenuNav",apex.gPageContext$);a.hasClass("js-addActions")&&apex.actions.addFromMarkup(a),a.menu({behaveLikeTabs:a.hasClass("js-tabLike"),menubarShowSubMenuIcon:a.hasClass("js-showSubMenuIcons")||null,menubar:!0,menubarOverfl'
 ||'ow:!0,callout:a.hasClass("js-menu-callout")});const n=()=>a.find(".a-MenuBar-item").not(".a-MenuBar-item--overflow").each((function(a){const n=(window.nsTopBadges||[])[a],s=e(this).children(".a-MenuBar-label");n&&!s.children(".ns-TopBadge").length&&s'
-||'.append(e(''<span class="ns-TopBadge"></span>'').text(n))}));n(),a.menu("resize"),n(),e(window).on("apexwindowresized",(()=>setTimeout(n,0)))}(apex.jQuery);'))
+||'.append(e(''<span class="ns-TopBadge"></span>'').text(n))}));n(),a.menu("resize"),n(),a[0]&&new MutationObserver(n).observe(a[0],{childList:!0,subtree:!0})}(apex.jQuery);'))
 ,p_theme_id=>42
 ,p_theme_class_id=>20
 ,p_default_template_options=>'js-tabLike'
@@ -10293,10 +10294,10 @@ wwv_flow_imp_shared.create_list_template(
 '</ul></div>',
 '<script #APEX_CSP_NONCE_ATTRIBUTE#>',
 '/* Modern Top Navigation: source in Navigation Studio _src/top-nav-pre.js */',
-'(()=>{const s=document.getElementById("t_MenuNav"),t=document.body,e=/^(ns-(?!Bar-)|js-(tabLike|menu-callout|showSubMenuIcons))/,n=()=>{const n=/[#&]ns=([^&]*)/.exec(location.hash);n&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),d'
-||'ecodeURIComponent(n[1]).split(/[\s,+]+/).forEach((t=>e.test(t)&&s.classList.add(t))),[...t.classList].forEach((s=>/^ns-(?!Bar-|TopNav$)/.test(s)&&t.classList.remove(s)))),t.classList.add("ns-TopNav"),s.classList.forEach((s=>s.startsWith("ns-")&&t.cla'
-||'ssList.add(s)))};n(),window.addEventListener("hashchange",n),window.nsTopBadges=[...s.querySelectorAll(":scope > ul > li > a")].map((s=>{const t=/\s*\[(.*?)\]\s*$/.exec(s.textContent);return t&&(s.textContent=s.textContent.slice(0,t.index)),t?t[1]:""'
-||'}))})();',
+'(()=>{const s=document.getElementById("t_MenuNav"),t=document.body,e=/^(ns-(?!Bar-)|js-(tabLike|menu-callout|showSubMenuIcons))/,a=()=>{const a=/[#&]ns=([^&]*)/.exec(location.hash);let n;try{n=a&&decodeURIComponent(a[1]).split(/[\s,+]+/)}catch(s){}n&'
+||'&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),n.forEach((t=>e.test(t)&&s.classList.add(t))),[...t.classList].forEach((s=>/^ns-(?!Bar-|TopNav$)/.test(s)&&t.classList.remove(s)))),t.classList.add("ns-TopNav"),s.classList.forEach((s='
+||'>s.startsWith("ns-")&&t.classList.add(s)))};a(),window.addEventListener("hashchange",a),window.nsTopBadges=[...s.querySelectorAll(":scope > ul > li > a")].map((s=>{const t=/\s*\[(.*?)\]\s*$/.exec(s.textContent);return t&&(s.textContent=s.textContent.'
+||'slice(0,t.index)),t?t[1]:""}))})();',
 '</script>'))
 ,p_before_sub_list=>'<ul class="u-DisplayNone">'
 ,p_after_sub_list=>'</ul></li>'
@@ -10619,7 +10620,6 @@ wwv_flow_imp_page.create_page(
 ,p_warn_on_unsaved_changes=>null
 ,p_autocomplete_on_off=>'OFF'
 ,p_protection_level=>'D'
-,p_page_component_map=>'14'
 );
 end;
 /
@@ -10722,7 +10722,6 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
-,p_page_component_map=>'13'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11852144698985847)
@@ -10798,7 +10797,15 @@ wwv_flow_imp_page.create_page(
 '        { item: "P2_AVATAR", css: "ns-Bar--avatar", label: "User Avatar", t: "bar" }, { item: "P2_BAR_SEARCH", css: "ns-Bar--search", label: "Search Button", t: "bar" },',
 '        { item: "P2_PULSE", css: "ns-Bar--pulse", label: "Pulsing Badges", t: "bar" }',
 '    ];',
-'    var frame = document.getElementById("nvd-frame"), app = frame.getAttribute("data-app"), session = frame.getAttribute("data-session"), lastReload = null;',
+'    var frame = document.getElementById("nvd-frame"), app = frame.getAttribute("data-app"), session = frame.getAttribute("data-session"), lastReload = null, current = "";',
+'    // the preview keeps the chosen look when a page finishes loading: a choice made while it was still loading, or',
+'    // another demo page opened from the menu inside the preview',
+'    frame.addEventListener("load", function () {',
+'        try {',
+'            var l = frame.contentWindow.location;',
+'            if (current && l.href !== "about:blank" && l.hash !== current) { l.hash = current; }',
+'        } catch (e) { /* cross-origin: ignore */ }',
+'    });',
 '    function esc(s) { return apex.util.escapeHTML(String(s)); }',
 '    function pos() { return $v("P2_POSITION") === "TOP" ? "top" : "side"; }',
 '    function on(t) { return t === "nav" || t === "bar" || t === pos(); }',
@@ -10806,7 +10813,10 @@ wwv_flow_imp_page.create_page(
 '',
 '    // a look passed from the Gallery: #look=<menu classes>&bar=<bar classes>&pos=side|top&st=expanded|collapsed',
 '    (function fromHash() {',
-'        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };',
+'        var h = location.hash, g = function (k) {',
+'            var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h);',
+'            try { return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; /* a damaged link: start from the defaults */ }',
+'        };',
 '        if (!g("look")) { return; }',
 '        var nav = g("look").split(/\s+/), bar = (g("bar") || "").split(/\s+/);',
 '        apex.item("P2_POSITION").setValue(g("pos") === "top" ? "TOP" : "SIDE", null, true);',
@@ -10861,13 +10871,16 @@ wwv_flow_imp_page.create_page(
 '    function render() {',
 '        var c = chosen(), want = pageUrl(), state = c.pos === "side" && $v("P2_STATE") === "COLLAPSED" ? "collapsed" : "expanded",',
 '            hash = "#ns=" + encodeURIComponent(c.nav.join(" ")) + "&nb=" + encodeURIComponent(c.bar.join(" ")) + "&nsx=" + state,',
-'            reloadKey = want + "|" + $v("P2_COLLAPSE") + "|" + $v("P2_SUB");',
+'            reloadKey = [want, $v("P2_COLLAPSE"), $v("P2_SUB"), $v("P2_SEARCH"), $v("P2_TABBAR")].join("|");',
 '        relevance(c);',
-'        // a new page or Collapse Mode needs a fresh load; everything else follows the hash without a reload',
+'        current = hash;',
+'        // a new page, Collapse Mode, Sub-menus, Menu Search and Phone Bottom Bar need a fresh load (the menu reads them',
+'        // once, when it is drawn); everything else follows the hash without a reload',
 '        if (reloadKey !== lastReload) {',
-'            var was = (frame.getAttribute("src") || "").split("#")[0];',
-'            frame.setAttribute("src", want + hash);',
-'            if (was === want) { try { frame.contentWindow.location.reload(); } catch (e) { /* cross-origin: ignore */ } }',
+'            var was = (frame.getAttribute("src") || "").split("#")[0], l = null;',
+'            try { l = frame.contentWindow.location; } catch (e) { /* cross-origin: start again from the demo page */ }',
+'            // same menu position: reload the page the preview is on (it may be another demo page by now) with the new look',
+'            if (was === want && l && l.href !== "about:blank") { l.hash = hash; l.reload(); } else { frame.setAttribute("src", want + hash); }',
 '        } else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", want + hash); } }',
 '        lastReload = reloadKey;',
 '        var navName = c.pos === "top" ? "Modern Top Navigation" : "Modern Side Navigation";',
@@ -10896,10 +10909,21 @@ wwv_flow_imp_page.create_page(
 '    $(window).on("resize apexwindowresized", fit);',
 '    fit();',
 '    $(document).on("click", ".js-nvd-copy", function () {',
-'        var t = $(this).attr("data-target");',
-'        navigator.clipboard.writeText($("#" + t).text()).then(function () { apex.message.showPageSuccess("Copied."); });',
+'        var el = document.getElementById($(this).attr("data-target")), text = el.textContent;',
+'        function done() { apex.message.showPageSuccess("Copied."); }',
+'        // no clipboard access (plain http, or the browser said no): select the text so Ctrl+C takes it',
+'        function manual() {',
+'            var r = document.createRange(), ok = false;',
+'            r.selectNodeContents(el);',
+'            getSelection().removeAllRanges();',
+'            getSelection().addRange(r);',
+'            try { ok = document.execCommand("copy"); } catch (e) { ok = false; }',
+'            if (ok) { done(); } else { apex.message.alert("The browser did not allow copying. The text is selected - press Ctrl+C (Cmd+C)."); }',
+'        }',
+'        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, manual); } else { manual(); }',
 '    });',
-'    $(document).on("click", ".js-nvd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });',
+'    // the look as chosen now (the iframe''s src attribute only knows the look of its last full load)',
+'    $(document).on("click", ".js-nvd-open", function () { window.open(pageUrl() + current, "_blank"); });',
 '    render();',
 '})(apex.jQuery);'))
 ,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -10926,7 +10950,6 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
-,p_page_component_map=>'17'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11852306341985848)
@@ -11467,7 +11490,6 @@ wwv_flow_imp_page.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_protection_level=>'C'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11855326663985849)
@@ -11589,7 +11611,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856201655985869)
@@ -11736,7 +11757,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856571201985869)
@@ -11798,7 +11818,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11856877466985869)
@@ -11860,7 +11879,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857139270985869)
@@ -11922,7 +11940,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857439985985869)
@@ -11984,7 +12001,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11857750150985869)
@@ -12046,7 +12062,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858089995985870)
@@ -12108,7 +12123,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858379434985870)
@@ -12170,7 +12184,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11831650210985637)
 ,p_nav_list_template_options=>'#DEFAULT#:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11858640556985870)
@@ -12232,7 +12245,6 @@ wwv_flow_imp_page.create_page(
 ,p_navigation_list_template_id=>wwv_flow_imp.id(11833425487985638)
 ,p_nav_list_template_options=>'#DEFAULT#:js-tabLike:ns-Accent--indigo'
 ,p_page_is_public_y_n=>'Y'
-,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11859424897985871)

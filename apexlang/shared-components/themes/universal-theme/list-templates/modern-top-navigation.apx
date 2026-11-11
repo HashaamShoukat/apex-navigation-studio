@@ -13,7 +13,7 @@ listTemplate modern-top-navigation (
             </ul></div>
             <script #APEX_CSP_NONCE_ATTRIBUTE#>
             /* Modern Top Navigation: source in Navigation Studio _src/top-nav-pre.js */
-            (()=>{const s=document.getElementById("t_MenuNav"),t=document.body,e=/^(ns-(?!Bar-)|js-(tabLike|menu-callout|showSubMenuIcons))/,n=()=>{const n=/[#&]ns=([^&]*)/.exec(location.hash);n&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),decodeURIComponent(n[1]).split(/[\s,+]+/).forEach((t=>e.test(t)&&s.classList.add(t))),[...t.classList].forEach((s=>/^ns-(?!Bar-|TopNav$)/.test(s)&&t.classList.remove(s)))),t.classList.add("ns-TopNav"),s.classList.forEach((s=>s.startsWith("ns-")&&t.classList.add(s)))};n(),window.addEventListener("hashchange",n),window.nsTopBadges=[...s.querySelectorAll(":scope > ul > li > a")].map((s=>{const t=/\s*\[(.*?)\]\s*$/.exec(s.textContent);return t&&(s.textContent=s.textContent.slice(0,t.index)),t?t[1]:""}))})();
+            (()=>{const s=document.getElementById("t_MenuNav"),t=document.body,e=/^(ns-(?!Bar-)|js-(tabLike|menu-callout|showSubMenuIcons))/,a=()=>{const a=/[#&]ns=([^&]*)/.exec(location.hash);let n;try{n=a&&decodeURIComponent(a[1]).split(/[\s,+]+/)}catch(s){}n&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),n.forEach((t=>e.test(t)&&s.classList.add(t))),[...t.classList].forEach((s=>/^ns-(?!Bar-|TopNav$)/.test(s)&&t.classList.remove(s)))),t.classList.add("ns-TopNav"),s.classList.forEach((s=>s.startsWith("ns-")&&t.classList.add(s)))};a(),window.addEventListener("hashchange",a),window.nsTopBadges=[...s.querySelectorAll(":scope > ul > li > a")].map((s=>{const t=/\s*\[(.*?)\]\s*$/.exec(s.textContent);return t&&(s.textContent=s.textContent.slice(0,t.index)),t?t[1]:""}))})();
             </script>
             ```
     }
@@ -37,7 +37,7 @@ listTemplate modern-top-navigation (
         executeWhenPageLoads:
             ```javascript-browser
             // Modern Top Navigation: source in Navigation Studio _src/top-nav.js
-            !function(e){const a=e("#t_MenuNav",apex.gPageContext$);a.hasClass("js-addActions")&&apex.actions.addFromMarkup(a),a.menu({behaveLikeTabs:a.hasClass("js-tabLike"),menubarShowSubMenuIcon:a.hasClass("js-showSubMenuIcons")||null,menubar:!0,menubarOverflow:!0,callout:a.hasClass("js-menu-callout")});const n=()=>a.find(".a-MenuBar-item").not(".a-MenuBar-item--overflow").each((function(a){const n=(window.nsTopBadges||[])[a],s=e(this).children(".a-MenuBar-label");n&&!s.children(".ns-TopBadge").length&&s.append(e('<span class="ns-TopBadge"></span>').text(n))}));n(),a.menu("resize"),n(),e(window).on("apexwindowresized",(()=>setTimeout(n,0)))}(apex.jQuery);
+            !function(e){const a=e("#t_MenuNav",apex.gPageContext$);a.hasClass("js-addActions")&&apex.actions.addFromMarkup(a),a.menu({behaveLikeTabs:a.hasClass("js-tabLike"),menubarShowSubMenuIcon:a.hasClass("js-showSubMenuIcons")||null,menubar:!0,menubarOverflow:!0,callout:a.hasClass("js-menu-callout")});const n=()=>a.find(".a-MenuBar-item").not(".a-MenuBar-item--overflow").each((function(a){const n=(window.nsTopBadges||[])[a],s=e(this).children(".a-MenuBar-label");n&&!s.children(".ns-TopBadge").length&&s.append(e('<span class="ns-TopBadge"></span>').text(n))}));n(),a.menu("resize"),n(),a[0]&&new MutationObserver(n).observe(a[0],{childList:!0,subtree:!0})}(apex.jQuery);
             ```
     }
     attributeDescriptions {

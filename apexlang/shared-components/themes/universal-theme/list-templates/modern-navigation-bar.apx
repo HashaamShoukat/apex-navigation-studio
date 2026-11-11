@@ -13,7 +13,7 @@ listTemplate modern-navigation-bar (
             </ul>
             <script #APEX_CSP_NONCE_ATTRIBUTE#>
             /* Modern Navigation Bar: source in Navigation Studio _src/nav-bar-pre.js */
-            (()=>{const s=document.currentScript.previousElementSibling,e=/^(ns-(Bar|Accent)-|js-menu)/,t=()=>{const t=/[#&]nb=([^&]*)/.exec(location.hash);t&&s&&([...s.classList].forEach((t=>e.test(t)&&s.classList.remove(t))),decodeURIComponent(t[1]).split(/[\s,+]+/).forEach((t=>e.test(t)&&s.classList.add(t))))};t(),window.addEventListener("hashchange",t)})();
+            (()=>{const t=document.currentScript.previousElementSibling,e=/^(ns-(Bar|Accent)-|js-menu)/,s=()=>{const s=/[#&]nb=([^&]*)/.exec(location.hash);if(!s||!t)return;let n;try{n=decodeURIComponent(s[1]).split(/[\s,+]+/)}catch(t){return}[...t.classList].forEach((s=>e.test(s)&&t.classList.remove(s))),n.forEach((s=>e.test(s)&&t.classList.add(s)))};s(),window.addEventListener("hashchange",s)})();
             </script>
             ```
     }

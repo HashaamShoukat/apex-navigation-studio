@@ -17,5 +17,7 @@
     badges();
     e.menu("resize");
     badges();
-    $(window).on("apexwindowresized", () => setTimeout(badges, 0));
+    // the menu bar draws itself again whenever it has to move entries into its overflow menu (also some time after the
+    // page has loaded), so watch it rather than the window: adding a badge that is already there changes nothing
+    if (e[0]) { new MutationObserver(badges).observe(e[0], { childList: true, subtree: true }); }
 })(apex.jQuery);

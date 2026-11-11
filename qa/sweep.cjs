@@ -30,4 +30,5 @@ const SCREENS = [[1920, 1080], [1366, 768], [820, 1180], [1180, 820], [390, 844]
   }
   await b.close();
   console.log(problems.length ? problems.join("\n") : "no problems", "\nlooks:", uniq.length, "screens:", SCREENS.length);
+  if (problems.length) { process.exitCode = 1; }
 })();

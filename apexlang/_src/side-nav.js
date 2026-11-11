@@ -66,8 +66,8 @@
         $(".ns-Search").on("click", () => { if (has("js-navCollapsed")) { open(); } });
         // Ctrl+K / Cmd+K anywhere, "/" when not typing; the navigation bar's search button sends "ns-search"
         $(document).on("keydown", e => {
-            const typing = /input|textarea|select/i.test(e.target.tagName) || e.target.isContentEditable;
-            if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey) || e.key === "/" && !typing) { e.preventDefault(); open(); }
+            const typing = /input|textarea|select/i.test(e.target.tagName) || e.target.isContentEditable, mod = e.ctrlKey || e.metaKey;
+            if ((e.key === "k" || e.key === "K") && mod && !e.altKey || e.key === "/" && !typing && !mod && !e.altKey) { e.preventDefault(); open(); }
         }).on("ns-search", open);
         body.classList.add("ns-HasSearch");
     }
@@ -85,14 +85,5 @@
           apex.util.escapeHTML(msg("MODERN_NAV.MENU", "Menu")) + "</span></button></nav>").appendTo(body)
             .on("click", "button", () => $("#t_Button_navControl").trigger("click"));
     }
-
-    // APEX 26.2: Universal Theme fires apexwindowresized when the title bar changes size, and opening the menu below
-    // --js-mq-lg narrows it - the menu closed again at once on phones. Skip that event while the menu is open and the
-    // window kept its width.
-    const large = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--js-mq-lg")) || 1200;
-    let w = innerWidth;
-    $.event.special.apexwindowresized = { trigger: () => {
-        if (innerWidth === w && w < large && has("js-navExpanded")) { return false; }
-        w = innerWidth;
-    } };
+    // (the APEX 26.2 "menu closes at once on phones" workaround lives in side-nav-pre.js)
 })(apex.jQuery);

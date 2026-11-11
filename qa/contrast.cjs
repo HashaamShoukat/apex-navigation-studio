@@ -57,5 +57,6 @@ const ACC = ["", "ocean", "indigo", "violet", "emerald", "rose", "amber", "slate
   }
   for (const [k, v] of Object.entries(fails)) console.log(k, "=>", [...new Set(v)].join(" | "));
   console.log(n, "combinations,", Object.keys(fails).length, "with failures");
+  if (Object.keys(fails).length) { process.exitCode = 1; }
   await b.close();
 })();

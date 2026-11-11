@@ -67,7 +67,7 @@ Text contrast is at least 4.5:1 in every design, accent and scheme (checked auto
 2. **App Builder > Import**, install it with any application ID. No database objects; **APEX 26.1** or later.
 3. Run it - every page is public.
 
-The APEXlang source is in [`apexlang/`](apexlang/) (`apex import -input apexlang` with SQLcl 26.1). The templates, option groups and pages are built from [`apexlang/_src`](apexlang/_src): `npm install` once, then `cd apexlang && node _src/build.mjs` (templates), `node _src/pages.mjs` (lists and demo pages) and `node _src/studio-pages.mjs` (Gallery, Designer, How to Use).
+The APEXlang source is in [`apexlang/`](apexlang/) (`apex import -input apexlang` with SQLcl 26.1). The templates, option groups and pages are built from [`apexlang/_src`](apexlang/_src): `npm install` once, then `npm run build`. It runs `node apexlang/_src/build.mjs` (templates), `pages.mjs` (lists and demo pages) and `studio-pages.mjs` (Gallery, Designer, How to Use).
 
 ## Use it in your application
 
